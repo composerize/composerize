@@ -1,0 +1,34 @@
+{
+  "name": "composerize",
+  "version": "1.0.0",
+  "description": "docker run -> docker-compose.yml",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "webpack": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/magicmark/composerize.git"
+  },
+  "author": "Mark Larah <mark@larah.me>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/magicmark/composerize/issues"
+  },
+  "homepage": "https://github.com/magicmark/composerize#readme",
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "node-sass": "^3.8.0",
+    "sass-loader": "^4.0.0",
+    "webpack": "^1.13.2"
+  },
+  "dependencies": {
+    "copy-webpack-plugin": "^3.0.1",
+    "css-loader": "^0.24.0",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "style-loader": "^0.13.1"
+  }
+}

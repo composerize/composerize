@@ -1,0 +1,77 @@
+html, body {
+    padding: 0px;
+    margin: 0px;
+}
+
+.header {
+    display: block;
+    background: #ea8193;
+    color: #6b2632;
+    border-bottom: 2px solid #6b2632;
+}
+
+.header_main-title {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 40px;
+    display: inline-block;
+    margin: 14px 20px;
+}
+
+.section {
+    margin-top: 32px;
+}
+
+.section + .section {
+    border-top: 1px solid #dcd4d8;
+}
+
+.section_container  {
+    margin: 0px 50px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.inputbox, .result {
+    background: #fef4f7;
+    color: #28282f;
+    border: 2px solid #cacaca;
+    border-radius: 6px;
+    padding: 10px 13px;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 13px;
+    font-family: 'Ubuntu Mono', monospace;
+}
+
+.blurb {
+    line-height: 16px;
+
+    & a:hover,
+    & a:visited,
+    & a:active,
+    & a:link {
+        color: #a2b8ea;
+    }
+}
+
+.code {
+    margin: 0px 2px;
+    background: #eef2fb;
+    font-family: 'Ubuntu Mono', monospace;
+    border: 1px solid #d3d4d6;
+    padding: 3px 6px;
+    border-radius: 7px;
+}
+
+.output_label {
+    display: table;
+    font-size: 11px;
+    border: 1px solid #dcd4d8;
+    border-top: 0px;
+    background: #f7ebed;
+    color: #6b2632;
+    padding: 4px;
+}
+
+.result_contents {
+    white-space: pre;
+}
