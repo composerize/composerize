@@ -8,6 +8,7 @@ html, body {
     background: #ea8193;
     color: #6b2632;
     border-bottom: 2px solid #6b2632;
+    position: relative;
 }
 
 .header_main-title {
@@ -15,6 +16,12 @@ html, body {
     font-size: 40px;
     display: inline-block;
     margin: 14px 20px;
+}
+
+.header_buttons {
+    position: absolute;
+    bottom: 7px;
+    right: 7px;
 }
 
 .section {
@@ -74,4 +81,19 @@ html, body {
 
 .result_contents {
     white-space: pre;
+}
+
+.copy-button {
+    float: right;
+    margin: -10px -13px;
+    background: #e0e0e0;
+    border-radius: 0px 4px 0px 6px;
+    border: 2px solid #cacaca;
+    border-top: 0;
+    border-right: 0;
+    color: #000000;
+
+    & i {
+        padding: 10px 13px;
+    }
 }

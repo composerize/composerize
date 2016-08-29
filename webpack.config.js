@@ -3,8 +3,18 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
+    devtool: 'source-map',
+    target: 'web',
+        node: {
+            fs: 'empty'
+    },
     entry: {
         'composerize-js-bundle': './lib/js/composerize',
+    },
+    externals: {
+        // require("jquery") is external and available
+        //  on the global var jQuery
+        "jquery": "jQuery"
     },
     output: {
         filename: 'dist/[name].js'
@@ -17,7 +27,7 @@ module.exports = {
                 loader: 'babel-loader',
             },
             {
-                test: /\.scss$/,
+                test: /\.s?css$/,
                 loader: ExtractTextPlugin.extract('css!sass'),
             }
         ],
