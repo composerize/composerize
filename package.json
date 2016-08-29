@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack"
+    "build": "webpack --progress --colors",
+    "start": "http-server"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,6 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "http-server": "^0.9.0",
     "jquery": "^3.1.0",
-    "json2yaml": "^1.1.0",
     "spawn-args": "^0.2.0",
     "style-loader": "^0.13.1",
     "tipso": "^1.0.8",
