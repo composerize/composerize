@@ -1,0 +1,113 @@
+html, body, p {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.u-no-margin-top {
+    padding-top: 0;
+}
+
+.section + .section {
+    border-top: 1px solid #dcd4d8;
+}
+
+.section_container  {
+    width: 100%;
+    margin: 0px 50px;
+    font-family: 'Raleway', sans-serif;
+}
+
+.inputbox, .result {
+    background: #fef4f7;
+    color: #28282f;
+    border: 2px solid #cacaca;
+    border-radius: 6px;
+    padding: 10px 13px;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: 13px;
+    font-family: 'Ubuntu Mono', monospace;
+    margin-bottom: 30px;
+}
+
+.blurb {
+    line-height: 32px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+a:hover,
+a:visited,
+a:active,
+a:link {
+    color: #a2b8ea;
+}
+
+.code {
+    margin: 0px 2px;
+    background: #eef2fb;
+    font-family: 'Ubuntu Mono', monospace;
+    border: 1px solid #d3d4d6;
+    padding: 3px 6px;
+    border-radius: 7px;
+}
+
+.output_label {
+    display: table;
+    font-size: 11px;
+    border: 1px solid #dcd4d8;
+    border-top: 0px;
+    background: #f7ebed;
+    color: #6b2632;
+    padding: 4px;
+    margin-bottom: 20px;
+}
+
+.result_contents {
+    white-space: pre;
+}
+
+.copy-button {
+    float: right;
+    margin: -10px -13px;
+    background: #e0e0e0;
+    border-radius: 0px 4px 0px 6px;
+    border: 2px solid #cacaca;
+    border-top: 0;
+    border-right: 0;
+
+    & i {
+        color: #404040;
+        padding: 10px 13px;
+    }
+
+    display: none;
+
+    .result:hover & {
+        display: block;
+    }
+}
+
+.footer-items {
+    font-family: 'Raleway', sans-serif;
+    font-size: 12px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    line-height: 36px;
+
+
+    & li {
+        float: left;
+    }
+
+    & li + li {
+        &:before {
+            content: "-";
+            margin-right: 7px;
+        }
+
+        margin-left: 7px;
+    }
+}

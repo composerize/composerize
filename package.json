@@ -1,0 +1,26 @@
+{
+  "name": "composerize3",
+  "version": "3.0.0",
+  "homepage": "http://composerize.com",
+  "dependencies": {
+    "html5-boilerplate": "^0.0.1",
+    "node-sass-chokidar": "^0.0.1",
+    "normalize.css": "^7.0.0",
+    "react": "^15.5.4",
+    "react-copy-to-clipboard": "^5.0.0",
+    "react-dom": "^15.5.4",
+    "react-portal-tooltip": "^1.1.5",
+    "spawn-args": "^0.2.0",
+    "styled-components": "^1.4.6",
+    "yamljs": "^0.2.10"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

@@ -1,0 +1,11 @@
+html, body, p {
+    padding: 0px;
+    margin: 0px;
+}
+
+a:hover,
+a:visited,
+a:active,
+a:link {
+    color: #a2b8ea;
+}
