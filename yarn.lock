@@ -1386,9 +1386,9 @@ commondir@^1.0.1:
   version "1.0.1"
   resolved commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b
 
-composerize@^1.0.0-alpha.1:
-  version "1.0.0-alpha.1"
-  resolved composerize-1.0.0-alpha.1.tgz#cd3b9944c8797e6ef803c1e1b4bf01c192ce0dd6
+composerize@1.0.0-alpha.2:
+  version "1.0.0-alpha.2"
+  resolved composerize-1.0.0-alpha.2.tgz#458fc5d96c2752fbf03a4b68f20c9befeee0a0a0
   dependencies:
     spawn-args "^0.2.0"
     yamljs "^0.2.10"
