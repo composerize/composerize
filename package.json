@@ -3,16 +3,14 @@
   "version": "3.0.0",
   "homepage": "http://composerize.com",
   "dependencies": {
+    "composerize": "^1.0.0-alpha.1",
     "html5-boilerplate": "^0.0.1",
-    "node-sass-chokidar": "^0.0.1",
     "normalize.css": "^7.0.0",
     "react": "^15.5.4",
     "react-copy-to-clipboard": "^5.0.0",
     "react-dom": "^15.5.4",
     "react-portal-tooltip": "^1.1.5",
-    "spawn-args": "^0.2.0",
-    "styled-components": "^1.4.6",
-    "yamljs": "^0.2.10"
+    "styled-components": "^1.4.6"
   },
   "devDependencies": {
     "react-scripts": "1.0.1"

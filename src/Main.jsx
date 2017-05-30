@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import Composerize from "composerize";
 import "normalize.css";
 import "html5-boilerplate/dist/css/main.css";
 import "./App.css";
-import Composerize from "./composerize";
 
 import Header from "./components/Header";
 import Entry from "./components/Entry";
