@@ -1,0 +1,20 @@
+{
+  "presets": [
+    ["flow"],
+    ["env", {
+      "targets": {
+        "node": "current"
+      },
+      "modules": false
+    }]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        ["env", {
+          "modules": "commonjs"
+        }]
+      ]
+    }
+  }
+}
