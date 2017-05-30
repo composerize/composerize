@@ -3,10 +3,14 @@
     ["flow"],
     ["env", {
       "targets": {
-        "node": "current"
+        "node": "current",
+        "browsers": ["last 5 versions", "safari >= 7"]
       },
       "modules": false
     }]
+  ],
+  "plugins": [
+    "external-helpers"
   ],
   "env": {
     "test": {
