@@ -9,7 +9,7 @@ export default (input: string): ?string => {
   const tokens = spawnargs(formattedInput, { removequotes: 'always' });
 
   if (tokens[0] !== 'docker' || tokens[1] !== 'run') {
-    throw new ValueError('must bea valid docker run command');
+    throw new SyntaxError('must be a valid docker run command');
   }
 
   // remove 'docker run'
@@ -35,7 +35,7 @@ export default (input: string): ?string => {
   const result = {
     version: 3,
     services: {
-      [serviceName]: service
+      [serviceName]: service,
     },
   };
 
