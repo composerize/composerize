@@ -1,6 +1,6 @@
 {
   "name": "composerize",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "main": "dist/bundle.js",
   "license": "MIT",
   "scripts": {
@@ -42,6 +42,7 @@
     "yamljs": "^0.2.10"
   },
   "files": [
-    "dist/bundle.js"
+    "dist/bundle.js",
+    "cli.js"
   ]
 }
