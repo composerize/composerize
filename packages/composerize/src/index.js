@@ -9,7 +9,7 @@ export default (input: string): ?string => {
   const tokens = spawnargs(formattedInput, { removequotes: 'always' });
 
   if (tokens[0] !== 'docker' || tokens[1] !== 'run') {
-    return null;
+    throw new ValueError('must bea valid docker run command');
   }
 
   // remove 'docker run'

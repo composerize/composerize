@@ -1,12 +1,15 @@
 {
   "name": "composerize",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "main": "dist/bundle.js",
   "license": "MIT",
   "scripts": {
     "build": "rollup -c",
     "test": "node_modules/.bin/jest --no-watchman",
     "eslint": "eslint src/**/*.js --fix"
+  },
+  "bin": {
+    "composerize": "cli.js"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
