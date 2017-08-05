@@ -1,5 +1,8 @@
 # composerize
 
+[![Build Status](https://travis-ci.org/magicmark/composerize.svg?branch=master)](https://travis-ci.org/magicmark/composerize)
+[![npm](https://img.shields.io/npm/v/composerize.svg)](https://www.npmjs.com/package/composerize)
+
 http://composerize.com
 
 Turns docker run commands into docker-compose files
