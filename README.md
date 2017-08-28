@@ -1,5 +1,7 @@
 # composerize
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/magicmark/composerize.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/magicmark/composerize.svg?branch=master)](https://travis-ci.org/magicmark/composerize)
 [![npm](https://img.shields.io/npm/v/composerize.svg)](https://www.npmjs.com/package/composerize)
 
