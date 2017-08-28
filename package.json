@@ -3,17 +3,17 @@
   "version": "3.0.0",
   "homepage": "http://composerize.com",
   "dependencies": {
-    "composerize": "1.0.0-alpha.2",
-    "html5-boilerplate": "^0.0.1",
+    "composerize": "1.0.0-alpha.7",
+    "html5-boilerplate": "^6.0.0",
     "normalize.css": "^7.0.0",
     "react": "^15.5.4",
     "react-copy-to-clipboard": "^5.0.0",
     "react-dom": "^15.5.4",
     "react-portal-tooltip": "^1.1.5",
-    "styled-components": "^1.4.6"
+    "styled-components": "^2.1.2"
   },
   "devDependencies": {
-    "react-scripts": "1.0.1"
+    "react-scripts": "1.0.11"
   },
   "scripts": {
     "start": "react-scripts start",
