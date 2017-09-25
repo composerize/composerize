@@ -24,14 +24,19 @@
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.0.2",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.1.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^2.0.1"
   },
   "dependencies": {
     "deepmerge": "^1.5.2",
-    "spawn-args": "^0.2.0",
-    "yamljs": "^0.3.0"
+    "yamljs": "^0.3.0",
+    "yargs-parser": "^7.0.0"
   },
-  "files": ["dist/composerize.js", "cli.js"]
+  "files": [
+    "dist/composerize.js",
+    "cli.js"
+  ]
 }

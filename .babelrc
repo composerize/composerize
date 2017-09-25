@@ -5,7 +5,7 @@
       "env",
       {
         "targets": {
-          "node": "current",
+          "node": "6.10",
           "browsers": ["last 5 versions", "safari >= 7"]
         },
         "modules": false

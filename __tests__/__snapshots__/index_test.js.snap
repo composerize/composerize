@@ -11,7 +11,8 @@ services:
         restart: always
         logging:
             options:
-                max-size: 1g"
+                max-size: 1g
+        image: nginx"
 `;
 
 exports[`snapshots match snapshots 2`] = `
@@ -25,17 +26,47 @@ services:
         restart: always
         logging:
             options:
-                max-size: 1g"
+                max-size: 1g
+        image: nginx"
 `;
 
 exports[`snapshots match snapshots 3`] = `
 "version: 3
 services:
     youtrack:
+        container_name: youtrack
         volumes:
             - '/data/youtrack/data/:/opt/youtrack/data/'
             - '/data/youtrack/backup/:/opt/youtrack/backup/'
         ports:
             - '80:80'
-            - '3232:22351'"
+            - '3232:22351'
+        image: uniplug/youtrack"
+`;
+
+exports[`snapshots match snapshots 4`] = `
+"version: 3
+services:
+    nginx:
+        container_name: foobar
+        image: nginx"
+`;
+
+exports[`snapshots match snapshots 5`] = `
+"version: 3
+services:
+    nginx:
+        ports:
+            - '80:80'
+        container_name: webserver
+        image: 'nginx:latest'"
+`;
+
+exports[`snapshots match snapshots 6`] = `
+"version: 3
+services:
+    baz:
+        ports:
+            - '80:80'
+        image: 'foobar/baz:latest'"
 `;
