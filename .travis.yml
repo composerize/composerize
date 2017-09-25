@@ -1,23 +1,31 @@
 language: node_js
 node_js:
-  - "6"
+- '6'
 env:
-  - CXX=g++-4.8
+- CXX=g++-4.8
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - g++-4.8
-
+    - g++-4.8
 before_install: yarn global add greenkeeper-lockfile@1
 before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
-
 cache:
   yarn: true
   directories:
-    - node_modules
-
+  - node_modules
 script:
-  - yarn build
+- yarn build
+
+deploy:
+  provider: npm
+  email: mark@larah.me
+  skip_cleanup: true
+  api_key:
+    secure: HDbLgdw8bIWq2z9Uvi6tPTX0LtUT54YbtzooHKyvdCI3zGlgwd/KBRQqT3ApEwHhhnNCWpN1eo3nu2pvUI6pjcFLX4TQUoHLRnbODJnkYZqbBOb1glXv4cT73bGvBoJUQAYUYxGfSAjdEvWQ3L4io86GMvePCvrOVBeB2mBnGqsvIext9DJzaGILyo9iy7lMJ4kQ2/XNi7893KuznGITU7FP7UGbGz5xEK/Nk9PAoFNTVfzJiJZLUG7D+xArezVbMVad3A9HvDJPOeSwUsVlyojYnu+HVT3XPiWlaq7Xs5ZByMKgCkCib1PsCiE0scqU1kW91CeMZ7RR3+WTwmRG9lavapKw+RvpgKOA3vSuflSzbbxPkdFc+HNF3Vj5yOkBzEaKEjJPDdjaFPVQ/9APRb9WtuXPONm317k+zxZ7ABfKeCq1OJmrhB5qaZCEo3LG3dc3AzSNXBETDYPnITerHTzHDyVSOI7XRDloYTHstS8Ec5CeGuOVdkxZ5hQ6YHahFZ7O64U7AnU2LCVYf1/Y9z+uT+hcXO4uulT6kd9a/NgCv9gyRndfTIViCfHjBMQGFnDXQnwoJjc5SQA4wSkQ9d6T3QDHLbxRtCMLXJ+P12Fp3Gos0VEbqZCg9vX9tPztKGdfDOBVhcDyvnO01SBJi4GZv6Cn02Yhz5IPQED/ywU=
+  on:
+    branch: master
+    tags: true
+    repo: magicmark/composerize
