@@ -1,0 +1,27 @@
+{
+  "presets": [
+    ["flow"],
+    [
+      "env",
+      {
+        "targets": {
+          "node": "current",
+          "browsers": ["last 5 versions", "safari >= 7"]
+        },
+        "modules": false
+      }
+    ]
+  ],
+  "env": {
+    "test": {
+      "presets": [
+        [
+          "env",
+          {
+            "modules": "commonjs"
+          }
+        ]
+      ]
+    }
+  }
+}

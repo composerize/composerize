@@ -21,11 +21,3 @@ cache:
 
 script:
   - yarn build
-
-deploy:
-  provider: firebase
-  skip_cleanup: true
-  token:
-    secure: ${FIREBASE_API_TOKEN}
-  on:
-    branch: master

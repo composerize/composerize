@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`snapshots match snapshots 1`] = `
+"version: 3
+services:
+    nginx:
+        ports:
+            - '80:80'
+        volumes:
+            - '/var/run/docker.sock:/tmp/docker.sock:ro'
+        restart: always
+        logging:
+            options:
+                max-size: 1g"
+`;
+
+exports[`snapshots match snapshots 2`] = `
+"version: 3
+services:
+    nginx:
+        ports:
+            - '80:80'
+        volumes:
+            - '/var/run/docker.sock:/tmp/docker.sock:ro'
+        restart: always
+        logging:
+            options:
+                max-size: 1g"
+`;
+
+exports[`snapshots match snapshots 3`] = `
+"version: 3
+services:
+    youtrack:
+        volumes:
+            - '/data/youtrack/data/:/opt/youtrack/data/'
+            - '/data/youtrack/backup/:/opt/youtrack/backup/'
+        ports:
+            - '80:80'
+            - '3232:22351'"
+`;
