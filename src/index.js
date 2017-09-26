@@ -1,43 +1,51 @@
 // @flow
 import yamljs from "yamljs";
-import spawnargs from "spawn-args";
+import parser from "yargs-parser";
 import deepmerge from "deepmerge";
 
 import { maybeGetComposeEntry, getComposeJson } from "./logic";
 
+const getServiceName = image => {
+  let name = image.includes("/") ? image.split("/")[1] : image;
+  name = name.includes(":") ? name.split(":")[0] : name;
+
+  return name;
+};
+
 export default (input: string): ?string => {
   const formattedInput = input.replace(/(\s)+/g, " ").trim();
-  const tokens = spawnargs(formattedInput, { removequotes: "always" });
+  const tokens = parser(formattedInput);
 
-  if (tokens[0] !== "docker" || tokens[1] !== "run") {
+  if (tokens._[0] !== "docker" || tokens._[1] !== "run") {
     throw new SyntaxError("must be a valid docker run command");
   }
-
-  // remove 'docker run'
-  tokens.splice(0, 2);
 
   // The service object that we'll update
   let service = {};
 
   // Loop through the tokens and append to the service object
-  tokens.forEach((token, idx) => {
-    const composeEntry = maybeGetComposeEntry(tokens, idx);
-    if (composeEntry) {
-      // Store whatever the next entry will be
-      const json = getComposeJson(composeEntry);
-      service = deepmerge(service, json);
-    }
-  });
+  Object.entries(tokens)
+    .filter(t => t[0] !== "_")
+    .forEach(([key, value]) => {
+      const composeEntry = maybeGetComposeEntry(key, value);
+      if (composeEntry) {
+        // Store whatever the next entry will be
+        const json = getComposeJson(composeEntry);
+        service = deepmerge(service, json);
+      }
+    });
 
-  const image = tokens[tokens.length - 1];
-  const serviceName = image.includes("/") ? image.split("/")[1] : image;
+  const image = tokens._[tokens._.length - 1];
+  service.image = image;
+
+  let serviceName = getServiceName(image);
 
   // Outer template
   const result = {
     version: 3,
     services: {
-      [serviceName]: service
-    }
+      [serviceName]: service,
+    },
   };
 
   return yamljs.stringify(result, 9, 4).trim();

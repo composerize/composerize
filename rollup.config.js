@@ -1,28 +1,36 @@
-// rollup.config.js
-import commonjs from "rollup-plugin-commonjs";
-import resolve from "rollup-plugin-node-resolve";
-import babel from "rollup-plugin-babel";
-import uglify from "rollup-plugin-uglify";
-import replace from "rollup-plugin-replace";
+import commonjs from 'rollup-plugin-commonjs';
+import resolve from 'rollup-plugin-node-resolve';
+import babel from 'rollup-plugin-babel';
+import uglify from 'rollup-plugin-uglify';
+import replace from 'rollup-plugin-replace';
+import builtins from 'rollup-plugin-node-builtins';
+import globals from 'rollup-plugin-node-globals';
 
 export default {
-  entry: "src/index.js",
-  format: "umd",
-  sourceMap: "inline",
-  name: "composerize",
+  input: 'src/index.js',
+  sourcemap: 'inline',
+  name: 'composerize',
   plugins: [
+    commonjs({
+      namedExports: {
+        'node_modules/yargs-parser/index.js': ['default'],
+        'node_modules/camelcase/index.js': ['camelcase'],
+      },
+    }),
+    globals(),
+    builtins(),
     replace({
-      "process.env.NODE_ENV": JSON.stringify("production")
+      'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     resolve(),
     babel({
-      plugins: ["external-helpers"],
-      exclude: "node_modules/**" // only transpile our source code
+      plugins: ['external-helpers'],
+      include: ['src/**/*.js', 'node_modules/camelcase/**/*.js'],
     }),
-    commonjs({
-      namedExports: { "node_modules/spawn-args/index.js": ["spawnargs"] } // Default: undefined
-    }),
-    uglify()
+    uglify(),
   ],
-  dest: "dist/composerize.js"
+  output: {
+    file: 'dist/composerize.js',
+    format: 'umd',
+  },
 };
