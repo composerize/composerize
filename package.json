@@ -1,6 +1,6 @@
 {
   "name": "composerize",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "main": "dist/composerize.js",
   "license": "MIT",
   "scripts": {
@@ -35,8 +35,5 @@
     "yamljs": "^0.3.0",
     "yargs-parser": "^7.0.0"
   },
-  "files": [
-    "dist/composerize.js",
-    "cli.js"
-  ]
+  "files": ["dist/composerize.js", "cli.js"]
 }
