@@ -19,7 +19,7 @@
     "babel-preset-env": "^1.5.1",
     "babel-preset-flow": "^6.23.0",
     "eslint": "^4.7.2",
-    "flow-bin": "^0.55.0",
+    "flow-bin": "^0.56.0",
     "jest": "^21.1.0",
     "rollup": "^0.50.0",
     "rollup-plugin-babel": "^3.0.2",
