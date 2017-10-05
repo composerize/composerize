@@ -33,7 +33,7 @@
   "dependencies": {
     "deepmerge": "^1.5.2",
     "yamljs": "^0.3.0",
-    "yargs-parser": "^7.0.0"
+    "yargs-parser": "^8.0.0"
   },
   "files": ["dist/composerize.js", "cli.js"]
 }
