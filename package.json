@@ -31,7 +31,7 @@
     "rollup-plugin-uglify": "^2.0.1"
   },
   "dependencies": {
-    "deepmerge": "^1.5.2",
+    "deepmerge": "^2.0.0",
     "yamljs": "^0.3.0",
     "yargs-parser": "^7.0.0"
   },
