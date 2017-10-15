@@ -42,7 +42,7 @@ export default (input: string): ?string => {
 
   // Outer template
   const result = {
-    version: 3,
+    version: "3.3",
     services: {
       [serviceName]: service,
     },
