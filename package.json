@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rollup -c",
     "test": "node_modules/.bin/jest --no-watchman",
-    "eslint": "eslint src/**/*.js --fix",
+    "eslint": "eslint *.js src/**/*.js --fix",
     "precommit": "yarn run eslint"
   },
   "bin": {

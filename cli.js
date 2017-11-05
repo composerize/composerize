@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-'use strict';
 
-var composerize = require('./dist/composerize');
-var command = process.argv.slice(2).join(' ');
+const composerize = require('./dist/composerize');
+
+const command = process.argv.slice(2).join(' ');
+// eslint-disable-next-line no-console
 console.log(composerize(command));
