@@ -7,30 +7,30 @@ import builtins from 'rollup-plugin-node-builtins';
 import globals from 'rollup-plugin-node-globals';
 
 export default {
-  input: 'src/index.js',
-  sourcemap: 'inline',
-  name: 'composerize',
-  plugins: [
-    commonjs({
-      namedExports: {
-        'node_modules/yargs-parser/index.js': ['default'],
-        'node_modules/camelcase/index.js': ['camelcase'],
-      },
-    }),
-    globals(),
-    builtins(),
-    replace({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
-    resolve(),
-    babel({
-      plugins: ['external-helpers'],
-      include: ['src/**/*.js', 'node_modules/camelcase/**/*.js'],
-    }),
-    uglify(),
-  ],
-  output: {
-    file: 'dist/composerize.js',
-    format: 'umd',
-  },
+    input: 'src/index.js',
+    sourcemap: 'inline',
+    name: 'composerize',
+    plugins: [
+        babel({
+            plugins: ['external-helpers'],
+            include: ['src/**/*.js', 'node_modules/camelcase/**/*.js'],
+        }),
+        commonjs({
+            namedExports: {
+                'node_modules/yargs-parser/index.js': ['default'],
+                'node_modules/camelcase/index.js': ['camelcase'],
+            },
+        }),
+        globals(),
+        builtins(),
+        replace({
+            'process.env.NODE_ENV': JSON.stringify('production'),
+        }),
+        resolve(),
+        uglify(),
+    ],
+    output: {
+        file: 'dist/composerize.js',
+        format: 'umd',
+    },
 };

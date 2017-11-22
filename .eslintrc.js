@@ -1,9 +1,7 @@
 module.exports = {
   root: true,
-  extends: [
-    '@mlarah',
-  ],
+  extends: ['@sharkcore'],
   env: {
-    node: true
-  }
+    node: true,
+  },
 };
