@@ -80,3 +80,19 @@ services:
             - '80:80'
         image: 'foobar/baz:latest'"
 `;
+
+exports[`snapshots match snapshots 8`] = `
+"version: '3.3'
+services:
+    pms-docker:
+        container_name: plex
+        network_mode: host
+        environment:
+            - TZ=<timezone>
+            - PLEX_CLAIM=<claimToken>
+        volumes:
+            - '<path/to/plex/database>:/config'
+            - '<path/to/transcode/temp>:/transcode'
+            - '<path/to/media>:/data'
+        image: plexinc/pms-docker"
+`;
