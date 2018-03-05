@@ -1,11 +1,14 @@
 // @flow
+
 import yamljs from 'yamljs';
 import parser from 'yargs-parser';
 import deepmerge from 'deepmerge';
 
 import { maybeGetComposeEntry, getComposeJson } from './logic';
 
-const getServiceName = image => {
+export type RawValue = string | number | boolean | [string | number | boolean];
+
+const getServiceName = (image: string): string => {
     let name = image.includes('/') ? image.split('/')[1] : image;
     name = name.includes(':') ? name.split(':')[0] : name;
 
@@ -14,9 +17,13 @@ const getServiceName = image => {
 
 export default (input: string): ?string => {
     const formattedInput = input.replace(/(\s)+/g, ' ').trim();
-    const tokens = parser(formattedInput);
+    const parsedInput: {
+        +_: Array<string>,
+        +[flag: string]: RawValue,
+    } = parser(formattedInput);
+    const { _: command, ...params } = parsedInput;
 
-    if (tokens._[0] !== 'docker' || tokens._[1] !== 'run') {
+    if (command[0] !== 'docker' || command[1] !== 'run') {
         throw new SyntaxError('must be a valid docker run command');
     }
 
@@ -24,18 +31,20 @@ export default (input: string): ?string => {
     let service = {};
 
     // Loop through the tokens and append to the service object
-    Object.entries(tokens)
-        .filter(t => t[0] !== '_')
-        .forEach(([key, value]) => {
+    Object.entries(params).forEach(
+        // https://github.com/facebook/flow/issues/2174
+        // $FlowFixMe: Object.entries wipes out types ATOW
+        ([key, value]: [string, RawValue]) => {
             const composeEntry = maybeGetComposeEntry(key, value);
             if (composeEntry) {
                 // Store whatever the next entry will be
                 const json = getComposeJson(composeEntry);
                 service = deepmerge(service, json);
             }
-        });
+        },
+    );
 
-    const image = tokens._[tokens._.length - 1];
+    const image = command.slice(-1)[0];
     service.image = image;
 
     const serviceName = getServiceName(image);

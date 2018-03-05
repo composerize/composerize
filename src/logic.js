@@ -1,5 +1,7 @@
 // @flow
 
+import { MAPPINGS } from './mappings';
+
 import type {
     ComposeEntry,
     KVComposeEntry,
@@ -8,9 +10,7 @@ import type {
     ValueComposeEntry,
     Mapping,
 } from './mappings';
-import { MAPPINGS } from './mappings';
-
-type RawValue = string | number | boolean | [string | number | boolean];
+import type { RawValue } from './index';
 
 /**
  * Turn a mapping and the value of the mapping into a formatted json object
@@ -19,7 +19,7 @@ export const getComposeEntry = (
     mapping: Mapping,
     value: RawValue,
 ): ComposeEntry => {
-    if (mapping.type === 'KeyValue') {
+    if (mapping.type === 'KeyValue' && typeof value === 'string') {
         return ({
             path: mapping.path,
             value: {
@@ -31,20 +31,21 @@ export const getComposeEntry = (
     if (mapping.type === 'Array') {
         return ({
             path: mapping.path,
-            value: Array.isArray(value) ? value : [value],
+            // $FlowFixMe: TODO: Map to array of strings
+            value: Array.isArray(value) ? value : [String(value)],
         }: ArrayComposeEntry);
     }
 
     if (mapping.type === 'Switch') {
         return ({
             path: mapping.path,
-            value: value === 'true',
+            value: value === 'true' || value === true,
         }: SwitchComposeEntry);
     }
 
     return ({
         path: mapping.path,
-        value,
+        value: String(value),
     }: ValueComposeEntry);
 };
 
@@ -66,17 +67,13 @@ export const maybeGetComposeEntry = (
     }
 
     // Ensure there is a value
+    /* istanbul ignore if */
     if (mapping.type !== 'Switch' && !value) {
         // TODO: Throw error / warning
         return null;
     }
 
-    if (mapping && value) {
-        return getComposeEntry(mapping, value);
-    }
-
-    // TODO: Throw error / warning
-    return null;
+    return getComposeEntry(mapping, value);
 };
 
 export const getComposeJson = (entry: ComposeEntry): any =>

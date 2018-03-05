@@ -4,22 +4,25 @@
   "main": "dist/composerize.js",
   "license": "MIT",
   "scripts": {
+    "test": "yarn run typecheck && yarn run eslint && yarn run jest",
     "build": "rollup -c",
-    "test": "node_modules/.bin/jest --no-watchman",
+    "jest": "node_modules/.bin/jest --no-watchman",
     "eslint": "eslint *.js src/**/*.js --fix",
-    "precommit": "yarn run eslint"
+    "precommit": "yarn run eslint",
+    "typecheck": "flow check"
   },
   "bin": {
     "composerize": "cli.js"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-eslint": "^8.0.0",
+    "babel-eslint": "^8.2.2",
     "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.5.1",
     "babel-preset-flow": "^6.23.0",
-    "eslint": "^4.7.2",
-    "flow-bin": "^0.55.0",
+    "eslint": "^4.18.2",
+    "flow-bin": "^0.66.0",
     "husky": "^0.14.3",
     "jest": "^21.1.0",
     "rollup": "^0.50.0",
@@ -32,10 +35,13 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "dependencies": {
-    "@sharkcore/eslint-config": "^1.0.0",
+    "@sharkcore/eslint-config": "^1.0.2",
     "deepmerge": "^1.5.2",
     "yamljs": "^0.3.0",
     "yargs-parser": "^7.0.0"
   },
-  "files": ["dist/composerize.js", "cli.js"]
+  "files": [
+    "dist/composerize.js",
+    "cli.js"
+  ]
 }
