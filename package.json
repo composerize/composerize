@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "@sharkcore/eslint-config": "^1.0.2",
+    "core-js": "^2.5.5",
     "deepmerge": "^1.5.2",
     "yamljs": "^0.3.0",
     "yargs-parser": "^7.0.0"

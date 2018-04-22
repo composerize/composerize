@@ -1,5 +1,7 @@
 // @flow
 
+import 'core-js/fn/object/entries';
+
 import yamljs from 'yamljs';
 import parser from 'yargs-parser';
 import deepmerge from 'deepmerge';
