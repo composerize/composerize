@@ -27,6 +27,9 @@ describe('snapshots', () => {
 
         // test flag
         'docker run --privileged -p 80:80 foobar/baz:latest',
+
+        // https://github.com/magicmark/composerize/issues/25
+        'docker run -d --name plex --network=host -e TZ="<timezone>" -e PLEX_CLAIM="<claimToken>" -v <path/to/plex/database>:/config -v <path/to/transcode/temp>:/transcode -v <path/to/media>:/data plexinc/pms-docker',
     ];
 
     it('match snapshots', () => {
