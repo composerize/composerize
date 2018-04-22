@@ -21,7 +21,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.5.1",
     "babel-preset-flow": "^6.23.0",
-    "eslint": "^4.18.2",
+    "eslint": "^4.19.1",
     "flow-bin": "^0.66.0",
     "husky": "^0.14.3",
     "jest": "^21.1.0",
@@ -35,7 +35,7 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "dependencies": {
-    "@sharkcore/eslint-config": "^1.0.2",
+    "@sharkcore/eslint-config": "^1.1.0-alpha.3",
     "core-js": "^2.5.5",
     "deepmerge": "^1.5.2",
     "yamljs": "^0.3.0",

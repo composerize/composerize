@@ -1,7 +1,6 @@
 // @flow
 
 import { MAPPINGS } from './mappings';
-
 import type {
     ComposeEntry,
     KVComposeEntry,
@@ -10,6 +9,7 @@ import type {
     ValueComposeEntry,
     Mapping,
 } from './mappings';
+
 import type { RawValue } from './index';
 
 /**
