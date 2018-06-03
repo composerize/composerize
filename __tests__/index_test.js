@@ -33,6 +33,9 @@ describe('snapshots', () => {
       
         // test create
         'docker create -p 80:80 --name webserver nginx:latest',
+      
+        //test pid
+        'docker run -p 80:80 --pid="host" --name webserver nginx:latest',
     ];
 
     it('match snapshots', () => {
