@@ -31,7 +31,7 @@ describe('snapshots', () => {
         // https://github.com/magicmark/composerize/issues/25
         'docker run -d --name plex --network=host -e TZ="<timezone>" -e PLEX_CLAIM="<claimToken>" -v <path/to/plex/database>:/config -v <path/to/transcode/temp>:/transcode -v <path/to/media>:/data plexinc/pms-docker',
 
-        // https://github.com/magicmark/composerize/issues/25
+        // https://github.com/magicmark/composerize/issues/26
         'docker create -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --restart always --log-opt max-size=1g nginx',
     ];
 
