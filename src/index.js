@@ -25,7 +25,10 @@ export default (input: string): ?string => {
     } = parser(formattedInput);
     const { _: command, ...params } = parsedInput;
 
-    if (command[0] !== 'docker' || command[1] !== 'run') {
+    if (
+        command[0] !== 'docker' ||
+        (command[1] !== 'run' && command[1] !== 'create')
+    ) {
         throw new SyntaxError('must be a valid docker run command');
     }
 
