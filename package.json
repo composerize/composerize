@@ -23,7 +23,7 @@
     "babel-preset-flow": "^6.23.0",
     "eslint": "^4.19.1",
     "flow-bin": "^0.71.0",
-    "husky": "^0.14.3",
+    "husky": "^2.0.0",
     "jest": "^22.4.3",
     "rollup": "^0.59.0",
     "rollup-plugin-babel": "^3.0.4",
