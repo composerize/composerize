@@ -1,6 +1,5 @@
 # composerize
 
-[![GitHub pull-requests](https://img.shields.io/github/issues-pr/Naereen/StrapDown.js.svg)](https://GgtHub.com/magicmark/composerize/pull/)
 [![Build Status](https://travis-ci.org/magicmark/composerize.svg?branch=master)](https://travis-ci.org/magicmark/composerize)
 [![npm](https://img.shields.io/npm/v/composerize.svg)](https://www.npmjs.com/package/composerize)
 
