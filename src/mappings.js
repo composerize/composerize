@@ -73,6 +73,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     env: getMapping('Array', 'environment'),
     name: getMapping('Value', 'container_name'),
     network: getMapping('Value', 'network_mode'),
+    pid: getMapping('Value', 'pid'),
     privileged: getMapping('Switch', 'privileged'),
     publish: getMapping('Array', 'ports'),
     restart: getMapping('Value', 'restart'),

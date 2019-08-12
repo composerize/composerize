@@ -96,3 +96,24 @@ services:
             - '<path/to/media>:/data'
         image: plexinc/pms-docker"
 `;
+
+exports[`snapshots match snapshots 9`] = `
+"version: '3.3'
+services:
+    nginx:
+        ports:
+            - '80:80'
+        container_name: webserver
+        image: 'nginx:latest'"
+`;
+
+exports[`snapshots match snapshots 10`] = `
+"version: '3.3'
+services:
+    nginx:
+        ports:
+            - '80:80'
+        pid: host
+        container_name: webserver
+        image: 'nginx:latest'"
+`;
