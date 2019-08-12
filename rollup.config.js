@@ -8,11 +8,8 @@ import globals from 'rollup-plugin-node-globals';
 
 export default {
     input: 'src/index.js',
-    sourcemap: 'inline',
-    name: 'composerize',
     plugins: [
         babel({
-            plugins: ['external-helpers'],
             include: ['src/**/*.js', 'node_modules/camelcase/**/*.js'],
         }),
         commonjs({
@@ -30,6 +27,8 @@ export default {
         uglify(),
     ],
     output: {
+        name: 'composerize',
+        sourcemap: 'inline',
         file: 'dist/composerize.js',
         format: 'umd',
     },
