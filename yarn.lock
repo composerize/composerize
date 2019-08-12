@@ -1850,13 +1850,13 @@ estree-walker@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.2.1.tgz#bdafe8095383d8414d5dc2ecf4c9173b6db9412e"
 
-estree-walker@^0.3.0:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.3.1.tgz#e6b1a51cf7292524e7237c312e5fe6660c1ce1aa"
-
 estree-walker@^0.5.1:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.5.2.tgz#d3850be7529c9580d815600b53126515e146dd39"
+
+estree-walker@^0.6.0, estree-walker@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.6.1.tgz#53049143f40c6eb918b23671d1fe3219f3a1b362"
 
 esutils@^2.0.2:
   version "2.0.2"
@@ -3397,6 +3397,12 @@ magic-string@^0.22.4:
   dependencies:
     vlq "^0.2.1"
 
+magic-string@^0.25.2:
+  version "0.25.3"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.3.tgz#34b8d2a2c7fec9d9bdf9929a3fd81d271ef35be9"
+  dependencies:
+    sourcemap-codec "^1.4.4"
+
 makeerror@1.0.x:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/makeerror/-/makeerror-1.0.11.tgz#e01a5c9109f2af79660e4e8b9587790184f5a96c"
@@ -3852,6 +3858,10 @@ path-parse@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.5.tgz#3c1adf871ea9cd6c9431b6ea2bd74a0ff055c4c1"
 
+path-parse@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.6.tgz#d62dbb5679405d72c4737ec58600e9ddcf06d24c"
+
 path-type@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-1.1.0.tgz#59c44f7ee491da704da415da5a4070ba4f8fe441"
@@ -4303,17 +4313,11 @@ resolve@1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
 
-resolve@^1.1.6:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.5.0.tgz#1f09acce796c9a762579f31b2c1cc4c3cddf9f36"
+resolve@^1.1.6, resolve@^1.10.0, resolve@^1.5.0, resolve@^1.6.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.12.0.tgz#3fc644a35c84a48554609ff26ec52b66fa577df6"
   dependencies:
-    path-parse "^1.0.5"
-
-resolve@^1.5.0, resolve@^1.6.0:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.7.1.tgz#aadd656374fd298aee895bc026b8297418677fd3"
-  dependencies:
-    path-parse "^1.0.5"
+    path-parse "^1.0.6"
 
 restore-cursor@^2.0.0:
   version "2.0.0"
@@ -4351,14 +4355,14 @@ rollup-plugin-babel@^3.0.4:
   dependencies:
     rollup-pluginutils "^1.5.0"
 
-rollup-plugin-commonjs@^9.1.3:
-  version "9.1.3"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-commonjs/-/rollup-plugin-commonjs-9.1.3.tgz#37bfbf341292ea14f512438a56df8f9ca3ba4d67"
+rollup-plugin-commonjs@^9.3.4:
+  version "9.3.4"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-commonjs/-/rollup-plugin-commonjs-9.3.4.tgz#2b3dddbbbded83d45c36ff101cdd29e924fd23bc"
   dependencies:
-    estree-walker "^0.5.1"
-    magic-string "^0.22.4"
-    resolve "^1.5.0"
-    rollup-pluginutils "^2.0.1"
+    estree-walker "^0.6.0"
+    magic-string "^0.25.2"
+    resolve "^1.10.0"
+    rollup-pluginutils "^2.6.0"
 
 rollup-plugin-node-builtins@^2.1.2:
   version "2.1.2"
@@ -4409,12 +4413,11 @@ rollup-pluginutils@^1.5.0:
     estree-walker "^0.2.1"
     minimatch "^3.0.2"
 
-rollup-pluginutils@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.0.1.tgz#7ec95b3573f6543a46a6461bd9a7c544525d0fc0"
+rollup-pluginutils@^2.0.1, rollup-pluginutils@^2.6.0:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.8.1.tgz#8fa6dd0697344938ef26c2c09d2488ce9e33ce97"
   dependencies:
-    estree-walker "^0.3.0"
-    micromatch "^2.3.11"
+    estree-walker "^0.6.1"
 
 rollup@^0.59.0:
   version "0.59.4"
@@ -4623,6 +4626,10 @@ source-map@^0.5.0, source-map@^0.5.3, source-map@^0.5.6, source-map@^0.5.7, sour
 source-map@^0.6.0, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
+
+sourcemap-codec@^1.4.4:
+  version "1.4.6"
+  resolved "https://registry.yarnpkg.com/sourcemap-codec/-/sourcemap-codec-1.4.6.tgz#e30a74f0402bad09807640d39e971090a08ce1e9"
 
 spdx-correct@^3.0.0:
   version "3.0.0"
