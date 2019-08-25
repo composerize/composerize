@@ -1,7 +1,6 @@
 language: node_js
 node_js:
 - '10'
-
 cache:
   yarn: true
   directories:
@@ -9,13 +8,12 @@ cache:
 script:
 - yarn run test
 - yarn run build
-
 deploy:
   provider: npm
   email: mark@larah.me
   skip_cleanup: true
   api_key:
-    secure: HDbLgdw8bIWq2z9Uvi6tPTX0LtUT54YbtzooHKyvdCI3zGlgwd/KBRQqT3ApEwHhhnNCWpN1eo3nu2pvUI6pjcFLX4TQUoHLRnbODJnkYZqbBOb1glXv4cT73bGvBoJUQAYUYxGfSAjdEvWQ3L4io86GMvePCvrOVBeB2mBnGqsvIext9DJzaGILyo9iy7lMJ4kQ2/XNi7893KuznGITU7FP7UGbGz5xEK/Nk9PAoFNTVfzJiJZLUG7D+xArezVbMVad3A9HvDJPOeSwUsVlyojYnu+HVT3XPiWlaq7Xs5ZByMKgCkCib1PsCiE0scqU1kW91CeMZ7RR3+WTwmRG9lavapKw+RvpgKOA3vSuflSzbbxPkdFc+HNF3Vj5yOkBzEaKEjJPDdjaFPVQ/9APRb9WtuXPONm317k+zxZ7ABfKeCq1OJmrhB5qaZCEo3LG3dc3AzSNXBETDYPnITerHTzHDyVSOI7XRDloYTHstS8Ec5CeGuOVdkxZ5hQ6YHahFZ7O64U7AnU2LCVYf1/Y9z+uT+hcXO4uulT6kd9a/NgCv9gyRndfTIViCfHjBMQGFnDXQnwoJjc5SQA4wSkQ9d6T3QDHLbxRtCMLXJ+P12Fp3Gos0VEbqZCg9vX9tPztKGdfDOBVhcDyvnO01SBJi4GZv6Cn02Yhz5IPQED/ywU=
+    secure: j7rVdeU+mEB7wvZKV2RMiLId/pR3//yi1qbVYMLGHC3wgxXt2cD5qSdqIxEB2gqdJUsOxRh3NHzHwtno8Cc6K1QtqnHvm/oVLKSzj/Zbm0nNCILlzs5BNiJwj0Rj0Gj6kgRHZdpk8IDaDke04FIjLdmVNTKj/cdMdzhwKMz/Heaf9KZiT9UocWX+2WC0E1RgL+X+/0E6y2fXB8AhxVLFyipxK9//ezJ8/6aWhRjWx4Gl1QjyrhogiTB+7DgUA/r3PMOh+uDrlEkQPet0EcKavVTW7JdhhIsQD53TV8Wb5PbokfDLfLtV0ncnuB8MnCjO2IgNwtK3/o8yGZ7tjygD5r2dZlXJin7kYqSVfkPPTTJFVbgo5pY5S64+4rdic7w/nXinLrHwuBjac1P2TLoC/DrQyI/vl/l4FiADEXuLsDQIS7bQIEDGYHIEfW6I25q037sn+586gtr8azPEpBH3wwuyArZCKZqeXAGG4+wAxZL6o9fjosi/qvAR6fLMPu9aiMwM8QIwgdohJBwkyxQO6gNo4ex0mrl5QltcZaG4KoL2lDZ2p0Coa95c50skvN0bilHLUbY4omuTA+O7Z86pGYzln22hH2M1Yn2qj286p/P5037kl/kaSmtIeli2lo3aE1JjNuv0QZd8EdNdm9ZXGHsR7cdrm13K88J5Pv7q1sI=
   on:
     branch: master
     tags: true
