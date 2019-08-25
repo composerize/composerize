@@ -20,7 +20,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-flow": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^9.0.0",
+    "babel-eslint": "^10.0.2",
     "babel-jest": "^24.8.0",
     "eslint": "^4.19.1",
     "flow-bin": "^0.106.0",
