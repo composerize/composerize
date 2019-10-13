@@ -1791,10 +1791,10 @@ core-js-compat@^3.1.1:
     browserslist "^4.6.6"
     semver "^6.3.0"
 
-core-js@^2.5.5:
-  version "2.6.9"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
-  integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
+core-js@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.3.0.tgz#0b9eaca911b4a488b43f99f992c08cdfc8684b4a"
+  integrity sha512-a5Xeh/HsTymwFSwZjiW53UguRL73XAV6SjfESRtwwK8FLfchDCbquerl0Cvkmxo6SuCHOM/BaQFBRAwMFcoqQQ==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
