@@ -22,3 +22,7 @@ $ composerize docker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --
 - [Clone a fork of the repo](https://guides.github.com/activities/forking/) and install the project dependencies by running `yarn install`
 - Make your changes, and build the project by running `yarn build`
 - Test your changes with `yarn test`
+
+## Maintainers
+
+- Mark Larah (Twitter: [@mark_larah](https://twitter.com/mark_larah))
