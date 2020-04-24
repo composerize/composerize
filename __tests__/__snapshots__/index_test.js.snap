@@ -100,11 +100,17 @@ services:
 exports[`snapshots match snapshots 9`] = `
 "version: '3.3'
 services:
-    nginx:
-        ports:
-            - '80:80'
-        container_name: webserver
-        image: 'nginx:latest'"
+    pms-docker:
+        container_name: plex
+        network_mode: host
+        environment:
+            - TZ=<timezone>
+            - PLEX_CLAIM=<claimToken>
+        volumes:
+            - '<path/to/plex/database>:/config'
+            - '<path/to/transcode/temp>:/transcode'
+            - '<path/to/media>:/data'
+        image: plexinc/pms-docker"
 `;
 
 exports[`snapshots match snapshots 10`] = `
@@ -113,6 +119,31 @@ services:
     nginx:
         ports:
             - '80:80'
+        container_name: webserver
+        image: 'nginx:latest'"
+`;
+
+exports[`snapshots match snapshots 11`] = `
+"version: '3.3'
+services:
+    nginx:
+        ports:
+            - '80:80'
+        pid: host
+        container_name: webserver
+        image: 'nginx:latest'"
+`;
+
+exports[`snapshots match snapshots 12`] = `
+"version: '3.3'
+services:
+    nginx:
+        ports:
+            - '80:80'
+        ulimits:
+          nofile:
+            soft: 1234
+            hard: 1234
         pid: host
         container_name: webserver
         image: 'nginx:latest'"
