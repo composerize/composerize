@@ -1,3 +1,7 @@
+# https://config.travis-ci.com
+
+os: linux
+dist: bionic
 language: node_js
 node_js:
 - '10'
@@ -9,10 +13,11 @@ script:
 - yarn run test
 - yarn run build
 deploy:
+  edge: true
   provider: npm
   email: mark@larah.me
-  skip_cleanup: true
-  api_key:
+  cleanup: false
+  api_token:
     secure: j7rVdeU+mEB7wvZKV2RMiLId/pR3//yi1qbVYMLGHC3wgxXt2cD5qSdqIxEB2gqdJUsOxRh3NHzHwtno8Cc6K1QtqnHvm/oVLKSzj/Zbm0nNCILlzs5BNiJwj0Rj0Gj6kgRHZdpk8IDaDke04FIjLdmVNTKj/cdMdzhwKMz/Heaf9KZiT9UocWX+2WC0E1RgL+X+/0E6y2fXB8AhxVLFyipxK9//ezJ8/6aWhRjWx4Gl1QjyrhogiTB+7DgUA/r3PMOh+uDrlEkQPet0EcKavVTW7JdhhIsQD53TV8Wb5PbokfDLfLtV0ncnuB8MnCjO2IgNwtK3/o8yGZ7tjygD5r2dZlXJin7kYqSVfkPPTTJFVbgo5pY5S64+4rdic7w/nXinLrHwuBjac1P2TLoC/DrQyI/vl/l4FiADEXuLsDQIS7bQIEDGYHIEfW6I25q037sn+586gtr8azPEpBH3wwuyArZCKZqeXAGG4+wAxZL6o9fjosi/qvAR6fLMPu9aiMwM8QIwgdohJBwkyxQO6gNo4ex0mrl5QltcZaG4KoL2lDZ2p0Coa95c50skvN0bilHLUbY4omuTA+O7Z86pGYzln22hH2M1Yn2qj286p/P5037kl/kaSmtIeli2lo3aE1JjNuv0QZd8EdNdm9ZXGHsR7cdrm13K88J5Pv7q1sI=
   on:
     branch: master
