@@ -1,7 +1,8 @@
 module.exports = {
   root: true,
   extends: ['@sharkcore'],
-  env: {
-    node: true,
-  },
+  rules: {
+    // TODO: Add typescript types to composerize-website
+    "react/prop-types": "off"
+  }
 };

@@ -1,0 +1,41 @@
+{
+  "version": "0.0.0-not-distributed",
+  "private": true,
+  "name": "composerize-website",
+  "homepage": "https://composerize.com",
+  "dependencies": {
+    "composerize": "1.0.4",
+    "html5-boilerplate": "^7.2.0",
+    "normalize.css": "^8.0.1",
+    "react": "^16.9.0",
+    "react-copy-to-clipboard": "^5.0.1",
+    "react-dom": "^16.9.0",
+    "react-portal-tooltip": "^2.4.7",
+    "styled-components": "^4.3.2"
+  },
+  "devDependencies": {
+    "react-scripts": "3.1.1"
+  },
+  "scripts": {
+    "start": "make .env && react-scripts start",
+    "build": "make .env && react-scripts build",
+    "test": "make .env && react-scripts test --env=jsdom"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+        "browser": true
+    }
+  }
+}
