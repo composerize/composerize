@@ -15,10 +15,7 @@ import type { RawValue } from './index';
 /**
  * Turn a mapping and the value of the mapping into a formatted json object
  */
-export const getComposeEntry = (
-    mapping: Mapping,
-    value: RawValue,
-): ComposeEntry => {
+export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry => {
     if (mapping.type === 'KeyValue' && typeof value === 'string') {
         return ({
             path: mapping.path,
@@ -77,6 +74,4 @@ export const maybeGetComposeEntry = (
 };
 
 export const getComposeJson = (entry: ComposeEntry): any =>
-    entry.path
-        .split('/')
-        .reduceRight((prev, pathItem) => ({ [pathItem]: prev }), entry.value);
+    entry.path.split('/').reduceRight((prev, pathItem) => ({ [pathItem]: prev }), entry.value);

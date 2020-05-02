@@ -4,14 +4,15 @@ os: linux
 dist: bionic
 language: node_js
 node_js:
-- '10'
+  - "10"
+  - "12"
 cache:
   yarn: true
   directories:
-  - node_modules
+    - node_modules
 script:
-- yarn run test
-- yarn run build
+  - yarn run test
+  - yarn run build
 deploy:
   edge: true
   provider: npm

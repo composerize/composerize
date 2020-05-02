@@ -46,11 +46,7 @@ export type ValueComposeEntry = {
     value: string,
 };
 
-export type ComposeEntry =
-    | ArrayComposeEntry
-    | KVComposeEntry
-    | SwitchComposeEntry
-    | ValueComposeEntry;
+export type ComposeEntry = ArrayComposeEntry | KVComposeEntry | SwitchComposeEntry | ValueComposeEntry;
 
 export const getMapping = (type: ArgType, path: string): Mapping => ({
     type,
@@ -73,6 +69,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     env: getMapping('Array', 'environment'),
     name: getMapping('Value', 'container_name'),
     network: getMapping('Value', 'network_mode'),
+    net: getMapping('Value', 'network_mode'), // alias for network
     pid: getMapping('Value', 'pid'),
     privileged: getMapping('Switch', 'privileged'),
     publish: getMapping('Array', 'ports'),
