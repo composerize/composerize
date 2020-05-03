@@ -1,5 +1,6 @@
 // @flow
 
+import invariant from 'invariant';
 import { MAPPINGS } from './mappings';
 import type {
     ComposeEntry,
@@ -15,7 +16,7 @@ import type { RawValue } from './index';
 /**
  * Turn a mapping and the value of the mapping into a formatted json object
  */
-export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry => {
+export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry | Array<ComposeEntry> => {
     if (mapping.type === 'KeyValue' && typeof value === 'string') {
         return ({
             path: mapping.path,
@@ -38,6 +39,36 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
             path: mapping.path,
             value: value === 'true' || value === true,
         }: SwitchComposeEntry);
+    }
+
+    if (mapping.type === 'Ulimits') {
+        const values = Array.isArray(value) ? value : [value];
+
+        return values.map(_value => {
+            const [limitName, limitValue] = _value.split('=');
+            invariant(
+                limitName && limitValue,
+                `${mapping.type} must be in the format of: <type>=<soft limit>[:<hard limit>]`,
+            );
+
+            if (limitValue.includes(':')) {
+                const [soft, hard] = limitValue.split(':');
+                invariant(soft && hard, `${mapping.type} must be in the format of: <type>=<soft limit>[:<hard limit>]`);
+
+                return ({
+                    path: `${mapping.path}/${limitName}`,
+                    value: {
+                        soft: parseInt(soft),
+                        hard: parseInt(hard),
+                    },
+                }: KVComposeEntry);
+            }
+
+            return ({
+                path: `${mapping.path}/${limitName}`,
+                value: parseInt(limitValue),
+            }: ValueComposeEntry);
+        });
     }
 
     return ({

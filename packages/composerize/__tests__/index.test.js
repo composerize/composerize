@@ -2,7 +2,7 @@
 
 import Composerize from '../src';
 
-it('fails with invalid commands', () => {
+test('fails with invalid commands', () => {
     expect(() => {
         Composerize('foo bar');
     }).toThrow();

@@ -37,11 +37,14 @@ export default (input: string): ?string => {
         // https://github.com/facebook/flow/issues/2174
         // $FlowFixMe: Object.entries wipes out types ATOW
         ([key, value]: [string, RawValue]) => {
-            const composeEntry = maybeGetComposeEntry(key, value);
-            if (composeEntry) {
-                // Store whatever the next entry will be
-                const json = getComposeJson(composeEntry);
-                service = deepmerge(service, json);
+            const result = maybeGetComposeEntry(key, value);
+            if (result) {
+                const entries = Array.isArray(result) ? result : [result];
+                entries.forEach(entry => {
+                    // Store whatever the next entry will be
+                    const json = getComposeJson(entry);
+                    service = deepmerge(service, json);
+                });
             }
         },
     );
