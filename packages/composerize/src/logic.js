@@ -1,6 +1,7 @@
 // @flow
 
 import invariant from 'invariant';
+
 import { MAPPINGS } from './mappings';
 import type {
     ComposeEntry,
@@ -58,15 +59,15 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
                 return ({
                     path: `${mapping.path}/${limitName}`,
                     value: {
-                        soft: parseInt(soft),
-                        hard: parseInt(hard),
+                        soft: parseInt(soft, 10),
+                        hard: parseInt(hard, 10),
                     },
                 }: KVComposeEntry);
             }
 
             return ({
                 path: `${mapping.path}/${limitName}`,
-                value: parseInt(limitValue),
+                value: parseInt(limitValue, 10),
             }: ValueComposeEntry);
         });
     }

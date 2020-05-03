@@ -83,7 +83,8 @@ test('--ulimit (https://github.com/magicmark/composerize/pull/262)', () => {
     `);
 
     // @see https://docs.docker.com/compose/compose-file/#ulimits
-    expect(Composerize('docker run --ulimit nproc=65535 --ulimit nofile=20000:40000 nginx:latest')).toMatchInlineSnapshot(`
+    expect(Composerize('docker run --ulimit nproc=65535 --ulimit nofile=20000:40000 nginx:latest'))
+        .toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             nginx:
