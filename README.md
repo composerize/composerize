@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/magicmark/composerize.svg?branch=master)](https://travis-ci.org/magicmark/composerize)
 [![npm](https://img.shields.io/npm/v/composerize.svg)](https://www.npmjs.com/package/composerize)
-
+[![Follow @mark_larah](https://img.shields.io/twitter/follow/mark_larah)](https://twitter.com/mark_larah?ref_src=github_composerize)
+            
 http://composerize.com - Turns docker run commands into docker-compose files!
 
 ![Demo](https://i.imgur.com/GayZj2G.png)
