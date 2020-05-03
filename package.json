@@ -23,7 +23,7 @@
     "eslint": "^6.8.0",
     "flow-bin": "^0.112.0",
     "husky": "^0.14.3",
-    "jest": "^24.8.0"
+    "jest": "^25.5.4"
   },
   "dependencies": {
     "@sharkcore/eslint-config": "^1.1.0-alpha.3",

@@ -20,7 +20,7 @@
     "babel-jest": "^24.9.0",
     "flow-bin": "^0.112.0",
     "husky": "^0.14.3",
-    "jest": "^24.8.0",
+    "jest": "^25.5.4",
     "rollup": "^0.59.0",
     "rollup-plugin-babel": "4.x",
     "rollup-plugin-commonjs": "9.x",
