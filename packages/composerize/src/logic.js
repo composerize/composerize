@@ -46,7 +46,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         const values = Array.isArray(value) ? value : [value];
 
         return values.map(_value => {
-            const [limitName, limitValue] = _value.split('=');
+            const [limitName, limitValue] = String(_value).split('=');
             invariant(
                 limitName && limitValue,
                 `${mapping.type} must be in the format of: <type>=<soft limit>[:<hard limit>]`,
@@ -86,7 +86,7 @@ export const maybeGetComposeEntry = (
     mapKey: string,
     /* The value(s) to be applied */
     value: RawValue,
-): ?ComposeEntry => {
+): ?ComposeEntry | ?Array<ComposeEntry> => {
     // The 'Mapping' object (to map from the cli key to the docker compose equivalent structure)
     const mapping = MAPPINGS[mapKey];
 

@@ -38,7 +38,7 @@ export type ArrayComposeEntry = {
 export type KVComposeEntry = {
     path: string,
     value: {
-        [string]: string,
+        [string]: string | number,
     },
 };
 
