@@ -1,0 +1,16 @@
+#!/bin/bash
+set -uo pipefail
+
+# https://stackoverflow.com/a/246128/4396258
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+ROOT="${DIR}/.."
+
+yarn --cwd "${ROOT}" eslint
+RESULT=$?
+
+if [ ! $RESULT -eq 0 ]; then
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  printf "\e[1m[tools/eslint]\e[0m eslint failed! (To autofix issues, run \e[34m$ yarn eslint --fix\e[0m)\n"
+  echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+  exit $RESULT
+fi

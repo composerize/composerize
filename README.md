@@ -19,9 +19,13 @@ $ composerize docker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --
 
 ## Contributing
 
-- [Clone a fork of the repo](https://guides.github.com/activities/forking/) and install the project dependencies by running `yarn install`
-- Make your changes, and build the project by running `yarn build`
-- Test your changes with `yarn test`
+- [Clone a fork of the repo](https://guides.github.com/activities/forking/) and install the project dependencies by running `yarn`
+- Make your changes, and build the project by running `make build`
+- Test your changes with `make test`
+
+### yarn version
+
+Needs yarn@1.19.1. See https://github.com/yarnpkg/yarn/issues/7734.
 
 ## Maintainers
 

@@ -4,11 +4,8 @@
       "@babel/preset-env",
       {
         "targets": {
-          "node": "6.10",
-          "browsers": [
-            "last 5 versions",
-            "safari >= 7"
-          ]
+          "node": "8",
+          "browsers": [">0.2%", "not dead", "not op_mini all"]
         },
         "modules": false
       }
