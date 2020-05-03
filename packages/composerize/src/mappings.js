@@ -10,6 +10,12 @@ export type ArgType =
     // e.g. --log-driver (https://docs.docker.com/compose/compose-file/#logging)
     | 'KeyValue'
 
+    // Used to store a "limits" value of the input format: <type>=<soft limit>[:<hard limit>]
+    // e.g. --ulimit
+    // @see https://docs.docker.com/compose/compose-file/#ulimits
+    // @see https://docs.docker.com/engine/reference/commandline/run/#set-ulimits-in-container---ulimit
+    | 'Ulimits'
+
     // Used to store a boolean value for an option
     // e.g. --privileged (https://docs.docker.com/compose/compose-file/#domainname-hostname-ipc-mac_address-privileged-read_only-shm_size-stdin_open-tty-user-working_dir)
     | 'Switch'
@@ -32,7 +38,7 @@ export type ArrayComposeEntry = {
 export type KVComposeEntry = {
     path: string,
     value: {
-        [string]: string,
+        [string]: string | number,
     },
 };
 
@@ -43,7 +49,7 @@ export type SwitchComposeEntry = {
 
 export type ValueComposeEntry = {
     path: string,
-    value: string,
+    value: string | number,
 };
 
 export type ComposeEntry = ArrayComposeEntry | KVComposeEntry | SwitchComposeEntry | ValueComposeEntry;
@@ -75,6 +81,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     publish: getMapping('Array', 'ports'),
     restart: getMapping('Value', 'restart'),
     tmpfs: getMapping('Value', 'tmpfs'),
+    ulimit: getMapping('Ulimits', 'ulimits'),
     volume: getMapping('Array', 'volumes'),
     'log-driver': getMapping('Array', 'logging/driver'),
     'log-opt': getMapping('KeyValue', 'logging/options'),
