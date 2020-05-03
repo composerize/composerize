@@ -11,8 +11,8 @@ cache:
   directories:
     - node_modules
 script:
-  - yarn run test
-  - yarn run build
+  - make test
+  - make build
 deploy:
   edge: true
   provider: npm
