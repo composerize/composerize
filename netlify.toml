@@ -2,3 +2,13 @@
     base = "/"
     publish = "packages/composerize-website/build"
     command = "make build"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # To bust the cache that the CRA service worker set...
+	cache-control = '''
+	max-age=0,
+	no-cache,
+	no-store,
+	must-revalidate'''
