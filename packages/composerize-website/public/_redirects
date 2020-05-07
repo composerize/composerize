@@ -1,2 +1,2 @@
-http://www.composerize.com/* https://composerize.com/:splat 301!
-https://www.composerize.com/* https://composerize.com/:splat 301!
+http://composerize.com/* https://www.composerize.com/:splat 301!
+https://composerize.com/* https://www.composerize.com/:splat 301!
