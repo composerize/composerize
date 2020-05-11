@@ -1,6 +1,6 @@
 # composerize
 
-[![Build Status](https://travis-ci.org/magicmark/composerize.svg?branch=master)](https://travis-ci.org/magicmark/composerize)
+[![Build Status](https://travis-ci.org/magicmark/composerize.svg?branch=master)](https://travis-ci.com/github/magicmark/composerize)
 [![npm](https://img.shields.io/npm/v/composerize.svg)](https://www.npmjs.com/package/composerize)
 [![Follow @mark_larah](https://img.shields.io/twitter/follow/mark_larah)](https://twitter.com/mark_larah?ref_src=github_composerize)
             
