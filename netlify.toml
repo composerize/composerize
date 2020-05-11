@@ -6,6 +6,9 @@
 [[headers]]
   for = "/*"
   [headers.values]
+    # For clients still on the old cached version of the app...
+    Access-Control-Allow-Origin = "https://composerize.com"
+
     # To bust the cache that the CRA service worker set...
 	cache-control = '''
 	max-age=0,
