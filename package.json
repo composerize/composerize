@@ -34,6 +34,8 @@
     "yarn": "<= 1.19.1"
   },
   "husky": {
-    "pre-commit": "./tools/eslint"
+    "hooks": {
+      "pre-commit": "./tools/eslint"
+    }
   }
 }
