@@ -18,7 +18,7 @@
     "@babel/preset-flow": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^24.9.0",
-    "flow-bin": "^0.112.0",
+    "flow-bin": "^0.125.1",
     "husky": "^0.14.3",
     "jest": "^25.5.4",
     "rollup": "^0.59.0",
