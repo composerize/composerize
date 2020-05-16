@@ -28,7 +28,7 @@
     "rollup-plugin-node-globals": "1.x",
     "rollup-plugin-node-resolve": "3.x",
     "rollup-plugin-replace": "2.x",
-    "rollup-plugin-uglify": "3.x"
+    "rollup-plugin-uglify": "4.x"
   },
   "dependencies": {
     "core-js": "^2.5.5",
