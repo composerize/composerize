@@ -11,6 +11,7 @@ node_modules:
 
 build: .env node_modules
 	yarn build
+	cat sw.js > build/service-worker.js
 
 test: .env node_modules
 	yarn test --watchAll=false
