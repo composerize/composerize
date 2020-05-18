@@ -23,7 +23,7 @@
     "jest": "^25.5.4",
     "rollup": "^0.59.0",
     "rollup-plugin-babel": "4.x",
-    "rollup-plugin-commonjs": "9.x",
+    "rollup-plugin-commonjs": "10.x",
     "rollup-plugin-node-builtins": "2.x",
     "rollup-plugin-node-globals": "1.x",
     "rollup-plugin-node-resolve": "3.x",
