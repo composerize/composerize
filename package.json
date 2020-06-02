@@ -21,7 +21,7 @@
     "babel-eslint": "^9.0.0",
     "babel-jest": "^24.9.0",
     "eslint": "^6.8.0",
-    "flow-bin": "^0.112.0",
+    "flow-bin": "^0.126.0",
     "husky": "^4.2.5",
     "jest": "^25.5.4"
   },
