@@ -4,14 +4,16 @@
   "name": "composerize-website",
   "homepage": "https://www.composerize.com",
   "dependencies": {
+    "babel-plugin-styled-components": "^1.10.7",
     "composerize": "1.0.4",
     "html5-boilerplate": "^7.2.0",
     "normalize.css": "^8.0.1",
-    "react": "^16.9.0",
+    "react": "16.x",
     "react-copy-to-clipboard": "^5.0.1",
-    "react-dom": "^16.9.0",
+    "react-dom": "16.x",
+    "react-is": "16.x",
     "react-portal-tooltip": "^2.4.7",
-    "styled-components": "^4.3.2"
+    "styled-components": "5.x"
   },
   "devDependencies": {
     "react-scripts": "3.4.1"
