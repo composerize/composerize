@@ -4,7 +4,6 @@ import styled from 'styled-components/macro';
 import Section from './Section';
 import TextInput from './TextInput';
 import Code from './Code';
-import CarbonAds from './CarbonAds';
 
 const Blurb = styled.div`
     line-height: 32px;
@@ -44,7 +43,7 @@ export default function Entry(props) {
                     </Blurb>
                     <TextInput command={props.command} onInputChange={props.onInputChange} />
                 </div>
-                <div
+                {/* <div
                     css={`
                         padding-left: 22px;
                         padding-bottom: 18px;
@@ -52,7 +51,7 @@ export default function Entry(props) {
                     `}
                 >
                     <CarbonAds />
-                </div>
+                </div> */}
             </div>
         </Section>
     );
