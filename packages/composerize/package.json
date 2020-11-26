@@ -31,7 +31,7 @@
     "rollup-plugin-uglify": "3.x"
   },
   "dependencies": {
-    "core-js": "^2.5.5",
+    "core-js": "^3.8.0",
     "deepmerge": "^2.1.0",
     "invariant": "^2.2.4",
     "yamljs": "^0.3.0",
