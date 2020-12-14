@@ -21,7 +21,7 @@
     "flow-bin": "^0.129.0",
     "husky": "^0.14.3",
     "jest": "^25.5.4",
-    "rollup": "^0.59.0",
+    "rollup": "^2.35.1",
     "rollup-plugin-babel": "4.x",
     "rollup-plugin-commonjs": "9.x",
     "rollup-plugin-node-builtins": "2.x",
