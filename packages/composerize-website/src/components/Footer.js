@@ -26,11 +26,10 @@ export default () => (
     <Section border>
         <Container>
             <Item>
-                Composerize (built with{' '}
+                Composerize - built with{' '}
                 <a rel="noopener noreferrer" href="https://www.npmjs.com/package/composerize" target="_blank">
                     v{process.env.REACT_APP_COMPOSERIZE_VERSION}
                 </a>
-                )
             </Item>
             <Item>
                 <a rel="noopener noreferrer" href="http://twitter.com/mark_larah" target="_blank">
