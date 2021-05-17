@@ -2,6 +2,20 @@
 
 import Composerize from '../src';
 
+test('--read-only', () => {
+    const command = 'docker run --read-only -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+            "version: '3.3'
+            services:
+                baz:
+                    read_only: true
+                    ports:
+                        - '80:80'
+                    image: 'foobar/baz:latest'"
+      `);
+});
+
 test('--privileged', () => {
     const command = 'docker run --privileged -p 80:80 foobar/baz:latest';
 

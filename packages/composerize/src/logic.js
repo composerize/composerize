@@ -38,7 +38,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
     if (mapping.type === 'Switch') {
         return ({
             path: mapping.path,
-            value: value === 'true' || value === true,
+            value: value === true,
         }: SwitchComposeEntry);
     }
 
