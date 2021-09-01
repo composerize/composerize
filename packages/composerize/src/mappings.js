@@ -72,6 +72,8 @@ export const MAPPINGS: { [string]: Mapping } = {
     expose: getMapping('Array', 'expose'),
     label: getMapping('Array', 'labels'),
     link: getMapping('Array', 'links'),
+    'log-driver': getMapping('Array', 'logging/driver'),
+    'log-opt': getMapping('KeyValue', 'logging/options'),
     entrypoint: getMapping('Array', 'entrypoint'),
     env: getMapping('Array', 'environment'),
     name: getMapping('Value', 'container_name'),
@@ -80,12 +82,11 @@ export const MAPPINGS: { [string]: Mapping } = {
     pid: getMapping('Value', 'pid'),
     privileged: getMapping('Switch', 'privileged'),
     publish: getMapping('Array', 'ports'),
+    'read-only': getMapping('Switch', 'read_only'),
     restart: getMapping('Value', 'restart'),
     tmpfs: getMapping('Value', 'tmpfs'),
     ulimit: getMapping('Ulimits', 'ulimits'),
     volume: getMapping('Array', 'volumes'),
-    'log-driver': getMapping('Array', 'logging/driver'),
-    'log-opt': getMapping('KeyValue', 'logging/options'),
 };
 
 // Add flag mappings
