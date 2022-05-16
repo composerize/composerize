@@ -4617,6 +4617,17 @@ compose-function@3.0.3:
   dependencies:
     arity-n "^1.0.4"
 
+composerize@1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/composerize/-/composerize-1.0.5.tgz#fffb8c53bbe03ace8b75f8644560d403c101570c"
+  integrity sha512-bCL+xmzW9Rmzzuu71xjPkcMTcopTT/+l4KrBOCyX7HnKCq6MVhCa/eaySW8sQi/6SHMzbVmY7TTYcrTkEDfMCQ==
+  dependencies:
+    core-js "^2.5.5"
+    deepmerge "^2.1.0"
+    invariant "^2.2.4"
+    yamljs "^0.3.0"
+    yargs-parser "^11.0.0"
+
 compressible@~2.0.16:
   version "2.0.18"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.18.tgz#af53cca6b070d4c3c0750fbd77286a6d7cc46fba"
@@ -14278,9 +14289,9 @@ trim-newlines@^2.0.0:
   integrity sha1-tAPQuRvlDDMd/EuC7s6yLD3hbSA=
 
 trim-off-newlines@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/trim-off-newlines/-/trim-off-newlines-1.0.1.tgz#9f9ba9d9efa8764c387698bcbfeb2c848f11adb3"
-  integrity sha1-n5up2e+odkw4dpi8v+sshI8RrbM=
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/trim-off-newlines/-/trim-off-newlines-1.0.3.tgz#8df24847fcb821b0ab27d58ab6efec9f2fe961a1"
+  integrity sha512-kh6Tu6GbeSNMGfrrZh6Bb/4ZEHV1QlB4xNDBeog8Y9/QwFlKTRyWvY3Fs9tRDAMZliVUwieMgEdIeL/FtqjkJg==
 
 trim-right@^1.0.1:
   version "1.0.1"
