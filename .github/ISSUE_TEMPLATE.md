@@ -22,7 +22,7 @@ some better output
 
 **Are you willing/able to attempt a fix?**
 
-Most issues can be trivially fixed by updating this mapping: 
+Most issues can be trivially addressed by updating this mapping: 
 
 https://github.com/magicmark/composerize/blob/dcae8ace865e2eef69e5bd27c4a9a320f56cac75/packages/composerize/src/mappings.js#L62-L66
 
