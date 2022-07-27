@@ -2,8 +2,8 @@
 
 **Do you want to request a *feature* or report a *bug*?**
 
-- [ ] feature
-- [ ] bug
+- [ ] feature request
+- [ ] bug report
 
 **Please provide a sample input docker run command**
 ```
