@@ -30,6 +30,20 @@ test('--privileged', () => {
       `);
 });
 
+test('--hostname', () => {
+    const command = 'docker run --hostname myHostName -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+            "version: '3.3'
+            services:
+                baz:
+                    hostname: myHostName
+                    ports:
+                        - '80:80'
+                    image: 'foobar/baz:latest'"
+      `);
+});
+
 test('--network (https://github.com/magicmark/composerize/issues/25)', () => {
     const command =
         'docker run -d --name plex --network=host -e TZ="<timezone>" -e PLEX_CLAIM="<claimToken>" -v <path/to/plex/database>:/config -v <path/to/transcode/temp>:/transcode -v <path/to/media>:/data plexinc/pms-docker';
