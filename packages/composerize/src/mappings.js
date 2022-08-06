@@ -70,6 +70,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     dns_search: getMapping('Array', 'dns_search'),
     env_file: getMapping('Array', 'env_file'),
     expose: getMapping('Array', 'expose'),
+    hostname: getMapping('Value', 'hostname'),
     label: getMapping('Array', 'labels'),
     link: getMapping('Array', 'links'),
     'log-driver': getMapping('Array', 'logging/driver'),
