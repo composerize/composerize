@@ -87,6 +87,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     restart: getMapping('Value', 'restart'),
     tmpfs: getMapping('Value', 'tmpfs'),
     ulimit: getMapping('Ulimits', 'ulimits'),
+    user: getMapping('Value', 'user'),
     volume: getMapping('Array', 'volumes'),
 };
 
@@ -94,3 +95,6 @@ export const MAPPINGS: { [string]: Mapping } = {
 MAPPINGS.v = MAPPINGS.volume;
 MAPPINGS.p = MAPPINGS.publish;
 MAPPINGS.e = MAPPINGS.env;
+MAPPINGS.l = MAPPINGS.label;
+MAPPINGS.h = MAPPINGS.hostname;
+MAPPINGS.u = MAPPINGS.user;
