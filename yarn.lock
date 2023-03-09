@@ -4617,6 +4617,17 @@ compose-function@3.0.3:
   dependencies:
     arity-n "^1.0.4"
 
+composerize@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/composerize/-/composerize-1.1.0.tgz#d6d2262b67ed2a1e0dd4c9026a3dd3b2f3c3717e"
+  integrity sha512-QTV1b+FOQ4ZkJzDzZYqAVHrJL2iFQO9Tu5a2gk8SCxIa62HFEtHAD40op7/I0IqO1Ea8whAq2j0hPfxnftFXgQ==
+  dependencies:
+    core-js "^2.5.5"
+    deepmerge "^2.1.0"
+    invariant "^2.2.4"
+    yamljs "^0.3.0"
+    yargs-parser "^11.0.0"
+
 compressible@~2.0.16:
   version "2.0.18"
   resolved "https://registry.yarnpkg.com/compressible/-/compressible-2.0.18.tgz#af53cca6b070d4c3c0750fbd77286a6d7cc46fba"

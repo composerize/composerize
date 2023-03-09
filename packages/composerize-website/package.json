@@ -5,7 +5,7 @@
   "homepage": "https://www.composerize.com",
   "dependencies": {
     "babel-plugin-styled-components": "^1.10.7",
-    "composerize": "1.1.0",
+    "composerize": "1.2.0",
     "html5-boilerplate": "^7.2.0",
     "normalize.css": "^8.0.1",
     "react": "16.x",
