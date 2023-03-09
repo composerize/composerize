@@ -30,8 +30,52 @@ test('--privileged', () => {
       `);
 });
 
+test('--user', () => {
+    const command = 'docker run --user 99:100 -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+            "version: '3.3'
+            services:
+                baz:
+                    user: '99:100'
+                    ports:
+                        - '80:80'
+                    image: 'foobar/baz:latest'"
+      `);
+});
+
+test('--label', () => {
+    const command = 'docker run --label test1=value -l test2=value -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+            "version: '3.3'
+            services:
+                baz:
+                    labels:
+                        - test1=value
+                        - test2=value
+                    ports:
+                        - '80:80'
+                    image: 'foobar/baz:latest'"
+      `);
+});
+
 test('--hostname', () => {
     const command = 'docker run --hostname myHostName -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+            "version: '3.3'
+            services:
+                baz:
+                    hostname: myHostName
+                    ports:
+                        - '80:80'
+                    image: 'foobar/baz:latest'"
+      `);
+});
+
+test('-h', () => {
+    const command = 'docker run -h myHostName -p 80:80 foobar/baz:latest';
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
             "version: '3.3'
