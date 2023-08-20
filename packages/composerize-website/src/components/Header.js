@@ -30,9 +30,6 @@ export default () => (
     <Container>
         <Title>$ composerize</Title>
         <Buttons>
-            <Link href="https://travis-ci.org/magicmark/composerize">
-                <img src="https://img.shields.io/travis/magicmark/composerize/master.svg" alt="travis" />
-            </Link>
             <Link href="https://github.com/magicmark/composerize">
                 <img alt="npm" src="https://img.shields.io/npm/v/composerize" />
             </Link>
