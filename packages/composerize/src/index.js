@@ -62,6 +62,23 @@ export default (input: string): ?string => {
         service.command = commandArgsArray.join(' ');
     }
 
+    const namedVolumes = [];
+    if (service.volumes) {
+        for (let volumeIndex = 0; volumeIndex < service.volumes.length; volumeIndex += 1) {
+            let source;
+            if (typeof service.volumes[volumeIndex] === 'string') {
+                const volumeName = service.volumes[volumeIndex].split(':')[0];
+                source = volumeName;
+            } else {
+                const volumeSource = service.volumes[volumeIndex].source;
+                source = volumeSource;
+            }
+            if (source && !source.includes('/') && !source.includes('$')) {
+                namedVolumes.push([source, {}]);
+            }
+        }
+    }
+
     const serviceName = getServiceName(image);
 
     // Outer template
@@ -71,6 +88,9 @@ export default (input: string): ?string => {
             [serviceName]: service,
         },
     };
+    if (namedVolumes.length > 0) {
+        result.volumes = Object.fromEntries(namedVolumes);
+    }
 
     return yamljs.stringify(result, 9, 4).trim();
 };
