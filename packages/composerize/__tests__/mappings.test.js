@@ -333,3 +333,17 @@ test('multiline (https://github.com/magicmark/composerize/issues/120)', () => {
     `);
 });
 
+test('mount type (https://github.com/magicmark/composerize/issues/412)', () => {
+    expect(Composerize('docker run --mount type=bind,source=./logs,target=/usr/src/app/logs nginx'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            nginx:
+                volumes:
+                    -
+                        type: bind
+                        source: ./logs
+                        target: /usr/src/app/logs
+                image: nginx"
+    `);
+});

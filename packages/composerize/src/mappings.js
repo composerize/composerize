@@ -22,6 +22,7 @@ export type ArgType =
 
     // Used to store an arbitrary text value for an option
     | 'Value'
+    | 'Mounts'
     | 'Gpus';
 
 // Type to represent the structure of the docker compose mapping
@@ -81,6 +82,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     name: getMapping('Value', 'container_name'),
     network: getMapping('Value', 'network_mode'),
     net: getMapping('Value', 'network_mode'), // alias for network
+    mount: getMapping('Mounts', 'volumes'),
     pid: getMapping('Value', 'pid'),
     privileged: getMapping('Switch', 'privileged'),
     publish: getMapping('Array', 'ports'),
