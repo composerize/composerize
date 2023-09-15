@@ -42,6 +42,25 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         }: SwitchComposeEntry);
     }
 
+    if (mapping.type === 'Gpus') {
+        return ({
+            path: 'deploy',
+            value: {
+                resources: {
+                    reservations: {
+                        devices: [
+                            {
+                                driver: 'nvidia',
+                                count: value === 'all' ? 1 : parseInt(value, 10),
+                                capabilities: ['gpu'],
+                            },
+                        ],
+                    },
+                },
+            },
+        }: KVComposeEntry);
+    }
+
     if (mapping.type === 'Ulimits') {
         const values = Array.isArray(value) ? value : [value];
 

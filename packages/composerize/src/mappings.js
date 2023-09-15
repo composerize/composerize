@@ -21,7 +21,8 @@ export type ArgType =
     | 'Switch'
 
     // Used to store an arbitrary text value for an option
-    | 'Value';
+    | 'Value'
+    | 'Gpus';
 
 // Type to represent the structure of the docker compose mapping
 export type Mapping = {
@@ -38,7 +39,7 @@ export type ArrayComposeEntry = {
 export type KVComposeEntry = {
     path: string,
     value: {
-        [string]: string | number,
+        [string]: string | number | any,
     },
 };
 
@@ -89,6 +90,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     ulimit: getMapping('Ulimits', 'ulimits'),
     user: getMapping('Value', 'user'),
     volume: getMapping('Array', 'volumes'),
+    gpus: getMapping('Gpus', 'deploy'),
 };
 
 // Add flag mappings
