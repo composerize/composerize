@@ -61,10 +61,22 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         }: KVComposeEntry);
     }
 
+    if (mapping.type === 'Mounts') {
+        const values = Array.isArray(value) ? value : [value];
+
+        return values.map((_value) => {
+            const args = String(_value).split(',');
+            return ({
+                path: mapping.path,
+                value: [Object.fromEntries(args.map((_arg) => _arg.split('=')))],
+            }: KVComposeEntry);
+        });
+    }
+
     if (mapping.type === 'Ulimits') {
         const values = Array.isArray(value) ? value : [value];
 
-        return values.map(_value => {
+        return values.map((_value) => {
             const [limitName, limitValue] = String(_value).split('=');
             invariant(
                 limitName && limitValue,
