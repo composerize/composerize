@@ -42,7 +42,7 @@ export default (input: string): ?string => {
         const result = maybeGetComposeEntry(key, value);
         if (result) {
             const entries = Array.isArray(result) ? result : [result];
-            entries.forEach((entry) => {
+            entries.forEach(entry => {
                 // Store whatever the next entry will be
                 const json = getComposeJson(entry);
                 service = deepmerge(service, json);
@@ -54,18 +54,12 @@ export default (input: string): ?string => {
     service.image = image;
     if (command.length > 1) {
         let argStart = 1;
-        if (!command[1].startsWith('-')) {
-            const cmd = command[1];
-            service.command = cmd;
-            argStart = 2;
+        const commandArgsArray = [];
+        while (argStart < command.length) {
+            commandArgsArray.push(command[argStart]);
+            argStart += 1;
         }
-        if (argStart < command.length) {
-            service.args = [];
-            while (argStart < command.length) {
-                service.args.push(command[argStart]);
-                argStart += 1;
-            }
-        }
+        service.command = commandArgsArray.join(' ');
     }
 
     const serviceName = getServiceName(image);

@@ -233,21 +233,7 @@ test('command args (https://github.com/magicmark/composerize/issues/484)', () =>
                     - '8080:8080'
                 container_name: opcplc
                 image: 'mcr.microsoft.com/iotedge/opc-plc:latest'
-                args:
-                    - '--pn=50000'
-                    - '--autoaccept'
-                    - '--nospikes'
-                    - '--nodips'
-                    - '--nopostrend'
-                    - '--nonegtrend'
-                    - '--nodatavalues'
-                    - '--sph'
-                    - '--sn=25'
-                    - '--sr=10'
-                    - '--st=uint'
-                    - '--fn=5'
-                    - '--fr=1'
-                    - '--ft=uint'"
+                command: '--pn=50000 --autoaccept --nospikes --nodips --nopostrend --nonegtrend --nodatavalues --sph --sn=25 --sr=10 --st=uint --fn=5 --fr=1 --ft=uint'"
     `);
 });
 
