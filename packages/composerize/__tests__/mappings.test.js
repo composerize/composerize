@@ -269,6 +269,29 @@ test('basic image (https://github.com/magicmark/composerize/issues/542)', () => 
     `);
 });
 
+test('volumes declaration (https://github.com/magicmark/composerize/issues/524)', () => {
+    expect(
+        Composerize(
+            'docker run --restart=unless-stopped -d --name=readymedia1 --net=host -v /my/video/path:/media -v readymediacache:/cache -e VIDEO_DIR1=/media/my_video_files ypopovych/readymedia',
+        ),
+    ).toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            readymedia:
+                restart: unless-stopped
+                container_name: readymedia1
+                network_mode: host
+                volumes:
+                    - '/my/video/path:/media'
+                    - 'readymediacache:/cache'
+                environment:
+                    - VIDEO_DIR1=/media/my_video_files
+                image: ypopovych/readymedia
+        volumes:
+            readymediacache: {}"
+    `);
+});
+
 test('tmpfs (https://github.com/magicmark/composerize/issues/536)', () => {
     expect(
         Composerize(
