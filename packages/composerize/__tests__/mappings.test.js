@@ -168,3 +168,116 @@ test('--ulimit (https://github.com/magicmark/composerize/pull/262)', () => {
                 image: 'nginx:latest'"
     `);
 });
+
+test('-it image name (https://github.com/magicmark/composerize/issues/544)', () => {
+    expect(Composerize('docker run -p 8000:8000 -it ctfd/ctfd')).toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ctfd:
+                ports:
+                    - '8000:8000'
+                image: ctfd/ctfd"
+    `);
+    });
+
+test('command name (https://github.com/magicmark/composerize/issues/549)', () => {
+    expect(
+        Composerize(
+            'docker run -d --name=tailscaled -v /var/lib:/var/lib -v /dev/net/tun:/dev/net/tun --network=host --privileged tailscale/tailscale tailscaled',
+        ),
+    ).toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            tailscale:
+                container_name: tailscaled
+                volumes:
+                    - '/var/lib:/var/lib'
+                    - '/dev/net/tun:/dev/net/tun'
+                network_mode: host
+                privileged: true
+                image: tailscale/tailscale
+                command: tailscaled"
+    `);
+    });
+
+test('command name (https://github.com/magicmark/composerize/issues/538)', () => {
+    expect(
+        Composerize(
+            'docker run -p 8080:8080 -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:18.0.2 start-dev',
+        ),
+    ).toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            keycloak:
+                ports:
+                    - '8080:8080'
+                environment:
+                    - KEYCLOAK_ADMIN=admin
+                    - KEYCLOAK_ADMIN_PASSWORD=admin
+                image: 'quay.io/keycloak/keycloak:18.0.2'
+                command: start-dev"
+    `);
+});
+
+test('command args (https://github.com/magicmark/composerize/issues/484)', () => {
+    expect(
+        Composerize(
+            'docker run --rm -it -p 50000:50000 -p 8080:8080 --name opcplc mcr.microsoft.com/iotedge/opc-plc:latest --pn=50000 --autoaccept --nospikes --nodips --nopostrend --nonegtrend --nodatavalues --sph --sn=25 --sr=10 --st=uint --fn=5 --fr=1 --ft=uint',
+        ),
+    ).toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            iotedge:
+                ports:
+                    - '50000:50000'
+                    - '8080:8080'
+                container_name: opcplc
+                image: 'mcr.microsoft.com/iotedge/opc-plc:latest'
+                args:
+                    - '--pn=50000'
+                    - '--autoaccept'
+                    - '--nospikes'
+                    - '--nodips'
+                    - '--nopostrend'
+                    - '--nonegtrend'
+                    - '--nodatavalues'
+                    - '--sph'
+                    - '--sn=25'
+                    - '--sr=10'
+                    - '--st=uint'
+                    - '--fn=5'
+                    - '--fr=1'
+                    - '--ft=uint'"
+    `);
+});
+
+test('basic image (https://github.com/magicmark/composerize/issues/542)', () => {
+    expect(Composerize('docker run -d ubuntu')).toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                image: ubuntu"
+    `);
+});
+
+test('tmpfs (https://github.com/magicmark/composerize/issues/536)', () => {
+    expect(
+        Composerize(
+            'docker run -dit -p 8080:5000 --tmpfs /opt/omd/sites/cmk/tmp:uid=1000,gid=1000 -v/omd/sites --name monitoring -v/etc/localtime:/etc/localtime:ro --restart always checkmk/check-mk-raw:2.0.0-latest',
+        ),
+    ).toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            check-mk-raw:
+                ports:
+                    - '8080:5000'
+                tmpfs: '/opt/omd/sites/cmk/tmp:uid=1000,gid=1000'
+                volumes:
+                    - /omd/sites
+                    - '/etc/localtime:/etc/localtime:ro'
+                container_name: monitoring
+                restart: always
+                image: 'checkmk/check-mk-raw:2.0.0-latest'"
+    `);
+});
+

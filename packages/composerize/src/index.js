@@ -22,10 +22,13 @@ export default (input: string): ?string => {
     const parsedInput: {
         +_: Array<string>,
         +[flag: string]: RawValue,
-    } = parser(formattedInput);
+    } = parser(formattedInput.replace(/^docker (run|create)/, ''), {
+        configuration: { 'halt-at-non-option': true },
+        boolean: ['i', 't', 'd', 'rm', 'privileged'],
+    });
     const { _: command, ...params } = parsedInput;
 
-    if (command[0] !== 'docker' || (command[1] !== 'run' && command[1] !== 'create')) {
+    if (!formattedInput.startsWith('docker run') && !formattedInput.startsWith('docker create')) {
         throw new SyntaxError('must be a valid docker run/create command');
     }
 
@@ -33,24 +36,37 @@ export default (input: string): ?string => {
     let service = {};
 
     // Loop through the tokens and append to the service object
-    Object.entries(params).forEach(
+    Object.entries(params).forEach(([key, value]: [string, RawValue | mixed]) => {
         // https://github.com/facebook/flow/issues/2174
         // $FlowFixMe: Object.entries wipes out types ATOW
-        ([key, value]: [string, RawValue]) => {
-            const result = maybeGetComposeEntry(key, value);
-            if (result) {
-                const entries = Array.isArray(result) ? result : [result];
-                entries.forEach(entry => {
-                    // Store whatever the next entry will be
-                    const json = getComposeJson(entry);
-                    service = deepmerge(service, json);
-                });
-            }
-        },
-    );
+        const result = maybeGetComposeEntry(key, value);
+        if (result) {
+            const entries = Array.isArray(result) ? result : [result];
+            entries.forEach((entry) => {
+                // Store whatever the next entry will be
+                const json = getComposeJson(entry);
+                service = deepmerge(service, json);
+            });
+        }
+    });
 
-    const image = command.slice(-1)[0];
+    const image = command[0];
     service.image = image;
+    if (command.length > 1) {
+        let argStart = 1;
+        if (!command[1].startsWith('-')) {
+            const cmd = command[1];
+            service.command = cmd;
+            argStart = 2;
+        }
+        if (argStart < command.length) {
+            service.args = [];
+            while (argStart < command.length) {
+                service.args.push(command[argStart]);
+                argStart += 1;
+            }
+        }
+    }
 
     const serviceName = getServiceName(image);
 
