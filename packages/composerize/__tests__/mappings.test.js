@@ -281,3 +281,46 @@ test('tmpfs (https://github.com/magicmark/composerize/issues/536)', () => {
     `);
 });
 
+test('multiline (https://github.com/magicmark/composerize/issues/120)', () => {
+    expect(
+        Composerize(
+            `docker run -d --name kong \
+     --network=kong-net \
+     -e "KONG_DATABASE=postgres" \
+     -e "KONG_PG_HOST=kong-database" \
+     -e "KONG_CASSANDRA_CONTACT_POINTS=kong-database" \
+     -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \
+     -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" \
+     -e "KONG_PROXY_ERROR_LOG=/dev/stderr" \
+     -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" \
+     -e "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl" \
+     -p 8000:8000 \
+     -p 8443:8443 \
+     -p 8001:8001 \
+     -p 8444:8444 \
+     kong:latest`,
+        ),
+    ).toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            kong:
+                container_name: kong
+                network_mode: kong-net
+                environment:
+                    - KONG_DATABASE=postgres
+                    - KONG_PG_HOST=kong-database
+                    - KONG_CASSANDRA_CONTACT_POINTS=kong-database
+                    - KONG_PROXY_ACCESS_LOG=/dev/stdout
+                    - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+                    - KONG_PROXY_ERROR_LOG=/dev/stderr
+                    - KONG_ADMIN_ERROR_LOG=/dev/stderr
+                    - 'KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl'
+                ports:
+                    - '8000:8000'
+                    - '8443:8443'
+                    - '8001:8001'
+                    - '8444:8444'
+                image: 'kong:latest'"
+    `);
+});
+
