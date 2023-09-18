@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 import CBox from './CBox';
 
-const StyledInput = styled.input`
+const StyledInput = styled.textarea`
     ${CBox}
+	height:8em;
 `;
 
 export default class TextInput extends Component {
