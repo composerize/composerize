@@ -8,8 +8,74 @@ test('fails with invalid commands', () => {
     }).toThrow();
 });
 
+test('multiple docker run command', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest\n# comment\n\ndocker run -p 80:80 foobar/buzz:latest\ndocker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --restart always --log-opt max-size=1g nginx\n';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+    "version: '3.3'
+    services:
+        baz:
+            ports:
+                - '80:80'
+            image: 'foobar/baz:latest'
+        buzz:
+            ports:
+                - '80:80'
+            image: 'foobar/buzz:latest'
+        nginx:
+            ports:
+                - '80:80'
+            volumes:
+                - '/var/run/docker.sock:/tmp/docker.sock:ro'
+            restart: always
+            logging:
+                options:
+                    max-size: 1g
+            image: nginx"
+  `);
+});
+
 test('basic docker run command', () => {
     const command = 'docker run -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+    "version: '3.3'
+    services:
+        baz:
+            ports:
+                - '80:80'
+            image: 'foobar/baz:latest'"
+  `);
+});
+
+test('basic docker container run command', () => {
+    const command = 'docker container run -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+    "version: '3.3'
+    services:
+        baz:
+            ports:
+                - '80:80'
+            image: 'foobar/baz:latest'"
+  `);
+});
+
+test('basic docker create command', () => {
+    const command = 'docker create -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+    "version: '3.3'
+    services:
+        baz:
+            ports:
+                - '80:80'
+            image: 'foobar/baz:latest'"
+  `);
+});
+
+test('basic docker service create command', () => {
+    const command = 'docker service create -p 80:80 foobar/baz:latest';
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
     "version: '3.3'
@@ -100,6 +166,21 @@ test('testing parsing of quotes (https://github.com/magicmark/composerize/issues
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
     "version: '3.3'
+    services:
+        nginx:
+            container_name: foobar
+            image: nginx"
+  `);
+});
+
+test('testing with unknown args ()', () => {
+    const command = 'docker run --name="foobar" -z machin --unknown-long truc nginx';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+    "# ignored options for 'nginx'
+    # -z=machin
+    # --unknown-long=truc
+    version: '3.3'
     services:
         nginx:
             container_name: foobar

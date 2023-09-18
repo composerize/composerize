@@ -117,7 +117,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
     if (mapping.type === 'Ulimits') {
         const values = Array.isArray(value) ? value : [value];
 
-        return values.map((_value) => {
+        return values.map(_value => {
             const [limitName, limitValue] = String(_value).split('=');
             invariant(
                 limitName && limitValue,

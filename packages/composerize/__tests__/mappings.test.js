@@ -420,6 +420,21 @@ test('cgroup (https://github.com/magicmark/composerize/issues/561)', () => {
     `);
 });
 
+test('fake multiline (https://github.com/magicmark/composerize/issues/546)', () => {
+    expect(Composerize('docker run -d \ -v vol:/tmp \ hello-world \ --parameter'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            hello-world:
+                volumes:
+                    - 'vol:/tmp'
+                image: hello-world
+                command: '--parameter'
+        volumes:
+            vol: {}"
+    `);
+});
+    
 test('private registry (https://github.com/magicmark/composerize/issues/15)', () => {
     expect(Composerize('docker run --restart=always --privileged --name jatdb -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="somepass" -v ~/jat/mongodata:/data/db registry.cloud.local/js/mongo'))
         .toMatchInlineSnapshot(`
@@ -439,6 +454,21 @@ test('private registry (https://github.com/magicmark/composerize/issues/15)', ()
                 image: registry.cloud.local/js/mongo"
     `);
 });
+test('publish-all (https://github.com/magicmark/composerize/issues/19)', () => {
+    expect(Composerize('docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog'))
+        .toMatchInlineSnapshot(`
+        "# ignored options for 'frontail'
+        # -P
+        version: '3.3'
+        services:
+            frontail:
+                volumes:
+                    - '/var/log:/log'
+                image: mthenw/frontail
+                command: /log/syslog"
+            `);
+});
+
 test('--network-alias --link-local-ip', () => {
     expect(Composerize('docker run --net reseau --network-alias=ubuntu_res --link-local-ip 192.168.0.1 ubuntu'))
         .toMatchInlineSnapshot(`
