@@ -558,6 +558,19 @@ test('publish-all (https://github.com/magicmark/composerize/issues/19)', () => {
             `);
 });
 
+test('--sysctl', () => {
+    expect(Composerize('docker run --sysctl net.core.somaxconn=1024 --sysctl net.ipv4.tw_reuse=1 someimage'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            someimage:
+                sysctls:
+                    - net.core.somaxconn=1024
+                    - net.ipv4.tw_reuse=1
+                image: someimage"
+            `);
+});
+
 test('--label', () => {
     expect(Composerize('docker run -l my-label --label com.example.foo=bar ubuntu bash'))
         .toMatchInlineSnapshot(`
