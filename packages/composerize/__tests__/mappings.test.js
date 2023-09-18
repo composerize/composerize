@@ -374,3 +374,15 @@ test('mount type (https://github.com/magicmark/composerize/issues/412)', () => {
                 image: nginx"
     `);
 });
+test('cgroup (https://github.com/magicmark/composerize/issues/561)', () => {
+    expect(Composerize('docker run --cgroup-parent=docker.slice --cgroupns private systemd_test'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            systemd_test:
+                cgroup_parent: docker.slice
+                cgroup: private
+                image: systemd_test"
+    `);
+});
+
