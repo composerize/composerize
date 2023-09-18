@@ -167,7 +167,7 @@ export default (input: string): ?string => {
         const command = String(dockerCommand);
         if (!command) return;
         if (!command.match(/^\s*(run|create|container run|service create)/)) {
-            globalIgnoredOptionsComments.push(`# ignored : ${command}`);
+            globalIgnoredOptionsComments.push(`# ignored : docker ${command}\n`);
             return;
         }
         const { composeFile, ignoredOptionsComments } = getComposeFileJson(`docker ${command}`);
