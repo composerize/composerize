@@ -558,6 +558,20 @@ test('publish-all (https://github.com/magicmark/composerize/issues/19)', () => {
             `);
 });
 
+test('--label', () => {
+    expect(Composerize('docker run -l my-label --label com.example.foo=bar ubuntu bash'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                labels:
+                    - my-label
+                    - com.example.foo=bar
+                image: ubuntu
+                command: bash"
+            `);
+});
+
 test('--network-alias --link-local-ip', () => {
     expect(Composerize('docker run --net reseau --network-alias=ubuntu_res --link-local-ip 192.168.0.1 ubuntu'))
         .toMatchInlineSnapshot(`
