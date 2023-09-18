@@ -22,8 +22,8 @@ export type ArgType =
 
     // Used to store an arbitrary text value for an option
     | 'Value'
-    | 'Mounts'
     | 'Gpus';
+    | 'MapArray'
 
 // Type to represent the structure of the docker compose mapping
 export type Mapping = {
@@ -51,7 +51,7 @@ export type SwitchComposeEntry = {
 
 export type ValueComposeEntry = {
     path: string,
-    value: string | number,
+    value: string | number | any,
 };
 
 export type IgnoreComposeEntry = {
@@ -93,8 +93,8 @@ export const MAPPINGS: { [string]: Mapping } = {
     'log-opt': getMapping('KeyValue', 'logging/options'),
     entrypoint: getMapping('Array', 'entrypoint'),
     env: getMapping('Array', 'environment'),
+    mount: getMapping('MapArray', 'volumes'),
     name: getMapping('Value', 'container_name'),
-    mount: getMapping('Mounts', 'volumes'),
     net: getMapping('Networks', 'network_mode'), // alias for network
     'network-alias': getMapping('Array', 'networks/¤network¤/aliases'),
     network: getMapping('Networks', 'network_mode'),

@@ -15,6 +15,20 @@ import type {
 
 import type { RawValue } from './index';
 
+export const fromEntries = (iterable: Iterable<any>) =>
+    [...iterable].reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {});
+
+const parseListAsValueComposeEntryObject = (argValue: String, listSeparator: string, entrySeparator: string) => {
+    const args = argValue.split(listSeparator);
+
+    return fromEntries(
+        args.map(_arg => {
+            const [k, v] = _arg.split(entrySeparator, 2);
+            return [k, v];
+        }),
+    );
+};
+
 /**
  * Turn a mapping and the value of the mapping into a formatted json object
  */
@@ -77,7 +91,18 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         }: KVComposeEntry);
     }
 
-    if (mapping.type === 'Mounts') {
+    if (mapping.type === 'MapArray') {
+        const values = Array.isArray(value) ? value : [value];
+
+        return values.map(
+            _value =>
+                ({
+                    path: mapping.path,
+                    value: [parseListAsValueComposeEntryObject(_value, ',', '=')],
+                }: ValueComposeEntry),
+        );
+    }
+
         const values = Array.isArray(value) ? value : [value];
 
         return values.map((_value) => {
