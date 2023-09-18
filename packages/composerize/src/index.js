@@ -34,6 +34,7 @@ export const getComposeFileJson = (input: string): ComposeFile => {
         configuration: {
             'halt-at-non-option': true,
             'camel-case-expansion': false,
+            'boolean-negation': false,
         },
         boolean: [
             'i',

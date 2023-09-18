@@ -510,3 +510,20 @@ test('--network-alias --link-local-ip', () => {
             `);
 });
 
+test('--healthcheck-cmd ', () => {
+    const command =
+        'docker run --health-cmd=healthcheck.sh --health-interval=60s --health-timeout=10s --health-start-period=30s --health-retries=2  nginx:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            nginx:
+                healthcheck:
+                    test: healthcheck.sh
+                    interval: 60s
+                    timeout: 10s
+                    start_period: 30s
+                    retries: '2'
+                image: 'nginx:latest'"
+      `);
+});
