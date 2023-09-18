@@ -103,6 +103,15 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         );
     }
 
+    if (mapping.type === 'Map') {
+        const argValue = Array.isArray(value) ? value.join(',') : value;
+
+        return ({
+            path: mapping.path,
+            value: parseListAsValueComposeEntryObject(argValue, ',', '='),
+        }: ValueComposeEntry);
+    }
+
         const values = Array.isArray(value) ? value : [value];
 
         return values.map((_value) => {
@@ -142,6 +151,20 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
                 value: parseInt(limitValue, 10),
             }: ValueComposeEntry);
         });
+    }
+
+    if (mapping.type === 'IntValue') {
+        return ({
+            path: mapping.path,
+            value: parseInt(value, 10),
+        }: ValueComposeEntry);
+    }
+
+    if (mapping.type === 'FloatValue') {
+        return ({
+            path: mapping.path,
+            value: parseFloat(value),
+        }: ValueComposeEntry);
     }
 
     return ({

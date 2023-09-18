@@ -22,8 +22,12 @@ export type ArgType =
 
     // Used to store an arbitrary text value for an option
     | 'Value'
-    | 'Gpus';
+    | 'IntValue'
+    | 'FloatValue'
+    | 'Networks'
     | 'MapArray'
+    | 'Map'
+    | 'Gpus';
 
 // Type to represent the structure of the docker compose mapping
 export type Mapping = {
