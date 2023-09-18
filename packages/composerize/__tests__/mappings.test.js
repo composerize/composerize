@@ -658,6 +658,20 @@ test('--label', () => {
             `);
 });
 
+test('--pull --runtime --platform --isolation', () => {
+    expect(Composerize('docker run --pull always --runtime xxx --platform linux --isolation yyy ubuntu'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                pull_policy: always
+                runtime: xxx
+                platform: linux
+                isolation: yyy
+                image: ubuntu"
+            `);
+});
+
 test('--network-alias --link-local-ip', () => {
     expect(Composerize('docker run --net reseau --network-alias=ubuntu_res --link-local-ip 192.168.0.1 ubuntu'))
         .toMatchInlineSnapshot(`
