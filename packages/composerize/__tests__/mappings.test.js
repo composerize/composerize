@@ -831,6 +831,80 @@ test('--security-opt', () => {
             `);
 });
 
+test('blkio 1 device', () => {
+    expect(Composerize('docker run -it --blkio-weight 16 --blkio-weight-device "/dev/sda:200" --device-read-bps=/dev/sda:1mb --device-read-iops=/dev/sda:1000 --device-write-bps=/dev/sda:1mb --device-write-iops=/dev/sda:1000 ubuntu'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                stdin_open: true
+                tty: true
+                blkio_config:
+                    weight: 16
+                    weight_device:
+                        -
+                            path: /dev/sda
+                            weight: 200
+                    device_read_bps:
+                        -
+                            path: /dev/sda
+                            rate: 1mb
+                    device_read_iops:
+                        -
+                            path: /dev/sda
+                            rate: 1000
+                    device_write_bps:
+                        -
+                            path: /dev/sda
+                            rate: 1mb
+                    device_write_iops:
+                        -
+                            path: /dev/sda
+                            rate: 1000
+                image: ubuntu"
+            `);
+});
+
+test('blkio 2 device', () => {
+    expect(Composerize('docker run -it --blkio-weight 16 --blkio-weight-device "/dev/sda:200"  --blkio-weight-device "/dev/sdb:300" --device-read-bps=/dev/sda:1mb --device-read-bps=/dev/sdb:2mb --device-read-iops=/dev/sda:1000 --device-write-bps=/dev/sda:1mb --device-write-iops=/dev/sda:1000 ubuntu'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                stdin_open: true
+                tty: true
+                blkio_config:
+                    weight: 16
+                    weight_device:
+                        -
+                            path: /dev/sda
+                            weight: 200
+                        -
+                            path: /dev/sdb
+                            weight: 300
+                    device_read_bps:
+                        -
+                            path: /dev/sda
+                            rate: 1mb
+                        -
+                            path: /dev/sdb
+                            rate: 2mb
+                    device_read_iops:
+                        -
+                            path: /dev/sda
+                            rate: 1000
+                    device_write_bps:
+                        -
+                            path: /dev/sda
+                            rate: 1mb
+                    device_write_iops:
+                        -
+                            path: /dev/sda
+                            rate: 1000
+                image: ubuntu"
+            `);
+});
+
 test('--device-cgroup-rule', () => {
     expect(Composerize('docker run -d --device-cgroup-rule="c 42:* rmw" --name my-container my-image'))
         .toMatchInlineSnapshot(`

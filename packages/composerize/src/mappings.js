@@ -24,6 +24,8 @@ export type ArgType =
     | 'Value'
     | 'IntValue'
     | 'FloatValue'
+    | 'DeviceBlockIOConfigRate'
+    | 'DeviceBlockIOConfigWeight'
     | 'Networks'
     | 'MapArray'
     | 'Map'
@@ -78,6 +80,8 @@ export const getMapping = (type: ArgType, path: string): Mapping => ({
 // docker cli -> docker-compose options
 export const MAPPINGS: { [string]: Mapping } = {
     'add-host': getMapping('Array', 'extra_hosts'),
+    'blkio-weight': getMapping('IntValue', 'blkio_config/weight'),
+    'blkio-weight-device': getMapping('DeviceBlockIOConfigWeight', 'blkio_config/weight_device'),
     'cap-add': getMapping('Array', 'cap_add'),
     'cap-drop': getMapping('Array', 'cap_drop'),
     'cgroup-parent': getMapping('Value', 'cgroup_parent'),
@@ -90,6 +94,10 @@ export const MAPPINGS: { [string]: Mapping } = {
     cpus: getMapping('FloatValue', 'deploy/resources/limits/cpus'),
     detached: getMapping('Switch', ''),
     'device-cgroup-rule': getMapping('Array', 'device_cgroup_rules'),
+    'device-read-bps': getMapping('DeviceBlockIOConfigRate', 'blkio_config/device_read_bps'),
+    'device-read-iops': getMapping('DeviceBlockIOConfigRate', 'blkio_config/device_read_iops'),
+    'device-write-bps': getMapping('DeviceBlockIOConfigRate', 'blkio_config/device_write_bps'),
+    'device-write-iops': getMapping('DeviceBlockIOConfigRate', 'blkio_config/device_write_iops'),
     device: getMapping('Array', 'devices'),
     'dns-opt': getMapping('Array', 'dns_opt'),
     'dns-search': getMapping('Array', 'dns_search'),

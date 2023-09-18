@@ -112,14 +112,39 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         }: ValueComposeEntry);
     }
 
+    if (mapping.type === 'DeviceBlockIOConfigWeight') {
         const values = Array.isArray(value) ? value : [value];
 
-        return values.map((_value) => {
-            const args = String(_value).split(',');
+        return values.map(_value => {
+            const [path, weight] = String(_value).split(':');
+
             return ({
                 path: mapping.path,
-                value: [Object.fromEntries(args.map((_arg) => _arg.split('=')))],
-            }: KVComposeEntry);
+                value: [
+                    {
+                        path,
+                        weight: parseInt(weight, 10),
+                    },
+                ],
+            }: ValueComposeEntry);
+        });
+    }
+
+    if (mapping.type === 'DeviceBlockIOConfigRate') {
+        const values = Array.isArray(value) ? value : [value];
+
+        return values.map(_value => {
+            const [path, rate] = String(_value).split(':');
+
+            return ({
+                path: mapping.path,
+                value: [
+                    {
+                        path,
+                        rate: /^-?\d+$/.test(String(rate)) ? parseInt(rate, 10) : rate,
+                    },
+                ],
+            }: ValueComposeEntry);
         });
     }
 
