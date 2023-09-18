@@ -409,6 +409,26 @@ test('mount type (https://github.com/magicmark/composerize/issues/412)', () => {
                 image: nginx"
     `);
 });
+
+test('mount type multi (https://github.com/magicmark/composerize/issues/412)', () => {
+    expect(Composerize('docker run --mount type=bind,source=./logs,target=/usr/src/app/logs --mount type=bind,source=./data,target=/usr/src/app/data nginx'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            nginx:
+                volumes:
+                    -
+                        type: bind
+                        source: ./logs
+                        target: /usr/src/app/logs
+                    -
+                        type: bind
+                        source: ./data
+                        target: /usr/src/app/data
+                image: nginx"
+    `);
+});
+
 test('cgroup (https://github.com/magicmark/composerize/issues/561)', () => {
     expect(Composerize('docker run --cgroup-parent=docker.slice --cgroupns private systemd_test'))
         .toMatchInlineSnapshot(`
