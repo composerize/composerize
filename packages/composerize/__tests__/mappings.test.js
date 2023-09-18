@@ -816,6 +816,21 @@ test('--entrypoint', () => {
             `);
 });
 
+test('--security-opt', () => {
+    expect(Composerize('docker run --security-opt label:level:s0:c100,c200 -i -t fedora bash'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            fedora:
+                security_opt:
+                    - 'label:level:s0:c100,c200'
+                stdin_open: true
+                tty: true
+                image: fedora
+                command: bash"
+            `);
+});
+
 test('--device-cgroup-rule', () => {
     expect(Composerize('docker run -d --device-cgroup-rule="c 42:* rmw" --name my-container my-image'))
         .toMatchInlineSnapshot(`

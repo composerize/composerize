@@ -141,6 +141,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     restart: getMapping('Value', 'restart'),
     rm: getMapping('Switch', ''),
     runtime: getMapping('Value', 'runtime'),
+    'security-opt': getMapping('Array', 'security_opt'),
     'shm-size': getMapping('Value', 'shm_size'),
     'stop-signal': getMapping('Value', 'stop_signal'),
     'stop-timeout': getMapping('Value', 'stop_grace_period'),
