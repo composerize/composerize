@@ -441,6 +441,38 @@ test('cgroup (https://github.com/magicmark/composerize/issues/561)', () => {
     `);
 });
 
+test('cpu/share, ip (https://github.com/magicmark/composerize/issues/545)', () => {
+    expect(Composerize('docker run -d --restart always -p 5432:5432 --net postgres_net --ip 172.18.0.100 --name postgres2 --cpus=3 --cpu-shares=512 --log-driver json-file --log-opt max-size=100m --log-opt max-file=10 -v /srv/postgres:/var/lib/postgresql/data postgis/postgis'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            postgis:
+                restart: always
+                ports:
+                    - '5432:5432'
+                networks:
+                    postgres_net:
+                        ipv4_address: 172.18.0.100
+                container_name: postgres2
+                deploy:
+                    resources:
+                        limits:
+                            cpus: 3
+                cpu_shares: 512
+                logging:
+                    driver:
+                        - json-file
+                    options: 'max-size=100m,max-file=10'
+                volumes:
+                    - '/srv/postgres:/var/lib/postgresql/data'
+                image: postgis/postgis
+        networks:
+            postgres_net:
+                external:
+                    name: postgres_net"
+    `);
+});
+
 test('fake multiline (https://github.com/magicmark/composerize/issues/546)', () => {
     expect(Composerize('docker run -d \ -v vol:/tmp \ hello-world \ --parameter'))
         .toMatchInlineSnapshot(`
@@ -474,6 +506,36 @@ test('port no space (https://github.com/magicmark/composerize/issues/113)', () =
                 environment:
                     - NEO4J_AUTH=neo4j/test
                 image: 'neo4j:latest'"
+    `);
+});
+
+test('ip, mac, hostname, network (https://github.com/magicmark/composerize/issues/359)', () => {
+    expect(Composerize('docker run -d --name test --restart=always --net=homenet --ip=192.168.1.9 --ip6=xxxxx --mac-address=00:00:00:00:00:09 --hostname myhost -v /import/settings:/settings -v /import/media:/media -p 8080:8080 -e UID=1000 -e GID=1000 repo/image'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            image:
+                container_name: test
+                restart: always
+                networks:
+                    homenet:
+                        ipv4_address: 192.168.1.9
+                        ipv6_address: xxxxx
+                mac_address: '00:00:00:00:00:09'
+                hostname: myhost
+                volumes:
+                    - '/import/settings:/settings'
+                    - '/import/media:/media'
+                ports:
+                    - '8080:8080'
+                environment:
+                    - UID=1000
+                    - GID=1000
+                image: repo/image
+        networks:
+            homenet:
+                external:
+                    name: homenet"
     `);
 });
 
@@ -644,6 +706,27 @@ test('--expose ', () => {
             `);
 });
 
+test('--ipc --init --userns --uts -u --group-add --oom-kill-disable --oom-score-adj --stop-signal --stop-timeout', () => {
+    expect(Composerize('docker run --ipc shareable --init --userns host --uts uuu -u user1 --group-add groupX --oom-kill-disable --oom-score-adj xxx --stop-signal SIG_TERM --stop-timeout 2s ubuntu'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                ipc: shareable
+                init: true
+                userns_mode: host
+                uts: uuu
+                user: user1
+                group_add:
+                    - groupX
+                oom_kill_disable: true
+                oom_score_adj: xxx
+                stop_signal: SIG_TERM
+                stop_grace_period: 2s
+                image: ubuntu"
+            `);
+});
+
 test('--label', () => {
     expect(Composerize('docker run -l my-label --label com.example.foo=bar ubuntu bash'))
         .toMatchInlineSnapshot(`
@@ -655,6 +738,33 @@ test('--label', () => {
                     - com.example.foo=bar
                 image: ubuntu
                 command: bash"
+            `);
+});
+
+test('deploy limits', () => {
+    expect(Composerize('docker run --cpus 1.5 --pids-limit 1500 --shm-size 15G --memory 15G --memory-reservation 12G --memory-swap yyy --memory-swappiness zzz --cpu-period xxx --cpu-quota xxx --cpu-rt-period xxx --cpu-rt-runtime xxx --volumes-from other2 ubuntu'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                deploy:
+                    resources:
+                        limits:
+                            cpus: 1.5
+                            pids: 1500
+                            memory: 15G
+                        reservations:
+                            memory: 12G
+                shm_size: 15G
+                memswap_limit: yyy
+                mem_swappiness: zzz
+                cpu_period: xxx
+                cpu_quota: xxx
+                cpu_rt_period: xxx
+                cpu_rt_runtime: xxx
+                volume_from:
+                    - other2
+                image: ubuntu"
             `);
 });
 

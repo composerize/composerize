@@ -82,6 +82,12 @@ export const MAPPINGS: { [string]: Mapping } = {
     'cap-drop': getMapping('Array', 'cap_drop'),
     'cgroup-parent': getMapping('Value', 'cgroup_parent'),
     cgroupns: getMapping('Value', 'cgroup'),
+    'cpu-period': getMapping('Value', 'cpu_period'),
+    'cpu-quota': getMapping('Value', 'cpu_quota'),
+    'cpu-rt-period': getMapping('Value', 'cpu_rt_period'),
+    'cpu-rt-runtime': getMapping('Value', 'cpu_rt_runtime'),
+    'cpu-shares': getMapping('IntValue', 'cpu_shares'),
+    cpus: getMapping('FloatValue', 'deploy/resources/limits/cpus'),
     detached: getMapping('Switch', ''),
     'device-cgroup-rule': getMapping('Array', 'device_cgroup_rules'),
     device: getMapping('Array', 'devices'),
@@ -94,12 +100,14 @@ export const MAPPINGS: { [string]: Mapping } = {
     env: getMapping('Array', 'environment'),
     expose: getMapping('Array', 'expose'),
     gpus: getMapping('Gpus', 'deploy'),
+    'group-add': getMapping('Array', 'group_add'),
     'health-cmd': getMapping('Value', 'healthcheck/test'),
     'health-interval': getMapping('Value', 'healthcheck/interval'),
     'health-retries': getMapping('Value', 'healthcheck/retries'),
     'health-start-period': getMapping('Value', 'healthcheck/start_period'),
     'health-timeout': getMapping('Value', 'healthcheck/timeout'),
     hostname: getMapping('Value', 'hostname'),
+    init: getMapping('Switch', 'init'),
     interactive: getMapping('Switch', 'stdin_open'),
     ip6: getMapping('Value', 'networks/¤network¤/ipv6_address'),
     ip: getMapping('Value', 'networks/¤network¤/ipv4_address'),
@@ -111,13 +119,20 @@ export const MAPPINGS: { [string]: Mapping } = {
     'log-driver': getMapping('Array', 'logging/driver'),
     'log-opt': getMapping('KeyValue', 'logging/options'),
     'mac-address': getMapping('Value', 'mac_address'),
+    'memory-reservation': getMapping('Value', 'deploy/resources/reservations/memory'),
+    'memory-swap': getMapping('Value', 'memswap_limit'),
+    'memory-swappiness': getMapping('Value', 'mem_swappiness'),
+    memory: getMapping('Value', 'deploy/resources/limits/memory'),
     mount: getMapping('MapArray', 'volumes'),
     name: getMapping('Value', 'container_name'),
     net: getMapping('Networks', 'network_mode'), // alias for network
     'network-alias': getMapping('Array', 'networks/¤network¤/aliases'),
     network: getMapping('Networks', 'network_mode'),
     'no-healthcheck': getMapping('Switch', 'healthcheck/disable'),
+    'oom-kill-disable': getMapping('Switch', 'oom_kill_disable'),
+    'oom-score-adj': getMapping('Value', 'oom_score_adj'),
     pid: getMapping('Value', 'pid'),
+    'pids-limit': getMapping('IntValue', 'deploy/resources/limits/pids'),
     platform: getMapping('Value', 'platform'),
     privileged: getMapping('Switch', 'privileged'),
     publish: getMapping('Array', 'ports'),
@@ -126,13 +141,19 @@ export const MAPPINGS: { [string]: Mapping } = {
     restart: getMapping('Value', 'restart'),
     rm: getMapping('Switch', ''),
     runtime: getMapping('Value', 'runtime'),
+    'shm-size': getMapping('Value', 'shm_size'),
+    'stop-signal': getMapping('Value', 'stop_signal'),
+    'stop-timeout': getMapping('Value', 'stop_grace_period'),
     'storage-opt': getMapping('Map', 'storage_opt'),
     sysctl: getMapping('Array', 'sysctls'),
     tmpfs: getMapping('Value', 'tmpfs'),
     tty: getMapping('Switch', 'tty'),
     ulimit: getMapping('Ulimits', 'ulimits'),
     user: getMapping('Value', 'user'),
+    userns: getMapping('Value', 'userns_mode'),
+    uts: getMapping('Value', 'uts'),
     volume: getMapping('Array', 'volumes'),
+    'volumes-from': getMapping('Array', 'volume_from'),
     workdir: getMapping('Value', 'working_dir'),
 };
 
@@ -144,7 +165,9 @@ MAPPINGS.l = MAPPINGS.label;
 MAPPINGS.h = MAPPINGS.hostname;
 MAPPINGS.u = MAPPINGS.user;
 MAPPINGS.w = MAPPINGS.workdir;
+MAPPINGS.c = MAPPINGS['cpu-shares'];
 MAPPINGS.l = MAPPINGS.label;
 MAPPINGS.t = MAPPINGS.tty;
 MAPPINGS.i = MAPPINGS.interactive;
+MAPPINGS.m = MAPPINGS.memory;
 MAPPINGS.d = MAPPINGS.detached;
