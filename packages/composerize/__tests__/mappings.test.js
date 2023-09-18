@@ -176,6 +176,8 @@ test('-it image name (https://github.com/magicmark/composerize/issues/544)', () 
             ctfd:
                 ports:
                     - '8000:8000'
+                stdin_open: true
+                tty: true
                 image: ctfd/ctfd"
     `);
     });
@@ -301,6 +303,8 @@ test('tmpfs (https://github.com/magicmark/composerize/issues/536)', () => {
         "version: '3.3'
         services:
             check-mk-raw:
+                stdin_open: true
+                tty: true
                 ports:
                     - '8080:5000'
                 tmpfs: '/opt/omd/sites/cmk/tmp:uid=1000,gid=1000'

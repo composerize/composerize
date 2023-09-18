@@ -73,6 +73,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     env_file: getMapping('Array', 'env_file'),
     expose: getMapping('Array', 'expose'),
     hostname: getMapping('Value', 'hostname'),
+    interactive: getMapping('Switch', 'stdin_open'),
     label: getMapping('Array', 'labels'),
     link: getMapping('Array', 'links'),
     'log-driver': getMapping('Array', 'logging/driver'),
@@ -89,6 +90,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     'read-only': getMapping('Switch', 'read_only'),
     restart: getMapping('Value', 'restart'),
     tmpfs: getMapping('Value', 'tmpfs'),
+    tty: getMapping('Switch', 'tty'),
     ulimit: getMapping('Ulimits', 'ulimits'),
     user: getMapping('Value', 'user'),
     volume: getMapping('Array', 'volumes'),
@@ -102,3 +104,5 @@ MAPPINGS.e = MAPPINGS.env;
 MAPPINGS.l = MAPPINGS.label;
 MAPPINGS.h = MAPPINGS.hostname;
 MAPPINGS.u = MAPPINGS.user;
+MAPPINGS.t = MAPPINGS.tty;
+MAPPINGS.i = MAPPINGS.interactive;

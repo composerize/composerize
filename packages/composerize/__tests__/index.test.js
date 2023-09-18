@@ -83,6 +83,7 @@ test('multiple args (https://github.com/magicmark/composerize/issues/9)', () => 
     "version: '3.3'
     services:
         youtrack:
+            tty: true
             container_name: youtrack
             volumes:
                 - '/data/youtrack/data/:/opt/youtrack/data/'
