@@ -120,6 +120,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     ulimit: getMapping('Ulimits', 'ulimits'),
     user: getMapping('Value', 'user'),
     volume: getMapping('Array', 'volumes'),
+    workdir: getMapping('Value', 'working_dir'),
 };
 
 // Add flag mappings
@@ -129,6 +130,7 @@ MAPPINGS.e = MAPPINGS.env;
 MAPPINGS.l = MAPPINGS.label;
 MAPPINGS.h = MAPPINGS.hostname;
 MAPPINGS.u = MAPPINGS.user;
+MAPPINGS.w = MAPPINGS.workdir;
 MAPPINGS.t = MAPPINGS.tty;
 MAPPINGS.i = MAPPINGS.interactive;
 MAPPINGS.d = MAPPINGS.detached;

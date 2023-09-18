@@ -477,6 +477,24 @@ test('port no space (https://github.com/magicmark/composerize/issues/113)', () =
     `);
 });
 
+test('-w working_dir', () => {
+    expect(Composerize('docker run -ti --rm -v ~/.ivy2:/root/.ivy2 -v ~/.sbt:/root/.sbt -v $PWD:/app -w /app mozilla/sbt sbt shell'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            sbt:
+                tty: true
+                stdin_open: true
+                volumes:
+                    - '~/.ivy2:/root/.ivy2'
+                    - '~/.sbt:/root/.sbt'
+                    - '$PWD:/app'
+                working_dir: /app
+                image: mozilla/sbt
+                command: 'sbt shell'"
+    `);
+});
+
 test('private registry (https://github.com/magicmark/composerize/issues/15)', () => {
     expect(Composerize('docker run --restart=always --privileged --name jatdb -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="somepass" -v ~/jat/mongodata:/data/db registry.cloud.local/js/mongo'))
         .toMatchInlineSnapshot(`
