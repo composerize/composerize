@@ -571,6 +571,19 @@ test('--sysctl', () => {
             `);
 });
 
+test('--expose ', () => {
+    expect(Composerize('docker run --expose 1500-1505 --expose=80 ubuntu'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                expose:
+                    - 1500-1505
+                    - 80
+                image: ubuntu"
+            `);
+});
+
 test('--label', () => {
     expect(Composerize('docker run -l my-label --label com.example.foo=bar ubuntu bash'))
         .toMatchInlineSnapshot(`
