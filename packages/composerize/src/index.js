@@ -114,7 +114,8 @@ export default (input: string): ?string => {
         result = { ...result, networks };
     }
     if (namedVolumes.length > 0) {
-        result.volumes = Object.fromEntries(namedVolumes);
+        const volumes = fromEntries(namedVolumes);
+        result = { ...result, volumes };
     }
 
     return yamljs.stringify(result, 9, 4).trim();
