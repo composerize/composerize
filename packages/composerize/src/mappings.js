@@ -54,7 +54,17 @@ export type ValueComposeEntry = {
     value: string | number,
 };
 
-export type ComposeEntry = ArrayComposeEntry | KVComposeEntry | SwitchComposeEntry | ValueComposeEntry;
+export type IgnoreComposeEntry = {
+    path: null,
+    value: null,
+};
+
+export type ComposeEntry =
+    | ArrayComposeEntry
+    | KVComposeEntry
+    | SwitchComposeEntry
+    | ValueComposeEntry
+    | IgnoreComposeEntry;
 
 export const getMapping = (type: ArgType, path: string): Mapping => ({
     type,
@@ -68,6 +78,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     cap_drop: getMapping('Array', 'cap_drop'),
     'cgroup-parent': getMapping('Value', 'cgroup_parent'),
     cgroupns: getMapping('Value', 'cgroup'),
+    detached: getMapping('Switch', ''),
     device: getMapping('Array', 'devices'),
     dns: getMapping('Array', 'dns'),
     dns_search: getMapping('Array', 'dns_search'),
@@ -92,6 +103,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     publish: getMapping('Array', 'ports'),
     'read-only': getMapping('Switch', 'read_only'),
     restart: getMapping('Value', 'restart'),
+    rm: getMapping('Switch', ''),
     tmpfs: getMapping('Value', 'tmpfs'),
     tty: getMapping('Switch', 'tty'),
     ulimit: getMapping('Ulimits', 'ulimits'),
@@ -108,3 +120,4 @@ MAPPINGS.h = MAPPINGS.hostname;
 MAPPINGS.u = MAPPINGS.user;
 MAPPINGS.t = MAPPINGS.tty;
 MAPPINGS.i = MAPPINGS.interactive;
+MAPPINGS.d = MAPPINGS.detached;

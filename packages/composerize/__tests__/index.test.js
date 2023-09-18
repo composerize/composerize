@@ -106,3 +106,13 @@ test('testing parsing of quotes (https://github.com/magicmark/composerize/issues
             image: nginx"
   `);
 });
+test('--rm', () => {
+    const command = 'docker run --rm=True ubuntu';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+    "version: '3.3'
+    services:
+        ubuntu:
+            image: ubuntu"
+  `);
+});

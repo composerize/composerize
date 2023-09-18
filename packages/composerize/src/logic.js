@@ -9,6 +9,7 @@ import type {
     ArrayComposeEntry,
     SwitchComposeEntry,
     ValueComposeEntry,
+    IgnoreComposeEntry,
     Mapping,
 } from './mappings';
 
@@ -137,8 +138,12 @@ export const maybeGetComposeEntry = (
     const mapping = MAPPINGS[mapKey];
 
     if (!mapping) {
-        // TODO: Throw error / warning
         return null;
+    }
+
+    if (mapping.path === '') {
+        // TODO: Throw error / warning
+        return ({}: IgnoreComposeEntry);
     }
 
     // Ensure there is a value
@@ -152,6 +157,9 @@ export const maybeGetComposeEntry = (
 };
 
 export const getComposeJson = (entry: ComposeEntry, network: any): any => {
+    if (!entry.path) return {};
+
+    // $FlowFixMe: used to discard IgnoreComposeEntry, path and value does not exists
     return entry.path
         .replace('¤network¤', network.toString())
         .split('/')
