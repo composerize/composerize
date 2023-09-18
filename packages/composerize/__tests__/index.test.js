@@ -187,6 +187,21 @@ test('testing with unknown args ()', () => {
             image: nginx"
   `);
 });
+
+test('testing malformed command line', () => {
+    const command = 'docker run --name="foobar" --bool nginx';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+    "# ignored options for '!!!invalid!!!'
+    # --bool=nginx
+    version: '3.3'
+    services:
+        '!!!invalid!!!':
+            container_name: foobar
+            image: null"
+  `);
+});
+
 test('--rm', () => {
     const command = 'docker run --rm=True ubuntu';
 
