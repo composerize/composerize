@@ -35,6 +35,21 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         }: ArrayComposeEntry);
     }
 
+    if (mapping.type === 'Networks') {
+        const stringValue = String(value);
+        if (!stringValue.match(/^(host|bridge|none)$|^container:.+/)) {
+            return ({
+                path: 'networks',
+                value: [stringValue],
+            }: ValueComposeEntry);
+        }
+
+        return ({
+            path: 'network_mode',
+            value: stringValue,
+        }: ValueComposeEntry);
+    }
+
     if (mapping.type === 'Switch') {
         return ({
             path: mapping.path,
@@ -136,5 +151,9 @@ export const maybeGetComposeEntry = (
     return getComposeEntry(mapping, value);
 };
 
-export const getComposeJson = (entry: ComposeEntry): any =>
-    entry.path.split('/').reduceRight((prev, pathItem) => ({ [pathItem]: prev }), entry.value);
+export const getComposeJson = (entry: ComposeEntry, network: any): any => {
+    return entry.path
+        .replace('¤network¤', network.toString())
+        .split('/')
+        .reduceRight((prev, pathItem) => ({ [pathItem]: prev }), entry.value);
+};

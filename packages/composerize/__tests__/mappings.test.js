@@ -341,7 +341,8 @@ test('multiline (https://github.com/magicmark/composerize/issues/120)', () => {
         services:
             kong:
                 container_name: kong
-                network_mode: kong-net
+                networks:
+                    - kong-net
                 environment:
                     - KONG_DATABASE=postgres
                     - KONG_PG_HOST=kong-database
@@ -356,7 +357,11 @@ test('multiline (https://github.com/magicmark/composerize/issues/120)', () => {
                     - '8443:8443'
                     - '8001:8001'
                     - '8444:8444'
-                image: 'kong:latest'"
+                image: 'kong:latest'
+        networks:
+            kong-net:
+                external:
+                    name: kong-net"
     `);
 });
 
@@ -384,5 +389,25 @@ test('cgroup (https://github.com/magicmark/composerize/issues/561)', () => {
                 cgroup: private
                 image: systemd_test"
     `);
+});
+
+test('--network-alias --link-local-ip', () => {
+    expect(Composerize('docker run --net reseau --network-alias=ubuntu_res --link-local-ip 192.168.0.1 ubuntu'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                networks:
+                    reseau:
+                        aliases:
+                            - ubuntu_res
+                        link_local_ips:
+                            - 192.168.0.1
+                image: ubuntu
+        networks:
+            reseau:
+                external:
+                    name: reseau"
+            `);
 });
 

@@ -82,9 +82,10 @@ export const MAPPINGS: { [string]: Mapping } = {
     entrypoint: getMapping('Array', 'entrypoint'),
     env: getMapping('Array', 'environment'),
     name: getMapping('Value', 'container_name'),
-    network: getMapping('Value', 'network_mode'),
-    net: getMapping('Value', 'network_mode'), // alias for network
     mount: getMapping('Mounts', 'volumes'),
+    net: getMapping('Networks', 'network_mode'), // alias for network
+    'network-alias': getMapping('Array', 'networks/¤network¤/aliases'),
+    network: getMapping('Networks', 'network_mode'),
     pid: getMapping('Value', 'pid'),
     privileged: getMapping('Switch', 'privileged'),
     publish: getMapping('Array', 'ports'),

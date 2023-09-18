@@ -35,6 +35,10 @@ export default (input: string): ?string => {
     // The service object that we'll update
     let service = {};
 
+    // $FlowFixMe: may be do better
+    const { net: netArg, network: networkArg } = params;
+    const network = netArg || networkArg || 'default';
+
     // Loop through the tokens and append to the service object
     Object.entries(params).forEach(([key, value]: [string, RawValue | mixed]) => {
         // https://github.com/facebook/flow/issues/2174
@@ -79,6 +83,23 @@ export default (input: string): ?string => {
         }
     }
 
+    const namedNetworks = [];
+    if (service.networks) {
+        if (Array.isArray(service.networks)) {
+            for (let networkIndex = 0; networkIndex < service.networks.length; networkIndex += 1) {
+                namedNetworks.push([
+                    service.networks[networkIndex],
+                    { external: { name: service.networks[networkIndex] } },
+                ]);
+            }
+        } else {
+            Object.keys(service.networks).forEach(serviceNetworkName => {
+                // TODO: supposed to be done by babel : if (service.networks.hasOwnProperty(network))
+                namedNetworks.push([serviceNetworkName, { external: { name: serviceNetworkName } }]);
+            });
+        }
+    }
+
     const serviceName = getServiceName(image);
 
     // Outer template
@@ -88,6 +109,10 @@ export default (input: string): ?string => {
             [serviceName]: service,
         },
     };
+    if (namedNetworks.length > 0) {
+        const networks = fromEntries(namedNetworks);
+        result = { ...result, networks };
+    }
     if (namedVolumes.length > 0) {
         result.volumes = Object.fromEntries(namedVolumes);
     }
