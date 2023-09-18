@@ -24,6 +24,7 @@ export const getComposeFileJson = (input: string): ComposeFile => {
     const formattedInput = input
         .replace(/(\s)+/g, ' ')
         .trim()
+        .replace(/\s-p(\d)/g, ' -p $1')
         .replace(/\s\\\s/g, ' ');
     const formattedInputArgs = formattedInput.replace(/^docker (run|create|container run|service create)/, '');
     const parsedInput: {

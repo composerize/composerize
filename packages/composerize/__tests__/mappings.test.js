@@ -435,6 +435,27 @@ test('fake multiline (https://github.com/magicmark/composerize/issues/546)', () 
     `);
 });
     
+test('port no space (https://github.com/magicmark/composerize/issues/113)', () => {
+    expect(Composerize('docker run \     --name testneo4j \     -p7474:7474 -p7687:7687 \     -d \     -v $HOME/neo4j/data:/data \     -v $HOME/neo4j/logs:/logs \     -v $HOME/neo4j/import:/var/lib/neo4j/import \     -v $HOME/neo4j/plugins:/plugins \     --env NEO4J_AUTH=neo4j/test \     neo4j:latest'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            neo4j:
+                container_name: testneo4j
+                ports:
+                    - '7474:7474'
+                    - '7687:7687'
+                volumes:
+                    - '$HOME/neo4j/data:/data'
+                    - '$HOME/neo4j/logs:/logs'
+                    - '$HOME/neo4j/import:/var/lib/neo4j/import'
+                    - '$HOME/neo4j/plugins:/plugins'
+                environment:
+                    - NEO4J_AUTH=neo4j/test
+                image: 'neo4j:latest'"
+    `);
+});
+
 test('private registry (https://github.com/magicmark/composerize/issues/15)', () => {
     expect(Composerize('docker run --restart=always --privileged --name jatdb -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="somepass" -v ~/jat/mongodata:/data/db registry.cloud.local/js/mongo'))
         .toMatchInlineSnapshot(`
