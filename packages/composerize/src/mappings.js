@@ -6,10 +6,6 @@ export type ArgType =
     // e.g. --device (https://docs.docker.com/compose/compose-file/#devices)
     | 'Array'
 
-    // Used to store a mapping of one key to one value
-    // e.g. --log-driver (https://docs.docker.com/compose/compose-file/#logging)
-    | 'KeyValue'
-
     // Used to store a "limits" value of the input format: <type>=<soft limit>[:<hard limit>]
     // e.g. --ulimit
     // @see https://docs.docker.com/compose/compose-file/#ulimits

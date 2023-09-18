@@ -462,7 +462,7 @@ test('cpu/share, ip (https://github.com/magicmark/composerize/issues/545)', () =
                 logging:
                     driver:
                         - json-file
-                    options: 
+                    options:
                         max-size: 100m
                         max-file: 10
                 volumes:

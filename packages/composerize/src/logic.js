@@ -24,7 +24,7 @@ const parseListAsValueComposeEntryObject = (argValue: string, listSeparator: str
     return fromEntries(
         args.map(_arg => {
             const [k, v] = _arg.split(entrySeparator, 2);
-            return [k, v];
+            return [k, /^-?\d+$/.test(String(v)) ? parseInt(v, 10) : v];
         }),
     );
 };
@@ -33,15 +33,6 @@ const parseListAsValueComposeEntryObject = (argValue: string, listSeparator: str
  * Turn a mapping and the value of the mapping into a formatted json object
  */
 export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry | Array<ComposeEntry> => {
-    if (mapping.type === 'KeyValue' && typeof value === 'string') {
-        return ({
-            path: mapping.path,
-            value: {
-                [value.split('=')[0]]: value.split('=')[1],
-            },
-        }: KVComposeEntry);
-    }
-
     if (mapping.type === 'Array') {
         return ({
             path: mapping.path,
