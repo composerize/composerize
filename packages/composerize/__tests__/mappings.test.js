@@ -558,6 +558,31 @@ test('publish-all (https://github.com/magicmark/composerize/issues/19)', () => {
             `);
 });
 
+test('storage-opt multi', () => {
+    expect(Composerize('docker run --storage-opt size=120G --storage-opt dummy=xxx fedora'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            fedora:
+                storage_opt:
+                    size: 120G
+                    dummy: xxx
+                image: fedora"
+            `);
+});
+
+test('storage-opt simple', () => {
+    expect(Composerize('docker run --storage-opt size=120G fedora'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            fedora:
+                storage_opt:
+                    size: 120G
+                image: fedora"
+            `);
+});
+
 test('--sysctl', () => {
     expect(Composerize('docker run --sysctl net.core.somaxconn=1024 --sysctl net.ipv4.tw_reuse=1 someimage'))
         .toMatchInlineSnapshot(`

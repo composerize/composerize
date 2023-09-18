@@ -118,6 +118,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     'read-only': getMapping('Switch', 'read_only'),
     restart: getMapping('Value', 'restart'),
     rm: getMapping('Switch', ''),
+    'storage-opt': getMapping('Map', 'storage_opt'),
     sysctl: getMapping('Array', 'sysctls'),
     tmpfs: getMapping('Value', 'tmpfs'),
     tty: getMapping('Switch', 'tty'),
