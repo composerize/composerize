@@ -18,7 +18,7 @@ import type { RawValue } from './index';
 export const fromEntries = (iterable: Iterable<any>) =>
     [...iterable].reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {});
 
-const parseListAsValueComposeEntryObject = (argValue: String, listSeparator: string, entrySeparator: string) => {
+const parseListAsValueComposeEntryObject = (argValue: string, listSeparator: string, entrySeparator: string) => {
     const args = argValue.split(listSeparator);
 
     return fromEntries(
@@ -98,7 +98,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
             _value =>
                 ({
                     path: mapping.path,
-                    value: [parseListAsValueComposeEntryObject(_value, ',', '=')],
+                    value: [parseListAsValueComposeEntryObject(String(_value), ',', '=')],
                 }: ValueComposeEntry),
         );
     }
@@ -108,7 +108,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
 
         return ({
             path: mapping.path,
-            value: parseListAsValueComposeEntryObject(argValue, ',', '='),
+            value: parseListAsValueComposeEntryObject(String(argValue), ',', '='),
         }: ValueComposeEntry);
     }
 
