@@ -571,6 +571,19 @@ test('--sysctl', () => {
             `);
 });
 
+test('--env-file', () => {
+    expect(Composerize('docker run --env-file ./env.list ubuntu bash'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                env_file:
+                    - ./env.list
+                image: ubuntu
+                command: bash"
+            `);
+});
+
 test('--expose ', () => {
     expect(Composerize('docker run --expose 1500-1505 --expose=80 ubuntu'))
         .toMatchInlineSnapshot(`
