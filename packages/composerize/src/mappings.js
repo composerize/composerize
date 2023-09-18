@@ -78,8 +78,8 @@ export const getMapping = (type: ArgType, path: string): Mapping => ({
 // docker cli -> docker-compose options
 export const MAPPINGS: { [string]: Mapping } = {
     'add-host': getMapping('Array', 'extra_hosts'),
-    cap_add: getMapping('Array', 'cap_add'),
-    cap_drop: getMapping('Array', 'cap_drop'),
+    'cap-add': getMapping('Array', 'cap_add'),
+    'cap-drop': getMapping('Array', 'cap_drop'),
     'cgroup-parent': getMapping('Value', 'cgroup_parent'),
     cgroupns: getMapping('Value', 'cgroup'),
     detached: getMapping('Switch', ''),

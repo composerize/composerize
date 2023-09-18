@@ -476,6 +476,35 @@ test('private registry (https://github.com/magicmark/composerize/issues/15)', ()
                 image: registry.cloud.local/js/mongo"
     `);
 });
+
+test('cap_add, cap_drop, pid, net, prviledged, device (https://github.com/magicmark/composerize/issues/30)', () => {
+    expect(Composerize('docker run -d --name storageos -e HOSTNAME  -e ADVERTISE_IP=xxx.xxx.xxx.xxx  -e JOIN=xxxxxxxxxxxxxxxxx  --net=host  --pid=host  --privileged  --cap-add SYS_ADMIN --cap-drop XXX --device /dev/fuse  -v /var/lib/storageos:/var/lib/storageos:rshared  -v /run/docker/plugins:/run/docker/plugins  storageos/node:0.10.0 server'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            node:
+                container_name: storageos
+                environment:
+                    - HOSTNAME
+                    - ADVERTISE_IP=xxx.xxx.xxx.xxx
+                    - JOIN=xxxxxxxxxxxxxxxxx
+                network_mode: host
+                pid: host
+                privileged: true
+                cap_add:
+                    - SYS_ADMIN
+                cap_drop:
+                    - XXX
+                devices:
+                    - /dev/fuse
+                volumes:
+                    - '/var/lib/storageos:/var/lib/storageos:rshared'
+                    - '/run/docker/plugins:/run/docker/plugins'
+                image: 'storageos/node:0.10.0'
+                command: server"
+    `);
+});
+
 test('publish-all (https://github.com/magicmark/composerize/issues/19)', () => {
     expect(Composerize('docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog'))
         .toMatchInlineSnapshot(`
