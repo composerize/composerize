@@ -592,6 +592,20 @@ test('--network-alias --link-local-ip', () => {
             `);
 });
 
+test('--entrypoint', () => {
+    expect(Composerize('docker run --entrypoint /bin/bash --no-healthcheck ubuntu'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ubuntu:
+                entrypoint:
+                    - /bin/bash
+                healthcheck:
+                    disable: true
+                image: ubuntu"
+            `);
+});
+
 test('--healthcheck-cmd ', () => {
     const command =
         'docker run --health-cmd=healthcheck.sh --health-interval=60s --health-timeout=10s --health-start-period=30s --health-retries=2  nginx:latest';
