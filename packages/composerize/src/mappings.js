@@ -83,6 +83,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     'cgroup-parent': getMapping('Value', 'cgroup_parent'),
     cgroupns: getMapping('Value', 'cgroup'),
     detached: getMapping('Switch', ''),
+    'device-cgroup-rule': getMapping('Array', 'device_cgroup_rules'),
     device: getMapping('Array', 'devices'),
     dns: getMapping('Array', 'dns'),
     dns_search: getMapping('Array', 'dns_search'),

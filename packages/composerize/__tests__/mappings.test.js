@@ -632,6 +632,19 @@ test('--entrypoint', () => {
             `);
 });
 
+test('--device-cgroup-rule', () => {
+    expect(Composerize('docker run -d --device-cgroup-rule="c 42:* rmw" --name my-container my-image'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            my-image:
+                device_cgroup_rules:
+                    - 'c 42:* rmw'
+                container_name: my-container
+                image: my-image"
+            `);
+});
+
 test('--healthcheck-cmd ', () => {
     const command =
         'docker run --health-cmd=healthcheck.sh --health-interval=60s --health-timeout=10s --health-start-period=30s --health-retries=2  nginx:latest';
