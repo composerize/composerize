@@ -73,6 +73,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     dns_search: getMapping('Array', 'dns_search'),
     env_file: getMapping('Array', 'env_file'),
     expose: getMapping('Array', 'expose'),
+    gpus: getMapping('Gpus', 'deploy'),
     hostname: getMapping('Value', 'hostname'),
     interactive: getMapping('Switch', 'stdin_open'),
     label: getMapping('Array', 'labels'),
@@ -96,7 +97,6 @@ export const MAPPINGS: { [string]: Mapping } = {
     ulimit: getMapping('Ulimits', 'ulimits'),
     user: getMapping('Value', 'user'),
     volume: getMapping('Array', 'volumes'),
-    gpus: getMapping('Gpus', 'deploy'),
 };
 
 // Add flag mappings

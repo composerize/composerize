@@ -66,7 +66,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
                         devices: [
                             {
                                 driver: 'nvidia',
-                                count: value === 'all' ? 1 : parseInt(value, 10),
+                                count: value === 'all' ? 'all' : parseInt(value, 10),
                                 capabilities: ['gpu'],
                             },
                         ],

@@ -202,12 +202,39 @@ test('command name (https://github.com/magicmark/composerize/issues/549)', () =>
     `);
     });
 
-test('gpus (https://github.com/magicmark/composerize/issues/550)', () => {
+test('gpus all (https://github.com/magicmark/composerize/issues/550)', () => {
     expect(Composerize('docker run -it --rm --gpus all -p 3000:3000 -v /opt/ai-art:/data overshard/ai-art'))
         .toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             ai-art:
+                stdin_open: true
+                tty: true
+                deploy:
+                    resources:
+                        reservations:
+                            devices:
+                                -
+                                    driver: nvidia
+                                    count: all
+                                    capabilities:
+                                        - gpu
+                ports:
+                    - '3000:3000'
+                volumes:
+                    - '/opt/ai-art:/data'
+                image: overshard/ai-art"
+    `);
+    });
+
+test('gpus 1 (https://github.com/magicmark/composerize/issues/550)', () => {
+    expect(Composerize('docker run -it --rm --gpus 1 -p 3000:3000 -v /opt/ai-art:/data overshard/ai-art'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            ai-art:
+                stdin_open: true
+                tty: true
                 deploy:
                     resources:
                         reservations:
