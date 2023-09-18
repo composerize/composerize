@@ -11,7 +11,7 @@ import { maybeGetComposeEntry, getComposeJson } from './logic';
 export type RawValue = string | number | boolean | [string | number | boolean];
 
 const getServiceName = (image: string): string => {
-    let name = image.includes('/') ? image.split('/')[1] : image;
+    let name = image.includes('/') ? image.split('/').slice(-1)[0] : image;
     name = name.includes(':') ? name.split(':')[0] : name;
 
     return name;

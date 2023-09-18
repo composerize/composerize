@@ -279,7 +279,9 @@ test('command args (https://github.com/magicmark/composerize/issues/484)', () =>
     ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
-            iotedge:
+            opc-plc:
+                stdin_open: true
+                tty: true
                 ports:
                     - '50000:50000'
                     - '8080:8080'
@@ -418,6 +420,25 @@ test('cgroup (https://github.com/magicmark/composerize/issues/561)', () => {
     `);
 });
 
+test('private registry (https://github.com/magicmark/composerize/issues/15)', () => {
+    expect(Composerize('docker run --restart=always --privileged --name jatdb -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="somepass" -v ~/jat/mongodata:/data/db registry.cloud.local/js/mongo'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            mongo:
+                restart: always
+                privileged: true
+                container_name: jatdb
+                ports:
+                    - '27017:27017'
+                    - '28017:28017'
+                environment:
+                    - MONGODB_PASS=somepass
+                volumes:
+                    - '~/jat/mongodata:/data/db'
+                image: registry.cloud.local/js/mongo"
+    `);
+});
 test('--network-alias --link-local-ip', () => {
     expect(Composerize('docker run --net reseau --network-alias=ubuntu_res --link-local-ip 192.168.0.1 ubuntu'))
         .toMatchInlineSnapshot(`
