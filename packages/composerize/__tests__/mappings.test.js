@@ -571,6 +571,28 @@ test('--sysctl', () => {
             `);
 });
 
+test('dns, link, add host', () => {
+    expect(Composerize('docker run --dns 8.8.8.8 --dns 127.0.0.1 --dns-search domain.com --dns-opt attempts:10 --link other_container --add-host=2.example2.com:10.0.0.2 --add-host=3.example.com:10.0.0.3 my/container'))
+        .toMatchInlineSnapshot(`
+        "version: '3.3'
+        services:
+            container:
+                dns:
+                    - 8.8.8.8
+                    - 127.0.0.1
+                dns_search:
+                    - domain.com
+                dns_opt:
+                    - 'attempts:10'
+                links:
+                    - other_container
+                extra_hosts:
+                    - '2.example2.com:10.0.0.2'
+                    - '3.example.com:10.0.0.3'
+                image: my/container"
+            `);
+});
+
 test('--env-file', () => {
     expect(Composerize('docker run --env-file ./env.list ubuntu bash'))
         .toMatchInlineSnapshot(`
