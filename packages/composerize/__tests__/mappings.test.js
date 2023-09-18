@@ -60,14 +60,15 @@ test('--label', () => {
       `);
 });
 
-test('--hostname', () => {
-    const command = 'docker run --hostname myHostName -p 80:80 foobar/baz:latest';
+test('--hostname --domainname', () => {
+    const command = 'docker run --hostname myHostName --domainname example.org -p 80:80 foobar/baz:latest';
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
             "version: '3.3'
             services:
                 baz:
                     hostname: myHostName
+                    domainname: example.org
                     ports:
                         - '80:80'
                     image: 'foobar/baz:latest'"

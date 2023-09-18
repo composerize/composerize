@@ -87,6 +87,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     dns: getMapping('Array', 'dns'),
     dns_search: getMapping('Array', 'dns_search'),
     env_file: getMapping('Array', 'env_file'),
+    domainname: getMapping('Value', 'domainname'),
     expose: getMapping('Array', 'expose'),
     gpus: getMapping('Gpus', 'deploy'),
     'health-cmd': getMapping('Value', 'healthcheck/test'),
