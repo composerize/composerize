@@ -5,7 +5,6 @@ import CBox from './CBox';
 
 const StyledInput = styled.textarea`
     ${CBox}
-	height:8em;
 `;
 
 export default class TextInput extends Component {
@@ -18,6 +17,7 @@ export default class TextInput extends Component {
 
         return (
             <StyledInput
+                rows={3}
                 value={command}
                 onChange={e => {
                     this.handleChange(e);
