@@ -181,7 +181,7 @@ test('-it image name (https://github.com/magicmark/composerize/issues/544)', () 
                 tty: true
                 image: ctfd/ctfd"
     `);
-    });
+});
 
 test('command name (https://github.com/magicmark/composerize/issues/549)', () => {
     expect(
@@ -201,7 +201,7 @@ test('command name (https://github.com/magicmark/composerize/issues/549)', () =>
                 image: tailscale/tailscale
                 command: tailscaled"
     `);
-    });
+});
 
 test('gpus all (https://github.com/magicmark/composerize/issues/550)', () => {
     expect(Composerize('docker run -it --rm --gpus all -p 3000:3000 -v /opt/ai-art:/data overshard/ai-art'))
@@ -226,7 +226,7 @@ test('gpus all (https://github.com/magicmark/composerize/issues/550)', () => {
                     - '/opt/ai-art:/data'
                 image: overshard/ai-art"
     `);
-    });
+});
 
 test('gpus 1 (https://github.com/magicmark/composerize/issues/550)', () => {
     expect(Composerize('docker run -it --rm --gpus 1 -p 3000:3000 -v /opt/ai-art:/data overshard/ai-art'))
@@ -251,7 +251,7 @@ test('gpus 1 (https://github.com/magicmark/composerize/issues/550)', () => {
                     - '/opt/ai-art:/data'
                 image: overshard/ai-art"
     `);
-    });
+});
 
 test('command name (https://github.com/magicmark/composerize/issues/538)', () => {
     expect(
@@ -411,8 +411,11 @@ test('mount type (https://github.com/magicmark/composerize/issues/412)', () => {
 });
 
 test('mount type multi (https://github.com/magicmark/composerize/issues/412)', () => {
-    expect(Composerize('docker run --mount type=bind,source=./logs,target=/usr/src/app/logs --mount type=bind,source=./data,target=/usr/src/app/data nginx'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run --mount type=bind,source=./logs,target=/usr/src/app/logs --mount type=bind,source=./data,target=/usr/src/app/data nginx',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             nginx:
@@ -442,8 +445,11 @@ test('cgroup (https://github.com/magicmark/composerize/issues/561)', () => {
 });
 
 test('cpu/share, ip (https://github.com/magicmark/composerize/issues/545)', () => {
-    expect(Composerize('docker run -d --restart always -p 5432:5432 --net postgres_net --ip 172.18.0.100 --name postgres2 --cpus=3 --cpu-shares=512 --log-driver json-file --log-opt max-size=100m --log-opt max-file=10 -v /srv/postgres:/var/lib/postgresql/data postgis/postgis'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run -d --restart always -p 5432:5432 --net postgres_net --ip 172.18.0.100 --name postgres2 --cpus=3 --cpu-shares=512 --log-driver json-file --log-opt max-size=100m --log-opt max-file=10 -v /srv/postgres:/var/lib/postgresql/data postgis/postgis',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             postgis:
@@ -476,8 +482,7 @@ test('cpu/share, ip (https://github.com/magicmark/composerize/issues/545)', () =
 });
 
 test('fake multiline (https://github.com/magicmark/composerize/issues/546)', () => {
-    expect(Composerize('docker run -d \ -v vol:/tmp \ hello-world \ --parameter'))
-        .toMatchInlineSnapshot(`
+    expect(Composerize('docker run -d  -v vol:/tmp  hello-world  --parameter')).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             hello-world:
@@ -489,10 +494,13 @@ test('fake multiline (https://github.com/magicmark/composerize/issues/546)', () 
             vol: {}"
     `);
 });
-    
+
 test('port no space (https://github.com/magicmark/composerize/issues/113)', () => {
-    expect(Composerize('docker run \     --name testneo4j \     -p7474:7474 -p7687:7687 \     -d \     -v $HOME/neo4j/data:/data \     -v $HOME/neo4j/logs:/logs \     -v $HOME/neo4j/import:/var/lib/neo4j/import \     -v $HOME/neo4j/plugins:/plugins \     --env NEO4J_AUTH=neo4j/test \     neo4j:latest'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run      --name testneo4j      -p7474:7474 -p7687:7687      -d      -v $HOME/neo4j/data:/data      -v $HOME/neo4j/logs:/logs      -v $HOME/neo4j/import:/var/lib/neo4j/import      -v $HOME/neo4j/plugins:/plugins      --env NEO4J_AUTH=neo4j/test      neo4j:latest',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             neo4j:
@@ -512,8 +520,11 @@ test('port no space (https://github.com/magicmark/composerize/issues/113)', () =
 });
 
 test('ip, mac, hostname, network (https://github.com/magicmark/composerize/issues/359)', () => {
-    expect(Composerize('docker run -d --name test --restart=always --net=homenet --ip=192.168.1.9 --ip6=xxxxx --mac-address=00:00:00:00:00:09 --hostname myhost -v /import/settings:/settings -v /import/media:/media -p 8080:8080 -e UID=1000 -e GID=1000 repo/image'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run -d --name test --restart=always --net=homenet --ip=192.168.1.9 --ip6=xxxxx --mac-address=00:00:00:00:00:09 --hostname myhost -v /import/settings:/settings -v /import/media:/media -p 8080:8080 -e UID=1000 -e GID=1000 repo/image',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             image:
@@ -542,8 +553,11 @@ test('ip, mac, hostname, network (https://github.com/magicmark/composerize/issue
 });
 
 test('-w working_dir', () => {
-    expect(Composerize('docker run -ti --rm -v ~/.ivy2:/root/.ivy2 -v ~/.sbt:/root/.sbt -v $PWD:/app -w /app mozilla/sbt sbt shell'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run -ti --rm -v ~/.ivy2:/root/.ivy2 -v ~/.sbt:/root/.sbt -v $PWD:/app -w /app mozilla/sbt sbt shell',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             sbt:
@@ -560,8 +574,11 @@ test('-w working_dir', () => {
 });
 
 test('private registry (https://github.com/magicmark/composerize/issues/15)', () => {
-    expect(Composerize('docker run --restart=always --privileged --name jatdb -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="somepass" -v ~/jat/mongodata:/data/db registry.cloud.local/js/mongo'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run --restart=always --privileged --name jatdb -d -p 27017:27017 -p 28017:28017 -e MONGODB_PASS="somepass" -v ~/jat/mongodata:/data/db registry.cloud.local/js/mongo',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             mongo:
@@ -580,8 +597,11 @@ test('private registry (https://github.com/magicmark/composerize/issues/15)', ()
 });
 
 test('cap_add, cap_drop, pid, net, prviledged, device (https://github.com/magicmark/composerize/issues/30)', () => {
-    expect(Composerize('docker run -d --name storageos -e HOSTNAME  -e ADVERTISE_IP=xxx.xxx.xxx.xxx  -e JOIN=xxxxxxxxxxxxxxxxx  --net=host  --pid=host  --privileged  --cap-add SYS_ADMIN --cap-drop XXX --device /dev/fuse  -v /var/lib/storageos:/var/lib/storageos:rshared  -v /run/docker/plugins:/run/docker/plugins  storageos/node:0.10.0 server'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run -d --name storageos -e HOSTNAME  -e ADVERTISE_IP=xxx.xxx.xxx.xxx  -e JOIN=xxxxxxxxxxxxxxxxx  --net=host  --pid=host  --privileged  --cap-add SYS_ADMIN --cap-drop XXX --device /dev/fuse  -v /var/lib/storageos:/var/lib/storageos:rshared  -v /run/docker/plugins:/run/docker/plugins  storageos/node:0.10.0 server',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             node:
@@ -608,8 +628,7 @@ test('cap_add, cap_drop, pid, net, prviledged, device (https://github.com/magicm
 });
 
 test('publish-all (https://github.com/magicmark/composerize/issues/19)', () => {
-    expect(Composerize('docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog'))
-        .toMatchInlineSnapshot(`
+    expect(Composerize('docker run -d -P -v /var/log:/log mthenw/frontail /log/syslog')).toMatchInlineSnapshot(`
         "# ignored options for 'frontail'
         # -P
         version: '3.3'
@@ -623,8 +642,7 @@ test('publish-all (https://github.com/magicmark/composerize/issues/19)', () => {
 });
 
 test('storage-opt multi', () => {
-    expect(Composerize('docker run --storage-opt size=120G --storage-opt dummy=xxx fedora'))
-        .toMatchInlineSnapshot(`
+    expect(Composerize('docker run --storage-opt size=120G --storage-opt dummy=xxx fedora')).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             fedora:
@@ -636,8 +654,7 @@ test('storage-opt multi', () => {
 });
 
 test('storage-opt simple', () => {
-    expect(Composerize('docker run --storage-opt size=120G fedora'))
-        .toMatchInlineSnapshot(`
+    expect(Composerize('docker run --storage-opt size=120G fedora')).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             fedora:
@@ -661,8 +678,11 @@ test('--sysctl', () => {
 });
 
 test('dns, link, add host', () => {
-    expect(Composerize('docker run --dns 8.8.8.8 --dns 127.0.0.1 --dns-search domain.com --dns-opt attempts:10 --link other_container --add-host=2.example2.com:10.0.0.2 --add-host=3.example.com:10.0.0.3 my/container'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run --dns 8.8.8.8 --dns 127.0.0.1 --dns-search domain.com --dns-opt attempts:10 --link other_container --add-host=2.example2.com:10.0.0.2 --add-host=3.example.com:10.0.0.3 my/container',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             container:
@@ -683,8 +703,7 @@ test('dns, link, add host', () => {
 });
 
 test('--env-file', () => {
-    expect(Composerize('docker run --env-file ./env.list ubuntu bash'))
-        .toMatchInlineSnapshot(`
+    expect(Composerize('docker run --env-file ./env.list ubuntu bash')).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             ubuntu:
@@ -696,8 +715,7 @@ test('--env-file', () => {
 });
 
 test('--expose ', () => {
-    expect(Composerize('docker run --expose 1500-1505 --expose=80 ubuntu'))
-        .toMatchInlineSnapshot(`
+    expect(Composerize('docker run --expose 1500-1505 --expose=80 ubuntu')).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             ubuntu:
@@ -709,8 +727,11 @@ test('--expose ', () => {
 });
 
 test('--ipc --init --userns --uts -u --group-add --oom-kill-disable --oom-score-adj --stop-signal --stop-timeout', () => {
-    expect(Composerize('docker run --ipc shareable --init --userns host --uts uuu -u user1 --group-add groupX --oom-kill-disable --oom-score-adj xxx --stop-signal SIG_TERM --stop-timeout 2s ubuntu'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run --ipc shareable --init --userns host --uts uuu -u user1 --group-add groupX --oom-kill-disable --oom-score-adj xxx --stop-signal SIG_TERM --stop-timeout 2s ubuntu',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             ubuntu:
@@ -730,8 +751,7 @@ test('--ipc --init --userns --uts -u --group-add --oom-kill-disable --oom-score-
 });
 
 test('--label', () => {
-    expect(Composerize('docker run -l my-label --label com.example.foo=bar ubuntu bash'))
-        .toMatchInlineSnapshot(`
+    expect(Composerize('docker run -l my-label --label com.example.foo=bar ubuntu bash')).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             ubuntu:
@@ -744,8 +764,11 @@ test('--label', () => {
 });
 
 test('deploy limits', () => {
-    expect(Composerize('docker run --cpus 1.5 --pids-limit 1500 --shm-size 15G --memory 15G --memory-reservation 12G --memory-swap yyy --memory-swappiness zzz --cpu-period xxx --cpu-quota xxx --cpu-rt-period xxx --cpu-rt-runtime xxx --volumes-from other2 ubuntu'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run --cpus 1.5 --pids-limit 1500 --shm-size 15G --memory 15G --memory-reservation 12G --memory-swap yyy --memory-swappiness zzz --cpu-period xxx --cpu-quota xxx --cpu-rt-period xxx --cpu-rt-runtime xxx --volumes-from other2 ubuntu',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             ubuntu:
@@ -805,8 +828,7 @@ test('--network-alias --link-local-ip', () => {
 });
 
 test('--entrypoint', () => {
-    expect(Composerize('docker run --entrypoint /bin/bash --no-healthcheck ubuntu'))
-        .toMatchInlineSnapshot(`
+    expect(Composerize('docker run --entrypoint /bin/bash --no-healthcheck ubuntu')).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             ubuntu:
@@ -819,8 +841,7 @@ test('--entrypoint', () => {
 });
 
 test('--security-opt', () => {
-    expect(Composerize('docker run --security-opt label:level:s0:c100,c200 -i -t fedora bash'))
-        .toMatchInlineSnapshot(`
+    expect(Composerize('docker run --security-opt label:level:s0:c100,c200 -i -t fedora bash')).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             fedora:
@@ -834,8 +855,11 @@ test('--security-opt', () => {
 });
 
 test('blkio 1 device', () => {
-    expect(Composerize('docker run -it --blkio-weight 16 --blkio-weight-device "/dev/sda:200" --device-read-bps=/dev/sda:1mb --device-read-iops=/dev/sda:1000 --device-write-bps=/dev/sda:1mb --device-write-iops=/dev/sda:1000 ubuntu'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run -it --blkio-weight 16 --blkio-weight-device "/dev/sda:200" --device-read-bps=/dev/sda:1mb --device-read-iops=/dev/sda:1000 --device-write-bps=/dev/sda:1mb --device-write-iops=/dev/sda:1000 ubuntu',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             ubuntu:
@@ -868,8 +892,11 @@ test('blkio 1 device', () => {
 });
 
 test('blkio 2 device', () => {
-    expect(Composerize('docker run -it --blkio-weight 16 --blkio-weight-device "/dev/sda:200"  --blkio-weight-device "/dev/sdb:300" --device-read-bps=/dev/sda:1mb --device-read-bps=/dev/sdb:2mb --device-read-iops=/dev/sda:1000 --device-write-bps=/dev/sda:1mb --device-write-iops=/dev/sda:1000 ubuntu'))
-        .toMatchInlineSnapshot(`
+    expect(
+        Composerize(
+            'docker run -it --blkio-weight 16 --blkio-weight-device "/dev/sda:200"  --blkio-weight-device "/dev/sdb:300" --device-read-bps=/dev/sda:1mb --device-read-bps=/dev/sdb:2mb --device-read-iops=/dev/sda:1000 --device-write-bps=/dev/sda:1mb --device-write-iops=/dev/sda:1000 ubuntu',
+        ),
+    ).toMatchInlineSnapshot(`
         "version: '3.3'
         services:
             ubuntu:

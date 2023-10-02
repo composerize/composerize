@@ -9,7 +9,8 @@ test('fails with invalid commands', () => {
 });
 
 test('multiple docker run command', () => {
-    const command = 'docker run -p 80:80 foobar/baz:latest\n# comment\n\ndocker run -p 80:80 foobar/buzz:latest\ndocker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --restart always --log-opt max-size=1g nginx\ndocker stop\n';
+    const command =
+        'docker run -p 80:80 foobar/baz:latest\n# comment\n\ndocker run -p 80:80 foobar/buzz:latest\ndocker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --restart always --log-opt max-size=1g nginx\ndocker stop\n';
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
     "# ignored : docker stop
