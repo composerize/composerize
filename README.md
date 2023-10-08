@@ -43,6 +43,29 @@ const composeConfig = convertDockerRunToCompose(dockerRunCommand);
 console.log(composeConfig);
 ```
 
+You can also merge docker run command(s) with an existing Docker Compose file content :
+
+```javascript
+const { convertDockerRunToCompose } = require('composerize');
+
+const dockerRunCommand = 'docker run -d -p 8080:80 --name my-web-app nginx:latest';
+
+// An existing Docker Compose configuration as a string
+const existingComposeConfig = `
+version: '3'
+services:
+  existing-service:
+    image: my-existing-image:latest
+    ports:
+      - '8000:80'
+`;
+
+// Convert the Docker run command to a Docker Compose configuration and merge with provided docker compose
+const composeConfig = convertDockerRunToCompose(dockerRunCommand, existingComposeConfig);
+
+console.log(composeConfig);
+```
+
 ## Contributing
 
 - [Clone a fork of the repo](https://guides.github.com/activities/forking/) and install the project dependencies by running `yarn`

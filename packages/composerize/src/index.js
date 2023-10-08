@@ -134,19 +134,21 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
 
     // Outer template
     let result;
-    result = {
+    const generatedCompose = {
         version: '3.3',
         services: {
             [serviceName]: service,
         },
     };
+    const existingCompose = yamljs.parse(existingComposeFile ?? '') ?? {};
+    result = deepmerge(existingCompose, generatedCompose);
     if (namedNetworks.length > 0) {
-        const networks = fromEntries(namedNetworks);
-        result = { ...result, networks };
+        const networks = { networks: fromEntries(namedNetworks) };
+        result = deepmerge(result, networks);
     }
     if (namedVolumes.length > 0) {
-        const volumes = fromEntries(namedVolumes);
-        result = { ...result, volumes };
+        const volumes = { volumes: fromEntries(namedVolumes) };
+        result = deepmerge(result, volumes);
     }
 
     let ignoredOptionsComments = '';
@@ -159,7 +161,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
     }: ComposeFile);
 };
 
-export default (input: string): ?string => {
+export default (input: string, existingComposeFile: string = ''): ?string => {
     const globalIgnoredOptionsComments = [];
     let result = {};
     const dockerCommands = input.replace(/^\s*#.*|^\s+/gm, '').split(/^\s*docker\s/gm);
@@ -170,7 +172,7 @@ export default (input: string): ?string => {
             globalIgnoredOptionsComments.push(`# ignored : docker ${command}\n`);
             return;
         }
-        const { composeFile, ignoredOptionsComments } = getComposeFileJson(`docker ${command}`);
+        const { composeFile, ignoredOptionsComments } = getComposeFileJson(`docker ${command}`, existingComposeFile);
         if (ignoredOptionsComments) globalIgnoredOptionsComments.push(ignoredOptionsComments);
 
         result = deepmerge(result, composeFile);
