@@ -41,6 +41,12 @@ export default function Entry(props) {
                             </a>{' '}
                             command(s) into the box below!
                         </p>
+                        <p>
+                            Looking for the reverse (Docker compose to <Code>docker run</Code> command(s)) ? Try{' '}
+                            <a href="https://decomposerize.com" rel="noopener noreferrer" target="_blank">
+                                Decomposerize
+                            </a>
+                        </p>
                     </Blurb>
                     <TextInput value={props.command} rows={3} onInputChange={props.onCommandInputChange} />
                     <details>
