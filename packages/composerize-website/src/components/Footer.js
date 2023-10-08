@@ -37,6 +37,11 @@ export default () => (
                 </a>
             </Item>
             <Item>
+                <a rel="noopener noreferrer" href="https://github.com/sharevb" target="_blank">
+                    ShareVB on GitHub
+                </a>
+            </Item>
+            <Item>
                 Want to help improve composerize? Open an{' '}
                 <a rel="noopener noreferrer" href="https://github.com/magicmark/composerize/issues" target="_blank">
                     issue on Github
