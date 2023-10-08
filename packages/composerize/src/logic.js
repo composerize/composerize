@@ -29,6 +29,11 @@ const parseListAsValueComposeEntryObject = (argValue: string, listSeparator: str
     );
 };
 
+const stripQuotes = (val: string): string =>
+    typeof val === 'string' && (val[0] === "'" || val[0] === '"') && val[val.length - 1] === val[0]
+        ? val.substring(1, val.length - 1)
+        : val;
+
 /**
  * Turn a mapping and the value of the mapping into a formatted json object
  */
@@ -80,6 +85,18 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
                 },
             },
         }: KVComposeEntry);
+    }
+
+    if (mapping.type === 'Envs') {
+        const values = Array.isArray(value) ? value : [value];
+
+        return values.map(_value => {
+            const [k, v] = String(_value).split('=', 2);
+            return ({
+                path: mapping.path,
+                value: [v ? `${k}=${stripQuotes(v)}` : k],
+            }: ValueComposeEntry);
+        });
     }
 
     if (mapping.type === 'MapArray') {

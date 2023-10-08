@@ -25,6 +25,7 @@ export type ArgType =
     | 'Networks'
     | 'MapArray'
     | 'Map'
+    | 'Envs'
     | 'Gpus';
 
 // Type to represent the structure of the docker compose mapping
@@ -101,7 +102,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     domainname: getMapping('Value', 'domainname'),
     entrypoint: getMapping('Array', 'entrypoint'),
     'env-file': getMapping('Array', 'env_file'),
-    env: getMapping('Array', 'environment'),
+    env: getMapping('Envs', 'environment'),
     expose: getMapping('Array', 'expose'),
     gpus: getMapping('Gpus', 'deploy'),
     'group-add': getMapping('Array', 'group_add'),
