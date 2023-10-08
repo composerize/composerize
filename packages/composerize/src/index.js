@@ -20,7 +20,7 @@ const getServiceName = (image: string): string => {
 
 export type ComposeFile = { composeFile: any, ignoredOptionsComments: string };
 
-export const getComposeFileJson = (input: string): ComposeFile => {
+const getComposeFileJson = (input: string, existingComposeFile: string): ComposeFile => {
     const formattedInput = input
         .replace(/(\s)+/g, ' ')
         .trim()
