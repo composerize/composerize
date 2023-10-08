@@ -13,12 +13,12 @@ export default class TextInput extends Component {
     }
 
     render() {
-        const { command } = this.props;
+        const { value, rows } = this.props;
 
         return (
             <StyledInput
-                rows={3}
-                value={command}
+                rows={rows ?? 1}
+                value={value}
                 onChange={e => {
                     this.handleChange(e);
                 }}

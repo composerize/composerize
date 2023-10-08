@@ -16,24 +16,37 @@ export default class Main extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            input: defaultCommand,
+            command: defaultCommand,
+            compose: '',
             output: Composerize(defaultCommand),
         };
-        this.onInputChange = this.onInputChange.bind(this);
+        this.onCommandInputChange = this.onCommandInputChange.bind(this);
+        this.onComposeInputChange = this.onComposeInputChange.bind(this);
     }
 
-    onInputChange(value) {
-        this.setState({
-            input: value,
-            output: Composerize(value),
-        });
+    onComposeInputChange(value) {
+        this.setState(state => ({
+            compose: value,
+            output: Composerize(state.command, value),
+        }));
+    }
+    onCommandInputChange(value) {
+        this.setState(state => ({
+            command: value,
+            output: Composerize(value, state.compose),
+        }));
     }
 
     render() {
         return (
             <div>
                 <Header />
-                <Entry command={this.state.input} onInputChange={this.onInputChange} />
+                <Entry
+                    command={this.state.command}
+                    compose={this.state.compose}
+                    onCommandInputChange={this.onCommandInputChange}
+                    onComposeInputChange={this.onComposeInputChange}
+                />
                 <Output output={this.state.output} />
                 <Footer />
             </div>

@@ -39,10 +39,17 @@ export default function Entry(props) {
                             >
                                 docker run
                             </a>{' '}
-                            command into the box below!
+                            command(s) into the box below!
                         </p>
                     </Blurb>
-                    <TextInput command={props.command} onInputChange={props.onInputChange} />
+                    <TextInput value={props.command} rows={3} onInputChange={props.onCommandInputChange} />
+                    <details>
+                        <summary>
+                            Click and paste to append <Code>docker run</Code> commands to an existing Docker compose
+                            file
+                        </summary>
+                        <TextInput value={props.compose} rows={10} onInputChange={props.onComposeInputChange} />
+                    </details>
                 </div>
                 <div
                     css={`
