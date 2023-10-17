@@ -78,5 +78,5 @@ Needs yarn@1.19.1. See https://github.com/yarnpkg/yarn/issues/7734.
 
 ## Maintainers
 
-- Lead Maintainer : Mark Larah (Twitter: [@mark_larah](https://twitter.com/mark_larah))
+- Lead Maintainer: Mark Larah (Twitter: [@mark_larah](https://twitter.com/mark_larah))
 - ShareVB [GitHub](https://github.com/sharevb)

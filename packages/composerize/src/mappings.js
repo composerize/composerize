@@ -6,10 +6,6 @@ export type ArgType =
     // e.g. --device (https://docs.docker.com/compose/compose-file/#devices)
     | 'Array'
 
-    // Used to store a mapping of one key to one value
-    // e.g. --log-driver (https://docs.docker.com/compose/compose-file/#logging)
-    | 'KeyValue'
-
     // Used to store a "limits" value of the input format: <type>=<soft limit>[:<hard limit>]
     // e.g. --ulimit
     // @see https://docs.docker.com/compose/compose-file/#ulimits
@@ -21,7 +17,16 @@ export type ArgType =
     | 'Switch'
 
     // Used to store an arbitrary text value for an option
-    | 'Value';
+    | 'Value'
+    | 'IntValue'
+    | 'FloatValue'
+    | 'DeviceBlockIOConfigRate'
+    | 'DeviceBlockIOConfigWeight'
+    | 'Networks'
+    | 'MapArray'
+    | 'Map'
+    | 'Envs'
+    | 'Gpus';
 
 // Type to represent the structure of the docker compose mapping
 export type Mapping = {
@@ -38,7 +43,7 @@ export type ArrayComposeEntry = {
 export type KVComposeEntry = {
     path: string,
     value: {
-        [string]: string | number,
+        [string]: string | number | any,
     },
 };
 
@@ -49,10 +54,20 @@ export type SwitchComposeEntry = {
 
 export type ValueComposeEntry = {
     path: string,
-    value: string | number,
+    value: string | number | any,
 };
 
-export type ComposeEntry = ArrayComposeEntry | KVComposeEntry | SwitchComposeEntry | ValueComposeEntry;
+export type IgnoreComposeEntry = {
+    path: null,
+    value: null,
+};
+
+export type ComposeEntry =
+    | ArrayComposeEntry
+    | KVComposeEntry
+    | SwitchComposeEntry
+    | ValueComposeEntry
+    | IgnoreComposeEntry;
 
 export const getMapping = (type: ArgType, path: string): Mapping => ({
     type,
@@ -62,33 +77,90 @@ export const getMapping = (type: ArgType, path: string): Mapping => ({
 // docker cli -> docker-compose options
 export const MAPPINGS: { [string]: Mapping } = {
     'add-host': getMapping('Array', 'extra_hosts'),
-    cap_add: getMapping('Array', 'cap_add'),
-    cap_drop: getMapping('Array', 'cap_drop'),
-    cgroup_parent: getMapping('Value', 'cgroup_parent'),
+    'blkio-weight': getMapping('IntValue', 'blkio_config/weight'),
+    'blkio-weight-device': getMapping('DeviceBlockIOConfigWeight', 'blkio_config/weight_device'),
+    'cap-add': getMapping('Array', 'cap_add'),
+    'cap-drop': getMapping('Array', 'cap_drop'),
+    'cgroup-parent': getMapping('Value', 'cgroup_parent'),
+    cgroupns: getMapping('Value', 'cgroup'),
+    'cpu-period': getMapping('Value', 'cpu_period'),
+    'cpu-quota': getMapping('Value', 'cpu_quota'),
+    'cpu-rt-period': getMapping('Value', 'cpu_rt_period'),
+    'cpu-rt-runtime': getMapping('Value', 'cpu_rt_runtime'),
+    'cpu-shares': getMapping('IntValue', 'cpu_shares'),
+    cpus: getMapping('FloatValue', 'deploy/resources/limits/cpus'),
+    detached: getMapping('Switch', ''),
+    'device-cgroup-rule': getMapping('Array', 'device_cgroup_rules'),
+    'device-read-bps': getMapping('DeviceBlockIOConfigRate', 'blkio_config/device_read_bps'),
+    'device-read-iops': getMapping('DeviceBlockIOConfigRate', 'blkio_config/device_read_iops'),
+    'device-write-bps': getMapping('DeviceBlockIOConfigRate', 'blkio_config/device_write_bps'),
+    'device-write-iops': getMapping('DeviceBlockIOConfigRate', 'blkio_config/device_write_iops'),
     device: getMapping('Array', 'devices'),
+    'dns-opt': getMapping('Array', 'dns_opt'),
+    'dns-search': getMapping('Array', 'dns_search'),
     dns: getMapping('Array', 'dns'),
-    dns_search: getMapping('Array', 'dns_search'),
-    env_file: getMapping('Array', 'env_file'),
+    domainname: getMapping('Value', 'domainname'),
+    entrypoint: getMapping('Array', 'entrypoint'),
+    'env-file': getMapping('Array', 'env_file'),
+    env: getMapping('Envs', 'environment'),
     expose: getMapping('Array', 'expose'),
+    gpus: getMapping('Gpus', 'deploy'),
+    'group-add': getMapping('Array', 'group_add'),
+    'health-cmd': getMapping('Value', 'healthcheck/test'),
+    'health-interval': getMapping('Value', 'healthcheck/interval'),
+    'health-retries': getMapping('Value', 'healthcheck/retries'),
+    'health-start-period': getMapping('Value', 'healthcheck/start_period'),
+    'health-timeout': getMapping('Value', 'healthcheck/timeout'),
     hostname: getMapping('Value', 'hostname'),
+    init: getMapping('Switch', 'init'),
+    interactive: getMapping('Switch', 'stdin_open'),
+    ip6: getMapping('Value', 'networks/¤network¤/ipv6_address'),
+    ip: getMapping('Value', 'networks/¤network¤/ipv4_address'),
+    ipc: getMapping('Value', 'ipc'),
+    isolation: getMapping('Value', 'isolation'),
     label: getMapping('Array', 'labels'),
+    'link-local-ip': getMapping('Array', 'networks/¤network¤/link_local_ips'),
     link: getMapping('Array', 'links'),
     'log-driver': getMapping('Array', 'logging/driver'),
-    'log-opt': getMapping('KeyValue', 'logging/options'),
-    entrypoint: getMapping('Array', 'entrypoint'),
-    env: getMapping('Array', 'environment'),
+    'log-opt': getMapping('Map', 'logging/options'),
+    'mac-address': getMapping('Value', 'mac_address'),
+    'memory-reservation': getMapping('Value', 'deploy/resources/reservations/memory'),
+    'memory-swap': getMapping('Value', 'memswap_limit'),
+    'memory-swappiness': getMapping('Value', 'mem_swappiness'),
+    memory: getMapping('Value', 'deploy/resources/limits/memory'),
+    mount: getMapping('MapArray', 'volumes'),
     name: getMapping('Value', 'container_name'),
-    network: getMapping('Value', 'network_mode'),
-    net: getMapping('Value', 'network_mode'), // alias for network
+    net: getMapping('Networks', 'network_mode'), // alias for network
+    'network-alias': getMapping('Array', 'networks/¤network¤/aliases'),
+    network: getMapping('Networks', 'network_mode'),
+    'no-healthcheck': getMapping('Switch', 'healthcheck/disable'),
+    'oom-kill-disable': getMapping('Switch', 'oom_kill_disable'),
+    'oom-score-adj': getMapping('Value', 'oom_score_adj'),
     pid: getMapping('Value', 'pid'),
+    'pids-limit': getMapping('IntValue', 'deploy/resources/limits/pids'),
+    platform: getMapping('Value', 'platform'),
     privileged: getMapping('Switch', 'privileged'),
     publish: getMapping('Array', 'ports'),
+    pull: getMapping('Value', 'pull_policy'),
     'read-only': getMapping('Switch', 'read_only'),
     restart: getMapping('Value', 'restart'),
+    rm: getMapping('Switch', ''),
+    runtime: getMapping('Value', 'runtime'),
+    'security-opt': getMapping('Array', 'security_opt'),
+    'shm-size': getMapping('Value', 'shm_size'),
+    'stop-signal': getMapping('Value', 'stop_signal'),
+    'stop-timeout': getMapping('Value', 'stop_grace_period'),
+    'storage-opt': getMapping('Map', 'storage_opt'),
+    sysctl: getMapping('Array', 'sysctls'),
     tmpfs: getMapping('Value', 'tmpfs'),
+    tty: getMapping('Switch', 'tty'),
     ulimit: getMapping('Ulimits', 'ulimits'),
     user: getMapping('Value', 'user'),
+    userns: getMapping('Value', 'userns_mode'),
+    uts: getMapping('Value', 'uts'),
     volume: getMapping('Array', 'volumes'),
+    'volumes-from': getMapping('Array', 'volume_from'),
+    workdir: getMapping('Value', 'working_dir'),
 };
 
 // Add flag mappings
@@ -98,3 +170,10 @@ MAPPINGS.e = MAPPINGS.env;
 MAPPINGS.l = MAPPINGS.label;
 MAPPINGS.h = MAPPINGS.hostname;
 MAPPINGS.u = MAPPINGS.user;
+MAPPINGS.w = MAPPINGS.workdir;
+MAPPINGS.c = MAPPINGS['cpu-shares'];
+MAPPINGS.l = MAPPINGS.label;
+MAPPINGS.t = MAPPINGS.tty;
+MAPPINGS.i = MAPPINGS.interactive;
+MAPPINGS.m = MAPPINGS.memory;
+MAPPINGS.d = MAPPINGS.detached;
