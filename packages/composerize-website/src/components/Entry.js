@@ -56,9 +56,10 @@ export default function Entry(props) {
                     </Blurb>
                     <TextInput value={props.command} rows={3} onInputChange={props.onCommandInputChange} />
                     <details
-                        css={`
-                            margin-bottom: '1em';
-                        `}
+                        style={{
+                            marginBottom: '1em',
+                            marginTop: '1em',
+                        }}
                     >
                         <summary>
                             Click and paste to append <Code>docker run</Code> commands to an existing Docker compose
