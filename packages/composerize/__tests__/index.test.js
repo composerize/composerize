@@ -355,3 +355,19 @@ volumes:
             vol: {}"
     `);
 });
+
+test('testing with env special chars (https://github.com/composerize/composerize/issues/1)', () => {
+    const command =
+        'docker run --name="foobar" -e PS1="[\\033[01;31m\\]\\u\\[\\033[01;32m\\]@\\h\\[\\033[01;34m\\] \\w \\$\\[\\033[00m\\] " nginx';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+        "name: <your project name>
+        services:
+            nginx:
+                container_name: foobar
+                environment:
+                    - \\"PS1=[\\\\\\\\033[01;31m\\\\\\\\]\\\\\\\\u\\\\\\\\[\\\\\\\\033[01;32m\\\\\\\\]@\\\\\\\\h\\\\\\\\[\\\\\\\\033[01;34m\\\\\\\\]
+                      \\\\\\\\w \\\\\\\\$\\\\\\\\[\\\\\\\\033[00m\\\\\\\\] \\"
+                image: nginx"
+    `);
+});
