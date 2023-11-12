@@ -31,6 +31,12 @@ export default function Entry(props) {
                             :)
                         </p>
                         <p>
+                            Looking for the reverse (Docker compose to <Code>docker run</Code> command(s)) ? Try{' '}
+                            <a href="https://decomposerize.com" rel="noopener noreferrer" target="_blank">
+                                Decomposerize
+                            </a>
+                        </p>
+                        <p>
                             Want to convert from Docker compose file formats ? Try{' '}
                             <a href="http://composeverter.com" rel="noopener noreferrer" target="_blank">
                                 Composeverter
@@ -46,12 +52,6 @@ export default function Entry(props) {
                                 docker run
                             </a>{' '}
                             command(s) into the box below!
-                        </p>
-                        <p>
-                            Looking for the reverse (Docker compose to <Code>docker run</Code> command(s)) ? Try{' '}
-                            <a href="https://decomposerize.com" rel="noopener noreferrer" target="_blank">
-                                Decomposerize
-                            </a>
                         </p>
                     </Blurb>
                     <TextInput value={props.command} rows={3} onInputChange={props.onCommandInputChange} />
