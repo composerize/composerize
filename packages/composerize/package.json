@@ -1,6 +1,6 @@
 {
   "name": "composerize",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "main": "dist/composerize.js",
   "license": "MIT",
   "scripts": {
@@ -31,10 +31,11 @@
     "rollup-plugin-uglify": "3.x"
   },
   "dependencies": {
+    "composeverter": "*",
     "core-js": "^2.5.5",
     "deepmerge": "^2.1.0",
     "invariant": "^2.2.4",
-    "yamljs": "^0.3.0",
+    "yaml": "^1.10.2",
     "yargs-parser": "^13.0.0"
   },
   "files": [

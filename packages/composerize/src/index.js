@@ -2,13 +2,18 @@
 
 import 'core-js/fn/object/entries';
 
-import yamljs from 'yamljs';
+import yaml from 'yaml';
 import parser from 'yargs-parser';
 import deepmerge from 'deepmerge';
+import Composeverter from 'composeverter';
 
 import { maybeGetComposeEntry, getComposeJson, fromEntries } from './logic';
 
 export type RawValue = string | number | boolean | [string | number | boolean] | any;
+
+export type ComposeVersion = 'latest' | 'v2x' | 'v3x';
+
+yaml.scalarOptions.null.nullStr = '';
 
 const getServiceName = (image: string): string => {
     if (image === null || image === '' || typeof image === 'undefined') return '!!!invalid!!!';
@@ -96,6 +101,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
         service.command = commandArgsArray.join(' ');
     }
 
+    const isNamedVolume = source => source && !source.includes('/') && !source.includes('\\') && !source.includes('$');
     const namedVolumes = [];
     if (service.volumes) {
         for (let volumeIndex = 0; volumeIndex < service.volumes.length; volumeIndex += 1) {
@@ -107,7 +113,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
                 const volumeSource = service.volumes[volumeIndex].source;
                 source = volumeSource;
             }
-            if (source && !source.includes('/') && !source.includes('$')) {
+            if (isNamedVolume(source)) {
                 namedVolumes.push([source, {}]);
             }
         }
@@ -135,12 +141,12 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
     // Outer template
     let result;
     const generatedCompose = {
-        version: '3.3',
+        version: '3',
         services: {
             [serviceName]: service,
         },
     };
-    const existingCompose = yamljs.parse(existingComposeFile ?? '') ?? {};
+    const existingCompose = yaml.parse(existingComposeFile ?? '') ?? {};
     result = deepmerge(existingCompose, generatedCompose);
     if (namedNetworks.length > 0) {
         const networks = { networks: fromEntries(namedNetworks) };
@@ -161,10 +167,10 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
     }: ComposeFile);
 };
 
-export default (input: string, existingComposeFile: string = ''): ?string => {
+export default (input: string, existingComposeFile: string = '', composeVersion: string = 'latest'): ?string => {
     const globalIgnoredOptionsComments = [];
     let result = {};
-    const dockerCommands = input.replace(/^\s*#.*|^\s+/gm, '').split(/^\s*docker\s/gm);
+    const dockerCommands = input.split(/^\s*docker\s/gm);
     Object.values(dockerCommands).forEach(dockerCommand => {
         const command = String(dockerCommand);
         if (!command) return;
@@ -180,5 +186,10 @@ export default (input: string, existingComposeFile: string = ''): ?string => {
     if (!result.services)
         throw new SyntaxError('must have at least a valid docker run/create/service create/container run command');
 
-    return globalIgnoredOptionsComments.join('\n') + yamljs.stringify(result, 9, 4).trim();
+    let finalComposeYaml = yaml.stringify(result, { indent: 4, simpleKeys: true }).trim();
+    if (composeVersion === 'v2x') finalComposeYaml = Composeverter.migrateFromV3xToV2x(finalComposeYaml);
+    else if (composeVersion === 'latest') finalComposeYaml = Composeverter.migrateToCommonSpec(finalComposeYaml);
+    else if (composeVersion !== 'v3x') throw new Error(`Unknown ComposeVersion '${composeVersion}'`);
+
+    return globalIgnoredOptionsComments.join('\n') + finalComposeYaml;
 };

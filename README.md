@@ -68,6 +68,22 @@ const composeConfig = convertDockerRunToCompose(dockerRunCommand, existingCompos
 console.log(composeConfig);
 ```
 
+You can also choose which version of Docker compose V2, you target : 2.x, 3.x or Common Specification by specifying a third parameter `composeVersion` on `convertDockerRunToCompose` :
+- 'v2x'
+- 'v3x'
+- 'latest'
+
+```javascript
+const { convertDockerRunToCompose } = require('composerize');
+
+const dockerRunCommand = 'docker run -d -p 8080:80 --name my-web-app nginx:latest';
+
+// Convert the Docker run command to a Docker Compose configuration for 2.x
+const composeConfig = convertDockerRunToCompose(dockerRunCommand, null, 'v2x');
+
+console.log(composeConfig);
+```
+
 ## Contributing
 
 - [Clone a fork of the repo](https://guides.github.com/activities/forking/) and install the project dependencies by running `yarn`
