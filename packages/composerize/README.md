@@ -3,11 +3,13 @@
 [![Build Status](https://travis-ci.org/magicmark/composerize.svg?branch=master)](https://travis-ci.com/github/magicmark/composerize)
 [![npm](https://img.shields.io/npm/v/composerize.svg)](https://www.npmjs.com/package/composerize)
 [![Follow @mark_larah](https://img.shields.io/twitter/follow/mark_larah)](https://twitter.com/mark_larah?ref_src=github_composerize)
-[ShareVB on GitHub](https://github.com/sharevb)
+[![ShareVB on GitHub](https://img.shields.io/badge/ShareVB-100000?logo=github&logoColor=white)](https://github.com/sharevb)
             
-http://composerize.com - Turns docker run commands into docker-compose files!
+http://composerize.com - Turns `docker run` commands into `docker-compose.yml` files and even merge with existing `docker-compose.yml`!
 
 Looking for the reverse : http://decomposerize.com / [Decomposerize](https://github.com/outilslibre/decomposerize)
+
+Want to convert from Docker compose file formats : http://composeverter.com / [Composeverter](https://github.com/outilslibre/composeverter)
 
 ![Demo](https://i.imgur.com/GayZj2G.png)
 
@@ -78,5 +80,5 @@ Needs yarn@1.19.1. See https://github.com/yarnpkg/yarn/issues/7734.
 
 ## Maintainers
 
-- Lead Maintainer: Mark Larah (Twitter: [@mark_larah](https://twitter.com/mark_larah))
+- Mark Larah (Twitter: [@mark_larah](https://twitter.com/mark_larah))
 - ShareVB [GitHub](https://github.com/sharevb)
