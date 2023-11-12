@@ -10,3 +10,6 @@ build: node_modules
 
 test: eslint node_modules
 	yarn lerna exec -- make test
+
+serve: build
+	serve -s packages/composerize-website/build/
