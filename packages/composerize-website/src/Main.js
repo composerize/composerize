@@ -18,23 +18,49 @@ export default class Main extends Component {
         this.state = {
             command: defaultCommand,
             compose: '',
+            version: 'latest',
             output: Composerize(defaultCommand),
+            error: '',
         };
         this.onCommandInputChange = this.onCommandInputChange.bind(this);
         this.onComposeInputChange = this.onComposeInputChange.bind(this);
+        this.onSelectChange = this.onSelectChange.bind(this);
     }
 
     onComposeInputChange(value) {
-        this.setState(state => ({
+        this.setState(() => ({
             compose: value,
-            output: Composerize(state.command, value),
         }));
+        this.updateConversion();
     }
+
     onCommandInputChange(value) {
-        this.setState(state => ({
+        this.setState(() => ({
             command: value,
-            output: Composerize(value, state.compose),
         }));
+        this.updateConversion();
+    }
+
+    onSelectChange(value) {
+        this.setState(() => ({
+            version: value.value,
+        }));
+        this.updateConversion();
+    }
+
+    updateConversion() {
+        this.setState(state => {
+            try {
+                return {
+                    output: Composerize(state.command, state.compose, state.version),
+                    error: '',
+                };
+            } catch (e) {
+                return {
+                    error: e.toString(),
+                };
+            }
+        });
     }
 
     render() {
@@ -44,10 +70,12 @@ export default class Main extends Component {
                 <Entry
                     command={this.state.command}
                     compose={this.state.compose}
+                    version={this.state.version}
+                    onSelectChange={this.onSelectChange}
                     onCommandInputChange={this.onCommandInputChange}
                     onComposeInputChange={this.onComposeInputChange}
                 />
-                <Output output={this.state.output} />
+                <Output output={this.state.output} error={this.state.error} />
                 <Footer />
             </div>
         );

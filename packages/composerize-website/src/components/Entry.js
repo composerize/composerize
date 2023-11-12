@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import Select from 'react-select';
 
 import Section from './Section';
 import TextInput from './TextInput';
@@ -13,6 +14,11 @@ const Blurb = styled.div`
 `;
 
 export default function Entry(props) {
+    const options = [
+        { value: 'v2x', label: 'V2 - 2.x' },
+        { value: 'v3x', label: 'V2 - 3.x' },
+        { value: 'latest', label: 'CommonSpec' },
+    ];
     return (
         <Section topPadding>
             <div
@@ -55,6 +61,12 @@ export default function Entry(props) {
                         </p>
                     </Blurb>
                     <TextInput value={props.command} rows={3} onInputChange={props.onCommandInputChange} />
+                    <span>Docker Compose version:</span>
+                    <Select
+                        onChange={props.onSelectChange}
+                        options={options}
+                        value={options.filter(({ value }) => value === props.version)}
+                    />
                     <details
                         style={{
                             marginBottom: '1em',

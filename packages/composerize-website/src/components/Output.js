@@ -37,6 +37,7 @@ export default props => (
                 documentation.
             </p>
         </Blurb>
+        <pre style={{ color: 'red' }}>{props.error}</pre>
         <Results output={props.output} />
     </Section>
 );
