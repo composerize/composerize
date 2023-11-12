@@ -62,8 +62,8 @@ export default function Entry(props) {
                         }}
                     >
                         <summary>
-                            Click and paste to append <Code>docker run</Code> commands to an existing Docker compose
-                            file
+                            Want to merge with a Docker compose file ? Click here and paste into the box below your
+                            existing <Code>docker-compose.yml</Code> to append <Code>docker run</Code> commands to it
                         </summary>
                         <TextInput value={props.compose} rows={10} onInputChange={props.onComposeInputChange} />
                     </details>
