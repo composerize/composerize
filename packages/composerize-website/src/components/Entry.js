@@ -31,6 +31,12 @@ export default function Entry(props) {
                             :)
                         </p>
                         <p>
+                            Want to convert from Docker compose file formats ? Try{' '}
+                            <a href="http://composeverter.com" rel="noopener noreferrer" target="_blank">
+                                Composeverter
+                            </a>
+                        </p>
+                        <p>
                             Paste your{' '}
                             <a
                                 href="https://docs.docker.com/engine/reference/run/"
