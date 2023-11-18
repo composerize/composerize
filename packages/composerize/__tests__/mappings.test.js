@@ -303,25 +303,27 @@ test('basic image (https://github.com/magicmark/composerize/issues/542)', () => 
 
 test('volumes declaration (https://github.com/magicmark/composerize/issues/524)', () => {
     expect(
-        Composerize(
-            'docker run --restart=unless-stopped -d --name=readymedia1 --net=host -v /my/video/path:/media -v readymediacache:/cache -e VIDEO_DIR1=/media/my_video_files ypopovych/readymedia',
-        ),
-    ).toMatchInlineSnapshot(`
-        "name: <your project name>
-        services:
-            readymedia:
-                restart: unless-stopped
-                container_name: readymedia1
-                network_mode: host
-                volumes:
-                    - /my/video/path:/media
-                    - readymediacache:/cache
-                environment:
-                    - VIDEO_DIR1=/media/my_video_files
-                image: ypopovych/readymedia
+  Composerize(
+    'docker run --restart=unless-stopped -d --name=readymedia1 --net=host -v /my/video/path:/media -v readymediacache:/cache -e VIDEO_DIR1=/media/my_video_files ypopovych/readymedia'
+  )
+).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    readymedia:
+        restart: unless-stopped
+        container_name: readymedia1
+        network_mode: host
         volumes:
-            readymediacache: {}"
-    `);
+            - /my/video/path:/media
+            - readymediacache:/cache
+        environment:
+            - VIDEO_DIR1=/media/my_video_files
+        image: ypopovych/readymedia
+volumes:
+    readymediacache:
+        external:
+            name: readymediacache"
+`);
 });
 
 test('tmpfs (https://github.com/magicmark/composerize/issues/536)', () => {
@@ -480,16 +482,18 @@ test('cpu/share, ip (https://github.com/magicmark/composerize/issues/545)', () =
 
 test('fake multiline (https://github.com/magicmark/composerize/issues/546)', () => {
     expect(Composerize('docker run -d  -v vol:/tmp  hello-world  --parameter')).toMatchInlineSnapshot(`
-        "name: <your project name>
-        services:
-            hello-world:
-                volumes:
-                    - vol:/tmp
-                image: hello-world
-                command: --parameter
+"name: <your project name>
+services:
+    hello-world:
         volumes:
-            vol: {}"
-    `);
+            - vol:/tmp
+        image: hello-world
+        command: --parameter
+volumes:
+    vol:
+        external:
+            name: vol"
+`);
 });
 
 test('port no space (https://github.com/magicmark/composerize/issues/113)', () => {

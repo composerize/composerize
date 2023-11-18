@@ -293,9 +293,9 @@ test('basic docker run command with existing compose and named volumes', () => {
     const command = 'docker run -d  -v vol:/tmp --net othernet hello-world  --parameter';
 
     expect(
-        Composerize(
-            command,
-            `
+  Composerize(
+    command,
+    `
 # some comment
 
 version: '3.3'
@@ -319,41 +319,43 @@ networks:
 volumes:
     readymediacache: {}
 
-    `,
-        ),
-    ).toMatchInlineSnapshot(`
-        "name: <your project name>
-        services:
-            readymedia:
-                restart: unless-stopped
-                container_name: readymedia1
-                network_mode: host
-                networks:
-                    - kong-net
-                volumes:
-                    - /my/video/path:/media
-                    - readymediacache:/cache
-                environment:
-                    - VIDEO_DIR1=/media/my_video_files
-                image: ypopovych/readymedia
-            hello-world:
-                volumes:
-                    - vol:/tmp
-                networks:
-                    - othernet
-                image: hello-world
-                command: --parameter
+    `
+  )
+).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    readymedia:
+        restart: unless-stopped
+        container_name: readymedia1
+        network_mode: host
         networks:
-            kong-net:
-                external:
-                    name: kong-net
-            othernet:
-                external:
-                    name: othernet
+            - kong-net
         volumes:
-            readymediacache: {}
-            vol: {}"
-    `);
+            - /my/video/path:/media
+            - readymediacache:/cache
+        environment:
+            - VIDEO_DIR1=/media/my_video_files
+        image: ypopovych/readymedia
+    hello-world:
+        volumes:
+            - vol:/tmp
+        networks:
+            - othernet
+        image: hello-world
+        command: --parameter
+networks:
+    kong-net:
+        external:
+            name: kong-net
+    othernet:
+        external:
+            name: othernet
+volumes:
+    readymediacache: {}
+    vol:
+        external:
+            name: vol"
+`);
 });
 
 test('testing with env special chars (https://github.com/composerize/composerize/issues/1)', () => {

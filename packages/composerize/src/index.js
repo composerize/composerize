@@ -114,7 +114,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
                 source = volumeSource;
             }
             if (isNamedVolume(source)) {
-                namedVolumes.push([source, {}]);
+                namedVolumes.push([source, {external: {name: source}}]);
             }
         }
     }
