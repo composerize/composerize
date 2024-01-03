@@ -1,6 +1,5 @@
 // @flow
 
-import yaml from 'yaml';
 import parser from 'yargs-parser';
 import deepmerge from 'deepmerge';
 import Composeverter from 'composeverter';
@@ -10,8 +9,6 @@ import { maybeGetComposeEntry, getComposeJson, fromEntries } from './logic';
 export type RawValue = string | number | boolean | [string | number | boolean] | any;
 
 export type ComposeVersion = 'latest' | 'v2x' | 'v3x';
-
-yaml.scalarOptions.null.nullStr = '';
 
 const getServiceName = (image: string): string => {
     if (image === null || image === '' || typeof image === 'undefined') return '!!!invalid!!!';
@@ -158,7 +155,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
             [serviceName]: service,
         },
     };
-    const existingCompose = yaml.parse(existingComposeFile ?? '') ?? {};
+    const existingCompose = Composeverter.yamlParse(existingComposeFile ?? '') ?? {};
     result = deepmerge(existingCompose, generatedCompose);
     if (namedNetworks.length > 0) {
         const networks = { networks: fromEntries(namedNetworks) };
@@ -179,7 +176,12 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
     }: ComposeFile);
 };
 
-export default (input: string, existingComposeFile: string = '', composeVersion: string = 'latest'): ?string => {
+export default (
+    input: string,
+    existingComposeFile: string = '',
+    composeVersion: string = 'latest',
+    indent: number = 4,
+): ?string => {
     const globalIgnoredOptionsComments = [];
     let result = {};
     const dockerCommands = input.split(/^\s*docker\s/gm);
@@ -209,9 +211,10 @@ export default (input: string, existingComposeFile: string = '', composeVersion:
     if (!result.services)
         throw new SyntaxError('must have at least a valid docker run/create/service create/container run command');
 
-    let finalComposeYaml = yaml.stringify(result, { indent: 4, simpleKeys: true }).trim();
-    if (composeVersion === 'v2x') finalComposeYaml = Composeverter.migrateFromV3xToV2x(finalComposeYaml);
-    else if (composeVersion === 'latest') finalComposeYaml = Composeverter.migrateToCommonSpec(finalComposeYaml);
+    let finalComposeYaml = Composeverter.yamlStringify(result, { indent }).trim();
+    if (composeVersion === 'v2x') finalComposeYaml = Composeverter.migrateFromV3xToV2x(finalComposeYaml, { indent });
+    else if (composeVersion === 'latest')
+        finalComposeYaml = Composeverter.migrateToCommonSpec(finalComposeYaml, { indent });
     else if (composeVersion !== 'v3x') throw new Error(`Unknown ComposeVersion '${composeVersion}'`);
 
     return globalIgnoredOptionsComments.join('\n') + finalComposeYaml;

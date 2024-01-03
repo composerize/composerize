@@ -84,6 +84,22 @@ const composeConfig = convertDockerRunToCompose(dockerRunCommand, null, 'v2x');
 console.log(composeConfig);
 ```
 
+You can also choose indentation level by specifying a fourth parameter `indent` on `convertDockerRunToCompose` :
+- 'v2x'
+- 'v3x'
+- 'latest'
+
+```javascript
+const { convertDockerRunToCompose } = require('composerize');
+
+const dockerRunCommand = 'docker run -d -p 8080:80 --name my-web-app nginx:latest';
+
+// Convert the Docker run command to a Docker Compose configuration for 2.x
+const composeConfig = convertDockerRunToCompose(dockerRunCommand, null, 'latest', 2);
+
+console.log(composeConfig);
+```
+
 ## Contributing
 
 - [Clone a fork of the repo](https://guides.github.com/activities/forking/) and install the project dependencies by running `yarn`
