@@ -431,3 +431,64 @@ test('testing with env special chars (https://github.com/composerize/composerize
                 image: nginx"
     `);
 });
+
+test('basic docker run command with existing compose (invalid 1)', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest';
+
+    expect(
+        Composerize(
+            command,
+            `
+version: '3.3'
+services:
+    `,
+        ),
+    ).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    baz:
+        ports:
+            - 80:80
+        image: foobar/baz:latest"
+`);
+});
+
+test('basic docker run command with existing compose (invalid 2)', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest';
+
+    expect(
+        Composerize(
+            command,
+            `
+#aze
+    `,
+        ),
+    ).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    baz:
+        ports:
+            - 80:80
+        image: foobar/baz:latest"
+`);
+});
+
+test('basic docker run command with existing compose (invalid 3)', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest';
+
+    expect(
+        Composerize(
+            command,
+            `
+#aze
+    `,
+        ),
+    ).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    baz:
+        ports:
+            - 80:80
+        image: foobar/baz:latest"
+`);
+});
