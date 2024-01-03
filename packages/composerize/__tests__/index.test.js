@@ -264,7 +264,7 @@ test('basic docker run command with null existing compose', () => {
     `);
 });
 
-test('basic docker run command with existing compose', () => {
+test('basic docker run command with existing compose (commonspec)', () => {
     const command = 'docker run -p 80:80 foobar/baz:latest';
 
     expect(
@@ -291,13 +291,69 @@ services:
     `);
 });
 
+test('basic docker run command with existing compose (2.x)', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest';
+
+    expect(
+        Composerize(
+            command,
+            `
+version: '3.3'
+services:
+    nginx:
+        container_name: foobar
+        image: nginx
+    `,
+            'v2x',
+        ),
+    ).toMatchInlineSnapshot(`
+"version: \\"2.4\\"
+services:
+    nginx:
+        container_name: foobar
+        image: nginx
+    baz:
+        ports:
+            - 80:80
+        image: foobar/baz:latest"
+`);
+});
+
+test('basic docker run command with existing compose (3.x)', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest';
+
+    expect(
+        Composerize(
+            command,
+            `
+version: '3.3'
+services:
+    nginx:
+        container_name: foobar
+        image: nginx
+    `,
+            'v3x',
+        ),
+    ).toMatchInlineSnapshot(`
+"version: \\"3\\"
+services:
+    nginx:
+        container_name: foobar
+        image: nginx
+    baz:
+        ports:
+            - 80:80
+        image: foobar/baz:latest"
+`);
+});
+
 test('basic docker run command with existing compose and named volumes', () => {
     const command = 'docker run -d  -v vol:/tmp --net othernet hello-world  --parameter';
 
     expect(
-  Composerize(
-    command,
-    `
+        Composerize(
+            command,
+            `
 # some comment
 
 version: '3.3'
@@ -321,9 +377,9 @@ networks:
 volumes:
     readymediacache: {}
 
-    `
-  )
-).toMatchInlineSnapshot(`
+    `,
+        ),
+    ).toMatchInlineSnapshot(`
 "name: <your project name>
 services:
     readymedia:
