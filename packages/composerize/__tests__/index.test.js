@@ -5,13 +5,15 @@ import Composerize from '../src';
 test('fails with invalid commands', () => {
     expect(() => {
         Composerize('foo bar');
-    }).toThrow();
+    }).toThrowErrorMatchingInlineSnapshot(
+        `"must have at least a valid docker run/create/service create/container run command"`,
+    );
 });
 
 test('fails with invalid conversion', () => {
     expect(() => {
         Composerize('docker run nginx', null, 'xxx');
-    }).toThrow();
+    }).toThrowErrorMatchingInlineSnapshot(`"Unknown ComposeVersion 'xxx'"`);
 });
 
 test('basic docker run command 2.x', () => {
