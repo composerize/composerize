@@ -183,14 +183,24 @@ export default (input: string, existingComposeFile: string = '', composeVersion:
     const globalIgnoredOptionsComments = [];
     let result = {};
     const dockerCommands = input.split(/^\s*docker\s/gm);
-    Object.values(dockerCommands).forEach(dockerCommand => {
+    let convertedExistingComposeFile = existingComposeFile;
+    if (existingComposeFile) {
+        if (composeVersion === 'v2x')
+            convertedExistingComposeFile = Composeverter.migrateFromV3xToV2x(convertedExistingComposeFile, { indent });
+        else if (composeVersion === 'latest')
+            convertedExistingComposeFile = Composeverter.migrateToCommonSpec(convertedExistingComposeFile, { indent });
+    }
+    dockerCommands.forEach((dockerCommand) => {
         const command = String(dockerCommand);
         if (!command) return;
         if (!command.match(/^\s*(run|create|container run|service create)/)) {
             globalIgnoredOptionsComments.push(`# ignored : docker ${command}\n`);
             return;
         }
-        const { composeFile, ignoredOptionsComments } = getComposeFileJson(`docker ${command}`, existingComposeFile);
+        const { composeFile, ignoredOptionsComments } = getComposeFileJson(
+            `docker ${command}`,
+            convertedExistingComposeFile,
+        );
         if (ignoredOptionsComments) globalIgnoredOptionsComments.push(ignoredOptionsComments);
 
         result = deepmerge(result, composeFile);
