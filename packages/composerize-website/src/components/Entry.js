@@ -4,6 +4,7 @@ import Select from 'react-select';
 
 import Section from './Section';
 import TextInput from './TextInput';
+import LinedTextInput from './LinedTextInput';
 import Code from './Code';
 import CarbonAds from './CarbonAds';
 
@@ -77,8 +78,15 @@ export default function Entry(props) {
                             Want to merge with a Docker compose file ? Click here and paste into the box below your
                             existing <Code>docker-compose.yml</Code> to append <Code>docker run</Code> commands to it
                         </summary>
-                        <TextInput value={props.compose} rows={10} onInputChange={props.onComposeInputChange} />
+                        <LinedTextInput
+                            value={props.compose}
+                            numOfLines={10}
+                            placeholder={'Enter docker-compose.yml content you want to merge with above command(s)'}
+                            onValueChange={props.onComposeInputChange}
+                            erroredLines={props.erroredLines}
+                        />
                     </details>
+                    <pre style={{ color: 'red' }}>{props.error}</pre>
                 </div>
                 <div
                     css={`

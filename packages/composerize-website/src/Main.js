@@ -21,6 +21,7 @@ export default class Main extends Component {
             version: 'latest',
             output: Composerize(defaultCommand),
             error: '',
+            erroredLines: [],
         };
         this.onCommandInputChange = this.onCommandInputChange.bind(this);
         this.onComposeInputChange = this.onComposeInputChange.bind(this);
@@ -54,10 +55,13 @@ export default class Main extends Component {
                 return {
                     output: Composerize(state.command, state.compose, state.version),
                     error: '',
+                    erroredLines: [],
                 };
             } catch (e) {
                 return {
                     error: e.toString(),
+                    output: '#see error message(s)',
+                    erroredLines: e.lines,
                 };
             }
         });
@@ -71,11 +75,13 @@ export default class Main extends Component {
                     command={this.state.command}
                     compose={this.state.compose}
                     version={this.state.version}
+                    error={this.state.error}
+                    erroredLines={this.state.erroredLines}
                     onSelectChange={this.onSelectChange}
                     onCommandInputChange={this.onCommandInputChange}
                     onComposeInputChange={this.onComposeInputChange}
                 />
-                <Output output={this.state.output} error={this.state.error} />
+                <Output output={this.state.output} />
                 <Footer />
             </div>
         );
