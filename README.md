@@ -90,10 +90,6 @@ console.log(composeConfig);
 - Make your changes, and build the project by running `make build`
 - Test your changes with `make test`
 
-### yarn version
-
-Needs yarn@1.19.1. See https://github.com/yarnpkg/yarn/issues/7734.
-
 ## Maintainers
 
 - Mark Larah (Twitter: [@mark_larah](https://twitter.com/mark_larah))

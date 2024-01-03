@@ -19,7 +19,7 @@ export default class TextInput extends Component {
             <StyledInput
                 rows={rows ?? 1}
                 value={value}
-                onChange={e => {
+                onChange={(e) => {
                     this.handleChange(e);
                 }}
             />

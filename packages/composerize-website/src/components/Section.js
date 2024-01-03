@@ -9,8 +9,8 @@ const Section = styled.div`
 
 const Spacer = styled.div`
     display: flex;
-    padding-top: ${props => (props.topPadding ? '30' : '0')}px;
-    border-top: ${props => (props.border ? '1' : '0')}px solid #dcd4d8;
+    padding-top: ${(props) => (props.topPadding ? '30' : '0')}px;
+    border-top: ${(props) => (props.border ? '1' : '0')}px solid #dcd4d8;
 `;
 
 export default ({ children, topPadding, border }) => (

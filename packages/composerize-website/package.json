@@ -5,7 +5,7 @@
   "homepage": "https://www.composerize.com",
   "dependencies": {
     "babel-plugin-styled-components": "^1.10.7",
-    "composerize": "*",
+    "composerize": "latest",
     "html5-boilerplate": "^7.2.0",
     "normalize.css": "^8.0.1",
     "react": "16.x",
@@ -17,7 +17,7 @@
     "styled-components": "5.x"
   },
   "devDependencies": {
-    "react-scripts": "3.4.1"
+    "react-scripts": "^5.x"
   },
   "scripts": {
     "start": "make .env && react-scripts start",

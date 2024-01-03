@@ -6,10 +6,10 @@ eslint: node_modules
 	./tools/eslint
 
 build: node_modules
-	yarn lerna exec -- make build
+	yarn lerna exec make build
 
 test: eslint node_modules
-	yarn lerna exec -- make test
+	yarn lerna exec make test
 
 serve: build
 	serve -s packages/composerize-website/build/

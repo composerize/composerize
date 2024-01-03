@@ -58,8 +58,8 @@ export type ValueComposeEntry = {
 };
 
 export type IgnoreComposeEntry = {
-    path: null,
-    value: null,
+    path?: null,
+    value?: null,
 };
 
 export type ComposeEntry =

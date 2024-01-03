@@ -15,14 +15,14 @@ import type {
 
 import type { RawValue } from './index';
 
-export const fromEntries = (iterable: Iterable<any>) =>
+export const fromEntries = (iterable: Iterable<any>): any =>
     [...iterable].reduce((obj, [key, val]) => ({ ...obj, [key]: val }), {});
 
 const parseListAsValueComposeEntryObject = (argValue: string, listSeparator: string, entrySeparator: string) => {
     const args = argValue.split(listSeparator);
 
     return fromEntries(
-        args.map(_arg => {
+        args.map((_arg) => {
             const [k, v] = _arg.split(entrySeparator, 2);
             return [k, /^-?\d+$/.test(String(v)) ? parseInt(v, 10) : v];
         }),
@@ -90,7 +90,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
     if (mapping.type === 'Envs') {
         const values = Array.isArray(value) ? value : [value];
 
-        return values.map(_value => {
+        return values.map((_value) => {
             const [k, v] = String(_value).split('=', 2);
             return ({
                 path: mapping.path,
@@ -103,7 +103,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         const values = Array.isArray(value) ? value : [value];
 
         return values.map(
-            _value =>
+            (_value) =>
                 ({
                     path: mapping.path,
                     value: [parseListAsValueComposeEntryObject(String(_value), ',', '=')],
@@ -123,7 +123,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
     if (mapping.type === 'DeviceBlockIOConfigWeight') {
         const values = Array.isArray(value) ? value : [value];
 
-        return values.map(_value => {
+        return values.map((_value) => {
             const [path, weight] = String(_value).split(':');
 
             return ({
@@ -141,7 +141,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
     if (mapping.type === 'DeviceBlockIOConfigRate') {
         const values = Array.isArray(value) ? value : [value];
 
-        return values.map(_value => {
+        return values.map((_value) => {
             const [path, rate] = String(_value).split(':');
 
             return ({
@@ -159,7 +159,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
     if (mapping.type === 'Ulimits') {
         const values = Array.isArray(value) ? value : [value];
 
-        return values.map(_value => {
+        return values.map((_value) => {
             const [limitName, limitValue] = String(_value).split('=');
             invariant(
                 limitName && limitValue,

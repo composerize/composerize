@@ -1,5 +1,5 @@
 {
-  "name": "composerize",
+  "name": "composerize-root",
   "private": true,
   "license": "MIT",
   "workspaces": [
@@ -13,29 +13,50 @@
     "eslint": "eslint packages/**/*/{src,__tests__}/**/*.js --format codeframe"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.7.4",
-    "@babel/preset-env": "^7.0.0",
-    "@babel/preset-flow": "^7.0.0",
+    "@babel/cli": "^7.x",
+    "@babel/core": "^7.x",
+    "@babel/eslint-parser": "^7.23.3",
+    "@babel/plugin-proposal-private-property-in-object": "^7.x",
+    "@babel/preset-env": "^7.x",
+    "@babel/preset-flow": "^7.x",
+    "@babel/preset-react": "^7.x",
+    "@stylistic/eslint-plugin-js": "^1.4.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^9.0.0",
-    "babel-jest": "^24.9.0",
-    "eslint": "^6.8.0",
-    "flow-bin": "^0.129.0",
-    "husky": "^4.2.5",
-    "jest": "^25.5.4"
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^27.4.3",
+    "babel-plugin-macros": "^3.1.0",
+    "babel-plugin-styled-components": "^2.1.4",
+    "eslint": "^8.53.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-formatter-codeframe": "^7.32.1",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "flow-bin": "^0.221.0",
+    "husky": "^8.0.3",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.4.3",
+    "jest-environment-jsdom": "^27.4.3",
+    "jest-styled-components": "^7.2.0",
+    "prettier": "^3.1.0"
   },
   "dependencies": {
-    "@sharkcore/eslint-config": "^1.1.0-alpha.3",
-    "lerna": "^3.20.2"
+    "lerna": "^7.4.2"
   },
   "engines": {
-    "node": ">=8",
-    "yarn": "<= 1.19.1"
+    "node": ">=8"
   },
   "husky": {
     "hooks": {
       "pre-commit": "./tools/eslint"
     }
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "styled-components/macro": "styled-components"
+    },
+    "prettierPath": null
   }
 }

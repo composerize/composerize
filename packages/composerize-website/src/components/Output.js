@@ -22,7 +22,7 @@ const Blurb = styled.div`
     margin-bottom: 10px;
 `;
 
-export default props => (
+export default (props) => (
     <Section border>
         <Label>Output</Label>
         <Blurb>

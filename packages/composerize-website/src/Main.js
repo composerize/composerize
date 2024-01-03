@@ -49,7 +49,7 @@ export default class Main extends Component {
     }
 
     updateConversion() {
-        this.setState(state => {
+        this.setState((state) => {
             try {
                 return {
                     output: Composerize(state.command, state.compose, state.version),

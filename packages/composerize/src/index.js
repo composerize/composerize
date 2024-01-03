@@ -1,7 +1,5 @@
 // @flow
 
-import 'core-js/fn/object/entries';
-
 import yaml from 'yaml';
 import parser from 'yargs-parser';
 import deepmerge from 'deepmerge';
@@ -77,7 +75,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
         const result = maybeGetComposeEntry(key, value);
         if (result) {
             const entries = Array.isArray(result) ? result : [result];
-            entries.forEach(entry => {
+            entries.forEach((entry) => {
                 // Store whatever the next entry will be
                 const json = getComposeJson(entry, network);
                 service = deepmerge(service, json);
@@ -90,6 +88,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
     });
 
     const image = command[0];
+    // $FlowFixMe: prop missing
     service.image = image;
     if (command.length > 1) {
         let argStart = 1;
@@ -98,38 +97,51 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
             commandArgsArray.push(command[argStart]);
             argStart += 1;
         }
+        // $FlowFixMe: prop missing
         service.command = commandArgsArray.join(' ');
     }
 
-    const isNamedVolume = source => source && !source.includes('/') && !source.includes('\\') && !source.includes('$');
+    const isNamedVolume = (source: string) =>
+        source && !source.includes('/') && !source.includes('\\') && !source.includes('$');
     const namedVolumes = [];
+    // $FlowFixMe: prop missing
     if (service.volumes) {
+        // $FlowFixMe: prop missing
         for (let volumeIndex = 0; volumeIndex < service.volumes.length; volumeIndex += 1) {
             let source;
+            // $FlowFixMe: prop missing
             if (typeof service.volumes[volumeIndex] === 'string') {
+                // $FlowFixMe: prop missing
                 const volumeName = service.volumes[volumeIndex].split(':')[0];
                 source = volumeName;
             } else {
+                // $FlowFixMe: prop missing
                 const volumeSource = service.volumes[volumeIndex].source;
                 source = volumeSource;
             }
             if (isNamedVolume(source)) {
-                namedVolumes.push([source, {external: {name: source}}]);
+                namedVolumes.push([source, { external: { name: source } }]);
             }
         }
     }
 
     const namedNetworks = [];
+    // $FlowFixMe: prop missing
     if (service.networks) {
+        // $FlowFixMe: prop missing
         if (Array.isArray(service.networks)) {
+            // $FlowFixMe: prop missing
             for (let networkIndex = 0; networkIndex < service.networks.length; networkIndex += 1) {
                 namedNetworks.push([
+                    // $FlowFixMe: prop missing
                     service.networks[networkIndex],
+                    // $FlowFixMe: prop missing
                     { external: { name: service.networks[networkIndex] } },
                 ]);
             }
         } else {
-            Object.keys(service.networks).forEach(serviceNetworkName => {
+            // $FlowFixMe: prop missing
+            Object.keys(service.networks).forEach((serviceNetworkName) => {
                 // TODO: supposed to be done by babel : if (service.networks.hasOwnProperty(network))
                 namedNetworks.push([serviceNetworkName, { external: { name: serviceNetworkName } }]);
             });
@@ -183,6 +195,7 @@ export default (input: string, existingComposeFile: string = '', composeVersion:
 
         result = deepmerge(result, composeFile);
     });
+    // $FlowFixMe: prop missing
     if (!result.services)
         throw new SyntaxError('must have at least a valid docker run/create/service create/container run command');
 

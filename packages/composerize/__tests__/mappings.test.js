@@ -303,10 +303,10 @@ test('basic image (https://github.com/magicmark/composerize/issues/542)', () => 
 
 test('volumes declaration (https://github.com/magicmark/composerize/issues/524)', () => {
     expect(
-  Composerize(
-    'docker run --restart=unless-stopped -d --name=readymedia1 --net=host -v /my/video/path:/media -v readymediacache:/cache -e VIDEO_DIR1=/media/my_video_files ypopovych/readymedia'
-  )
-).toMatchInlineSnapshot(`
+        Composerize(
+            'docker run --restart=unless-stopped -d --name=readymedia1 --net=host -v /my/video/path:/media -v readymediacache:/cache -e VIDEO_DIR1=/media/my_video_files ypopovych/readymedia',
+        ),
+    ).toMatchInlineSnapshot(`
 "name: <your project name>
 services:
     readymedia:
