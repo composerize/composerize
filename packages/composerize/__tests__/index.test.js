@@ -406,8 +406,8 @@ networks:
         external:
             name: kong-net
     othernet:
-        external:
-            name: othernet
+        external: true
+        name: othernet
 volumes:
     readymediacache: {}
     vol:

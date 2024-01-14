@@ -133,14 +133,14 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
                     // $FlowFixMe: prop missing
                     service.networks[networkIndex],
                     // $FlowFixMe: prop missing
-                    { external: { name: service.networks[networkIndex] } },
+                    { external: true, name: service.networks[networkIndex] },
                 ]);
             }
         } else {
             // $FlowFixMe: prop missing
             Object.keys(service.networks).forEach((serviceNetworkName) => {
                 // TODO: supposed to be done by babel : if (service.networks.hasOwnProperty(network))
-                namedNetworks.push([serviceNetworkName, { external: { name: serviceNetworkName } }]);
+                namedNetworks.push([serviceNetworkName, { external: true, name: serviceNetworkName }]);
             });
         }
     }

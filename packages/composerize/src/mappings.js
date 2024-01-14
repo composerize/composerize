@@ -121,7 +121,7 @@ export const MAPPINGS: { [string]: Mapping } = {
     label: getMapping('Array', 'labels'),
     'link-local-ip': getMapping('Array', 'networks/¤network¤/link_local_ips'),
     link: getMapping('Array', 'links'),
-    'log-driver': getMapping('Array', 'logging/driver'),
+    'log-driver': getMapping('Value', 'logging/driver'),
     'log-opt': getMapping('Map', 'logging/options'),
     'mac-address': getMapping('Value', 'mac_address'),
     'memory-reservation': getMapping('Value', 'deploy/resources/reservations/memory'),

@@ -369,32 +369,32 @@ test('multiline (https://github.com/magicmark/composerize/issues/120)', () => {
      kong:latest`,
         ),
     ).toMatchInlineSnapshot(`
-        "name: <your project name>
-        services:
-            kong:
-                container_name: kong
-                networks:
-                    - kong-net
-                environment:
-                    - KONG_DATABASE=postgres
-                    - KONG_PG_HOST=kong-database
-                    - KONG_CASSANDRA_CONTACT_POINTS=kong-database
-                    - KONG_PROXY_ACCESS_LOG=/dev/stdout
-                    - KONG_ADMIN_ACCESS_LOG=/dev/stdout
-                    - KONG_PROXY_ERROR_LOG=/dev/stderr
-                    - KONG_ADMIN_ERROR_LOG=/dev/stderr
-                    - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl
-                ports:
-                    - 8000:8000
-                    - 8443:8443
-                    - 8001:8001
-                    - 8444:8444
-                image: kong:latest
+"name: <your project name>
+services:
+    kong:
+        container_name: kong
         networks:
-            kong-net:
-                external:
-                    name: kong-net"
-    `);
+            - kong-net
+        environment:
+            - KONG_DATABASE=postgres
+            - KONG_PG_HOST=kong-database
+            - KONG_CASSANDRA_CONTACT_POINTS=kong-database
+            - KONG_PROXY_ACCESS_LOG=/dev/stdout
+            - KONG_ADMIN_ACCESS_LOG=/dev/stdout
+            - KONG_PROXY_ERROR_LOG=/dev/stderr
+            - KONG_ADMIN_ERROR_LOG=/dev/stderr
+            - KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl
+        ports:
+            - 8000:8000
+            - 8443:8443
+            - 8001:8001
+            - 8444:8444
+        image: kong:latest
+networks:
+    kong-net:
+        external: true
+        name: kong-net"
+`);
 });
 
 test('mount type (https://github.com/magicmark/composerize/issues/412)', () => {
@@ -443,41 +443,40 @@ test('cgroup (https://github.com/magicmark/composerize/issues/561)', () => {
     `);
 });
 
-test('cpu/share, ip (https://github.com/magicmark/composerize/issues/545)', () => {
+test('cpu/share, ip (https://github.com/magicmark/composerize/issues/545 and https://github.com/magicmark/composerize/issues/582)', () => {
     expect(
         Composerize(
             'docker run -d --restart always -p 5432:5432 --net postgres_net --ip 172.18.0.100 --name postgres2 --cpus=3 --cpu-shares=512 --log-driver json-file --log-opt max-size=100m --log-opt max-file=10 -v /srv/postgres:/var/lib/postgresql/data postgis/postgis',
         ),
     ).toMatchInlineSnapshot(`
-        "name: <your project name>
-        services:
-            postgis:
-                restart: always
-                ports:
-                    - 5432:5432
-                networks:
-                    postgres_net:
-                        ipv4_address: 172.18.0.100
-                container_name: postgres2
-                deploy:
-                    resources:
-                        limits:
-                            cpus: 3
-                cpu_shares: 512
-                logging:
-                    driver:
-                        - json-file
-                    options:
-                        max-size: 100m
-                        max-file: 10
-                volumes:
-                    - /srv/postgres:/var/lib/postgresql/data
-                image: postgis/postgis
+"name: <your project name>
+services:
+    postgis:
+        restart: always
+        ports:
+            - 5432:5432
         networks:
             postgres_net:
-                external:
-                    name: postgres_net"
-    `);
+                ipv4_address: 172.18.0.100
+        container_name: postgres2
+        deploy:
+            resources:
+                limits:
+                    cpus: 3
+        cpu_shares: 512
+        logging:
+            driver: json-file
+            options:
+                max-size: 100m
+                max-file: 10
+        volumes:
+            - /srv/postgres:/var/lib/postgresql/data
+        image: postgis/postgis
+networks:
+    postgres_net:
+        external: true
+        name: postgres_net"
+`);
 });
 
 test('fake multiline (https://github.com/magicmark/composerize/issues/546)', () => {
@@ -526,31 +525,31 @@ test('ip, mac, hostname, network (https://github.com/magicmark/composerize/issue
             'docker run -d --name test --restart=always --net=homenet --ip=192.168.1.9 --ip6=xxxxx --mac-address=00:00:00:00:00:09 --hostname myhost -v /import/settings:/settings -v /import/media:/media -p 8080:8080 -e UID=1000 -e GID=1000 repo/image',
         ),
     ).toMatchInlineSnapshot(`
-        "name: <your project name>
-        services:
-            image:
-                container_name: test
-                restart: always
-                networks:
-                    homenet:
-                        ipv4_address: 192.168.1.9
-                        ipv6_address: xxxxx
-                mac_address: 00:00:00:00:00:09
-                hostname: myhost
-                volumes:
-                    - /import/settings:/settings
-                    - /import/media:/media
-                ports:
-                    - 8080:8080
-                environment:
-                    - UID=1000
-                    - GID=1000
-                image: repo/image
+"name: <your project name>
+services:
+    image:
+        container_name: test
+        restart: always
         networks:
             homenet:
-                external:
-                    name: homenet"
-    `);
+                ipv4_address: 192.168.1.9
+                ipv6_address: xxxxx
+        mac_address: 00:00:00:00:00:09
+        hostname: myhost
+        volumes:
+            - /import/settings:/settings
+            - /import/media:/media
+        ports:
+            - 8080:8080
+        environment:
+            - UID=1000
+            - GID=1000
+        image: repo/image
+networks:
+    homenet:
+        external: true
+        name: homenet"
+`);
 });
 
 test('-w working_dir', () => {
@@ -811,21 +810,21 @@ test('--pull --runtime --platform --isolation', () => {
 test('--network-alias --link-local-ip', () => {
     expect(Composerize('docker run --net reseau --network-alias=ubuntu_res --link-local-ip 192.168.0.1 ubuntu'))
         .toMatchInlineSnapshot(`
-        "name: <your project name>
-        services:
-            ubuntu:
-                networks:
-                    reseau:
-                        aliases:
-                            - ubuntu_res
-                        link_local_ips:
-                            - 192.168.0.1
-                image: ubuntu
+"name: <your project name>
+services:
+    ubuntu:
         networks:
             reseau:
-                external:
-                    name: reseau"
-    `);
+                aliases:
+                    - ubuntu_res
+                link_local_ips:
+                    - 192.168.0.1
+        image: ubuntu
+networks:
+    reseau:
+        external: true
+        name: reseau"
+`);
 });
 
 test('--entrypoint', () => {
@@ -952,4 +951,29 @@ test('--healthcheck-cmd ', () => {
                     retries: \\"2\\"
                 image: nginx:latest"
     `);
+});
+
+test('--net and --log-driver bug (https://github.com/magicmark/composerize/issues/582)', () => {
+    const command =
+        'docker run -td --rm -p 80:80 --net=my_network --log-driver=journald --stop-signal=SIGRTMIN+3 --name my_container my_image';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    my_image:
+        tty: true
+        ports:
+            - 80:80
+        networks:
+            - my_network
+        logging:
+            driver: journald
+        stop_signal: SIGRTMIN+3
+        container_name: my_container
+        image: my_image
+networks:
+    my_network:
+        external: true
+        name: my_network"
+`);
 });
