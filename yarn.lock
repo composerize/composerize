@@ -2412,9 +2412,9 @@
     "@sinonjs/commons" "^1.7.0"
 
 "@stylistic/eslint-plugin-js@^1.4.0":
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/@stylistic/eslint-plugin-js/-/eslint-plugin-js-1.5.3.tgz#da7a7576a6ba9feef1f6db12504a5c4ba45a70a1"
-  integrity sha512-XlKnm82fD7Sw9kQ6FFigE0tobvptNBXZWsdfoKmUyK7bNxHsAHOFT8zJGY3j3MjZ0Fe7rLTu86hX/vOl0bRRdQ==
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/@stylistic/eslint-plugin-js/-/eslint-plugin-js-1.5.4.tgz#8636ddfc75f40e94721ecc96fb564b0641bd31cf"
+  integrity sha512-3ctWb3NvJNV1MsrZN91cYp2EGInLPSoZKphXIbIRx/zjZxKwLDr9z4LMOWtqjq14li/OgqUUcMq5pj8fgbLoTw==
   dependencies:
     acorn "^8.11.3"
     escape-string-regexp "^4.0.0"
