@@ -35,12 +35,12 @@ npm install composerize
 With the following code, you can easily integrate **Composerize** into your Node.js project and generate Docker Compose configurations from Docker run commands.
 
 ```javascript
-const { convertDockerRunToCompose } = require('composerize');
+const composerize = require('composerize');
 
 const dockerRunCommand = 'docker run -d -p 8080:80 --name my-web-app nginx:latest';
 
 // Convert the Docker run command to a Docker Compose configuration
-const composeConfig = convertDockerRunToCompose(dockerRunCommand);
+const composeConfig = composerize(dockerRunCommand);
 
 console.log(composeConfig);
 ```
@@ -48,7 +48,7 @@ console.log(composeConfig);
 You can also merge docker run command(s) with an existing Docker Compose file content :
 
 ```javascript
-const { convertDockerRunToCompose } = require('composerize');
+const composerize = require('composerize');
 
 const dockerRunCommand = 'docker run -d -p 8080:80 --name my-web-app nginx:latest';
 
@@ -63,7 +63,7 @@ services:
 `;
 
 // Convert the Docker run command to a Docker Compose configuration and merge with provided docker compose
-const composeConfig = convertDockerRunToCompose(dockerRunCommand, existingComposeConfig);
+const composeConfig = composerize(dockerRunCommand, existingComposeConfig);
 
 console.log(composeConfig);
 ```
@@ -74,12 +74,12 @@ You can also choose which version of Docker compose V2, you target : 2.x, 3.x or
 - 'latest'
 
 ```javascript
-const { convertDockerRunToCompose } = require('composerize');
+const composerize = require('composerize');
 
 const dockerRunCommand = 'docker run -d -p 8080:80 --name my-web-app nginx:latest';
 
 // Convert the Docker run command to a Docker Compose configuration for 2.x
-const composeConfig = convertDockerRunToCompose(dockerRunCommand, null, 'v2x');
+const composeConfig = composerize(dockerRunCommand, null, 'v2x');
 
 console.log(composeConfig);
 ```
@@ -90,12 +90,12 @@ You can also choose indentation level by specifying a fourth parameter `indent` 
 - 'latest'
 
 ```javascript
-const { convertDockerRunToCompose } = require('composerize');
+const composerize = require('composerize');
 
 const dockerRunCommand = 'docker run -d -p 8080:80 --name my-web-app nginx:latest';
 
 // Convert the Docker run command to a Docker Compose configuration for 2.x
-const composeConfig = convertDockerRunToCompose(dockerRunCommand, null, 'latest', 2);
+const composeConfig = composerize(dockerRunCommand, null, 'latest', 2);
 
 console.log(composeConfig);
 ```
