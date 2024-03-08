@@ -179,7 +179,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
 export default (
     input: string,
     existingComposeFile: string = '',
-    composeVersion: string = 'latest',
+    composeVersion: 'latest' | 'v2x' | 'v3x' = 'latest',
     indent: number = 4,
 ): ?string => {
     const globalIgnoredOptionsComments = [];
