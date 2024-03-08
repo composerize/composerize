@@ -4482,9 +4482,9 @@ compare-func@^2.0.0:
     dot-prop "^5.1.0"
 
 composerize@latest:
-  version "1.6.6"
-  resolved "https://registry.yarnpkg.com/composerize/-/composerize-1.6.6.tgz#9206803560c13ea0e8463f25422c6352f7c953d5"
-  integrity sha512-ZvnntVZvz4VzMSmxDc/BF+l5ra7pMAUDxDrljTosVCKhIFKR3mBVVKRJrne3Dx9xIDyvVwA1pRhmrAq+JGJX4g==
+  version "1.6.7"
+  resolved "https://registry.yarnpkg.com/composerize/-/composerize-1.6.7.tgz#fe952acbfdecaa2fd2ffdb1bea896f43e8c0fb07"
+  integrity sha512-SKRVeoLbIxR77lpM3Nfe96csyfpUPpNsCPzUoTqWsPJ5e/I6ilCKWeC+7UXNOLdiLddnUa5jPqrgXuqBQap9UA==
   dependencies:
     composeverter latest
     core-js "^2.5.5"

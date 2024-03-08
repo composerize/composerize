@@ -23,6 +23,7 @@ composerize can be run in the cli.
 $ composerize docker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --restart always --log-opt max-size=1g nginx
 ```
 
+See `composerize --help` for more options.
 
 ## How to use with node.js
 
