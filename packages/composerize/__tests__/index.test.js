@@ -403,16 +403,16 @@ services:
         command: --parameter
 networks:
     kong-net:
-        external:
-            name: kong-net
+        external: true
+        name: kong-net
     othernet:
         external: true
         name: othernet
 volumes:
     readymediacache: {}
     vol:
-        external:
-            name: vol"
+        external: true
+        name: vol"
 `);
 });
 

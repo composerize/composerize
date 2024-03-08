@@ -321,8 +321,8 @@ services:
         image: ypopovych/readymedia
 volumes:
     readymediacache:
-        external:
-            name: readymediacache"
+        external: true
+        name: readymediacache"
 `);
 });
 
@@ -490,8 +490,8 @@ services:
         command: --parameter
 volumes:
     vol:
-        external:
-            name: vol"
+        external: true
+        name: vol"
 `);
 });
 
