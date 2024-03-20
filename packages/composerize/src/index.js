@@ -22,6 +22,7 @@ export type ComposeFile = { composeFile: any, ignoredOptionsComments: string };
 
 const getComposeFileJson = (input: string, existingComposeFile: string): ComposeFile => {
     const formattedInput = input
+        .replace(/\n\s*#[^\n]+/g, '')
         .replace(/(\s)+/g, ' ')
         .trim()
         .replace(/\s-p(\d)/g, ' -p $1')

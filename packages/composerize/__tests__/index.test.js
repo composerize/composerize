@@ -55,7 +55,6 @@ test('multiple docker run command', () => {
                 ports:
                     - 80:80
                 image: foobar/baz:latest
-                command: \\"# comment\\"
             buzz:
                 ports:
                     - 80:80
