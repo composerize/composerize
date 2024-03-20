@@ -1,6 +1,6 @@
 {
   "name": "composerize",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "main": "dist/composerize.js",
   "license": "MIT",
   "scripts": {
