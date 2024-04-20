@@ -123,6 +123,24 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
         }
     }
 
+    // $FlowFixMe: prop missing
+    if (service.networks) {
+        const isObjectEmpty = (obj: any) => obj && Object.keys(obj).length === 0 && obj.constructor === Object;
+        // $FlowFixMe: prop missing
+        Object.keys(service.networks).forEach((serviceNetworkName) => {
+            // $FlowFixMe: prop missing
+            if (isObjectEmpty(service.networks[serviceNetworkName])) {
+                // $FlowFixMe: prop missing
+                service.networks[serviceNetworkName] = null;
+            }
+        });
+        // $FlowFixMe: prop missing
+        if (Object.values(service.networks).every((v) => !v)) {
+            // $FlowFixMe: prop missing
+            service.networks = Object.keys(service.networks);
+        }
+    }
+
     const namedNetworks = [];
     // $FlowFixMe: prop missing
     if (service.networks) {

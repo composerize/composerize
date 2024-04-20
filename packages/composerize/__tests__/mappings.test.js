@@ -977,3 +977,55 @@ networks:
         name: my_network"
 `);
 });
+test('--ip (case 1), order of command options should not give different results (#637)', () => {
+    const command =
+        'docker run -d --name host --ip 192.168.6.120 -p 81:82 --network ipvlan -v /docker/hosted:/data --hostname host container_name --restart=always';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    container_name:
+        container_name: host
+        networks:
+            ipvlan:
+                ipv4_address: 192.168.6.120
+        ports:
+            - 81:82
+        volumes:
+            - /docker/hosted:/data
+        hostname: host
+        image: container_name
+        command: --restart=always
+networks:
+    ipvlan:
+        external: true
+        name: ipvlan"
+`);
+});
+
+test('--ip (case 2), order of command options should not give different results (#637)', () => {
+    const command =
+        'docker run -d --name host -p 81:82 --network ipvlan --ip 192.168.6.120 -v /docker/hosted:/data --hostname host container_name --restart=always';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    container_name:
+        container_name: host
+        ports:
+            - 81:82
+        networks:
+            ipvlan:
+                ipv4_address: 192.168.6.120
+        volumes:
+            - /docker/hosted:/data
+        hostname: host
+        image: container_name
+        command: --restart=always
+networks:
+    ipvlan:
+        external: true
+        name: ipvlan"
+`);
+});
+

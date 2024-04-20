@@ -51,7 +51,7 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         if (!stringValue.match(/^(host|bridge|none)$|^container:.+/)) {
             return ({
                 path: 'networks',
-                value: [stringValue],
+                value: { [stringValue]: {} },
             }: ValueComposeEntry);
         }
 
