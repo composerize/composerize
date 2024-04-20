@@ -977,6 +977,43 @@ networks:
         name: my_network"
 `);
 });
+
+test('env var with "=" (case 1) (#638)', () => {
+    const command =
+        'docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -e JAVA_OPTS="-Dfile.encoding=utf-8 -Dsun.jnu.encoding-utf-8" jenkins/jenkins:lts-jdk17';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    jenkins:
+        ports:
+            - 8080:8080
+            - 50000:50000
+        restart: on-failure
+        environment:
+            - JAVA_OPTS=-Dfile.encoding=utf-8 -Dsun.jnu.encoding-utf-8
+        image: jenkins/jenkins:lts-jdk17"
+`);
+});
+
+test('env var with "=" (case 2) (#638)', () => {
+    const command =
+        'docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -e=JAVA_OPTS="-Dfile.encoding=utf-8 -Dsun.jnu.encoding-utf-8" jenkins/jenkins:lts-jdk17';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    jenkins:
+        ports:
+            - 8080:8080
+            - 50000:50000
+        restart: on-failure
+        environment:
+            - JAVA_OPTS=-Dfile.encoding=utf-8 -Dsun.jnu.encoding-utf-8
+        image: jenkins/jenkins:lts-jdk17"
+`);
+});
+
 test('--ip (case 1), order of command options should not give different results (#637)', () => {
     const command =
         'docker run -d --name host --ip 192.168.6.120 -p 81:82 --network ipvlan -v /docker/hosted:/data --hostname host container_name --restart=always';
@@ -1029,3 +1066,54 @@ networks:
 `);
 });
 
+test('env var with ending "==" (case 1) (#639)', () => {
+    const command = `docker rm -f dokemon-agent > /dev/null 2>&1
+        docker run
+        -e SERVER_URL=http://192.168.1.12:9090
+        -e TOKEN=dQufdsfdfsfsadfsadfsdfafasdf2FDuAw==
+        -v /var/run/docker.sock:/var/run/docker.sock
+        --name dokemon-agent --restart unless-stopped
+        -d productiveops/dokemon-agent:latest`;
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"# ignored : docker rm -f dokemon-agent > /dev/null 2>&1
+
+name: <your project name>
+services:
+    dokemon-agent:
+        environment:
+            - SERVER_URL=http://192.168.1.12:9090
+            - TOKEN=dQufdsfdfsfsadfsadfsdfafasdf2FDuAw==
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        container_name: dokemon-agent
+        restart: unless-stopped
+        image: productiveops/dokemon-agent:latest"
+`);
+});
+
+test('env var with ending "==" (case 2) (#639)', () => {
+    const command = `docker rm -f dokemon-agent > /dev/null 2>&1
+        docker run
+        -e=SERVER_URL=http://192.168.1.12:9090
+        -e=TOKEN=dQufdsfdfsfsadfsadfsdfafasdf2FDuAw==
+        -v=/var/run/docker.sock:/var/run/docker.sock
+        --name dokemon-agent --restart unless-stopped
+        -d productiveops/dokemon-agent:latest`;
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"# ignored : docker rm -f dokemon-agent > /dev/null 2>&1
+
+name: <your project name>
+services:
+    dokemon-agent:
+        environment:
+            - SERVER_URL=http://192.168.1.12:9090
+            - TOKEN=dQufdsfdfsfsadfsadfsdfafasdf2FDuAw==
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        container_name: dokemon-agent
+        restart: unless-stopped
+        image: productiveops/dokemon-agent:latest"
+`);
+});

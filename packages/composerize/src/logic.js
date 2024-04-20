@@ -91,10 +91,10 @@ export const getComposeEntry = (mapping: Mapping, value: RawValue): ComposeEntry
         const values = Array.isArray(value) ? value : [value];
 
         return values.map((_value) => {
-            const [k, v] = String(_value).split('=', 2);
+            const [k, ...v] = String(_value).split('=');
             return ({
                 path: mapping.path,
-                value: [v ? `${k}=${stripQuotes(v)}` : k],
+                value: [v.length ? `${k}=${stripQuotes(v.join('='))}` : k],
             }: ValueComposeEntry);
         });
     }
