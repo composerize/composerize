@@ -24,19 +24,6 @@ const Blurb = styled.div`
 
 export default (props) => (
     <Section border>
-        <Label>Output</Label>
-        <Blurb>
-            <p>
-                Copy the following into a file called <Code>docker-compose.yml</Code>
-            </p>
-            <p>
-                For more help, please consult the{' '}
-                <a href="https://docs.docker.com/compose/compose-file/" rel="noopener noreferrer" target="_blank">
-                    docker compose
-                </a>{' '}
-                documentation.
-            </p>
-        </Blurb>
         <Results output={props.output} />
     </Section>
 );

@@ -1,6 +1,7 @@
 html, body, p {
     padding: 0px;
     margin: 0px;
+    background-color: #1f1f1f;
 }
 
 a:hover,
