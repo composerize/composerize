@@ -100,6 +100,12 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
         service.command = commandArgsArray.join(' ');
     }
 
+    // $FlowFixMe: prop missing
+    if (service.network_mode === 'host') {
+        // $FlowFixMe: prop missing
+        delete service.ports;
+    }
+
     const isNamedVolume = (source: string) =>
         source && !source.includes('/') && !source.includes('\\') && !source.includes('$');
     const namedVolumes = [];
