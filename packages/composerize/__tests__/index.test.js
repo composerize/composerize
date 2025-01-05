@@ -234,8 +234,7 @@ test('testing malformed command line', () => {
         name: <your project name>
         services:
             \\"!!!invalid!!!\\":
-                container_name: foobar
-                image:"
+                container_name: foobar"
     `);
 });
 
@@ -492,21 +491,21 @@ services:
 `);
 });
 
-test('remove trailing \\ (https://github.com/composerize/composerize/issues/676)', () => {
+test('remove trailing \\ and handle strip quote (https://github.com/composerize/composerize/issues/676)', () => {
     expect(
         Composerize(
             `
-docker run --name adguardhome\
-    --restart unless-stopped\
-    -v /my/own/workdir:/opt/adguardhome/work\
-    -v /my/own/confdir:/opt/adguardhome/conf\
-    -p 53:53/tcp -p 53:53/udp\
-    -p 67:67/udp -p 68:68/udp\
-    -p 80:80/tcp -p 443:443/tcp -p 443:443/udp -p 3000:3000/tcp\
-    -p 853:853/tcp\
-    -p 784:784/udp -p 853:853/udp -p 8853:8853/udp\
-    -p 5443:5443/tcp -p 5443:5443/udp\
-    -d adguard/adguardhome
+docker run --name 'adguardhome'\\
+    --restart "unless-stopped"\\
+    -v '/my/own/workdir:/opt/adguardhome/work'\\
+    -v /my/own/confdir:/opt/adguardhome/conf\\
+    -p 53:53/tcp -p "53:53/udp"\\
+    -p 67:67/udp -p 68:68/udp\\
+    -p 80:80/tcp -p 443:443/tcp -p 443:443/udp -p 3000:3000/tcp\\
+    -p 853:853/tcp\\
+    -p 784:784/udp -p 853:853/udp -p 8853:8853/udp\\
+    -p 5443:5443/tcp -p 5443:5443/udp\\
+    -d "adguard/adguardhome"
 `,
         ),
     ).toMatchInlineSnapshot(`
@@ -534,5 +533,66 @@ services:
             - 5443:5443/tcp
             - 5443:5443/udp
         image: adguard/adguardhome"
+`);
+});
+
+test('carriage return in command (#678)', () => {
+    const command = `docker run \\
+  -v <CONFIG_FILE_PATH>:/etc/alloy/config.alloy \\
+  -p 12345:12345 \\
+  grafana/alloy:latest \\
+    run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data \\
+    /etc/alloy/config.alloy \\
+    other_param`;
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    alloy:
+        volumes:
+            - <CONFIG_FILE_PATH>:/etc/alloy/config.alloy
+        ports:
+            - 12345:12345
+        image: grafana/alloy:latest
+        command: >-
+            run --server.http.listen-addr=0.0.0.0:12345
+            --storage.path=/var/lib/alloy/data
+             /etc/alloy/config.alloy
+             other_param"
+`);
+});
+
+test('$ and ; in command (#679)', () => {
+    const command = `$ docker run --detach \\
+  --name openbis-db \\
+  --hostname openbis-db \\
+  --network openbis-network \\
+  -v openbis-db-data:/var/lib/postgresql/data \\
+  -e POSTGRES_PASSWORD=mysecretpassword \\
+  -e PGDATA=/var/lib/postgresql/data/pgdata \\
+  postgres:15;`;
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"# ignored options for 'postgres'
+# --detach
+name: <your project name>
+services:
+    postgres:
+        container_name: openbis-db
+        hostname: openbis-db
+        networks:
+            - openbis-network
+        volumes:
+            - openbis-db-data:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=mysecretpassword
+            - PGDATA=/var/lib/postgresql/data/pgdata
+        image: postgres:15
+networks:
+    openbis-network:
+        external: true
+        name: openbis-network
+volumes:
+    openbis-db-data:
+        external: true
+        name: openbis-db-data"
 `);
 });

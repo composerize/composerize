@@ -4,7 +4,7 @@ import parser from 'yargs-parser';
 import deepmerge from 'deepmerge';
 import Composeverter from 'composeverter';
 
-import { maybeGetComposeEntry, getComposeJson, fromEntries } from './logic';
+import { maybeGetComposeEntry, getComposeJson, fromEntries, stripQuotes } from './logic';
 
 export type RawValue = string | number | boolean | [string | number | boolean] | any;
 
@@ -22,13 +22,18 @@ export type ComposeFile = { composeFile: any, ignoredOptionsComments: string };
 
 const getComposeFileJson = (input: string, existingComposeFile: string): ComposeFile => {
     const formattedInput = input
-        .replace(/\n\s*#[^\n]+/g, '')
-        .replace(/\\\n/g, '')
-        .replace(/(\s)+/g, ' ')
-        .trim()
+        .replace(/\n\s*#[^\n]+/g, '\n')
+        .replace(/\\\n/g, '\n')
         .replace(/\s-p(\d)/g, ' -p $1')
-        .replace(/\s\\\s/g, ' ');
-    const formattedInputArgs = formattedInput.replace(/^docker (run|create|container run|service create)/, '');
+        .replace(/\s\\\s/g, '\n')
+        .replace(/\s*;$/g, '')
+        .replace(/[ ]+\n[ ]+/g, '\n ')
+        .replace(/[ ]+/g, ' ')
+        .trim();
+    const formattedInputArgs = formattedInput.replace(
+        /^(?:\s*\$\s+)?docker\s+(run|create|container\s+run|service\s+create)/,
+        '',
+    );
     const parsedInput: {
         +_: Array<string>,
         +[flag: string]: RawValue,
@@ -57,7 +62,15 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
             'sig-proxy',
         ],
     });
-    const { _: command, ...params } = parsedInput;
+    const { _: command, ...rawParams } = parsedInput;
+    const params = Object.fromEntries(
+        Object.entries(rawParams).map(([key, value]: [string, RawValue]) => {
+            if (Array.isArray(value)) {
+                return [key.trim(), value.map((v) => (typeof v === 'string' ? stripQuotes(String(v).trim()) : v))];
+            }
+            return [key.trim(), typeof value === 'string' ? stripQuotes(String(value).trim()) : value];
+        }),
+    );
 
     // The service object that we'll update
     let service = {};
@@ -86,7 +99,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
         }
     });
 
-    const image = command[0];
+    const image = stripQuotes(command[0]?.trim());
     // $FlowFixMe: prop missing
     service.image = image;
     if (command.length > 1) {
@@ -107,7 +120,12 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
     }
 
     const isNamedVolume = (source: string) =>
-        source && !source.includes('/') && !source.includes('\\') && !source.includes('$');
+        source &&
+        !source.includes('/') &&
+        !source.includes('\\') &&
+        !source.includes('$') &&
+        !source.includes('<') &&
+        !source.includes('>');
     const namedVolumes = [];
     // $FlowFixMe: prop missing
     if (service.volumes) {
@@ -210,7 +228,7 @@ export default (
 ): ?string => {
     const globalIgnoredOptionsComments = [];
     let result = {};
-    const dockerCommands = input.split(/^\s*docker\s/gm);
+    const dockerCommands = input.split(/^(?:\s*\$)?\s*docker\s+/gm);
     let convertedExistingComposeFile = existingComposeFile;
     if (existingComposeFile) {
         if (composeVersion === 'v2x')
@@ -221,7 +239,7 @@ export default (
     dockerCommands.forEach((dockerCommand) => {
         const command = String(dockerCommand);
         if (!command) return;
-        if (!command.match(/^\s*(run|create|container run|service create)/)) {
+        if (!command.match(/^\s*(run|create|container\s+run|service\s+create)/)) {
             globalIgnoredOptionsComments.push(`# ignored : docker ${command}\n`);
             return;
         }

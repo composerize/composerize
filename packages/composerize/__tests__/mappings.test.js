@@ -352,20 +352,20 @@ test('tmpfs (https://github.com/magicmark/composerize/issues/536)', () => {
 test('multiline (https://github.com/magicmark/composerize/issues/120)', () => {
     expect(
         Composerize(
-            `docker run -d --name kong \
-     --network=kong-net \
-     -e "KONG_DATABASE=postgres" \
-     -e "KONG_PG_HOST=kong-database" \
-     -e "KONG_CASSANDRA_CONTACT_POINTS=kong-database" \
-     -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \
-     -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" \
-     -e "KONG_PROXY_ERROR_LOG=/dev/stderr" \
-     -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" \
-     -e "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl" \
-     -p 8000:8000 \
-     -p 8443:8443 \
-     -p 8001:8001 \
-     -p 8444:8444 \
+            `docker run -d --name kong \\
+     --network=kong-net \\
+     -e "KONG_DATABASE=postgres" \\
+     -e "KONG_PG_HOST=kong-database" \\
+     -e "KONG_CASSANDRA_CONTACT_POINTS=kong-database" \\
+     -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" \\
+     -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" \\
+     -e "KONG_PROXY_ERROR_LOG=/dev/stderr" \\
+     -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" \\
+     -e "KONG_ADMIN_LISTEN=0.0.0.0:8001, 0.0.0.0:8444 ssl" \\
+     -p 8000:8000 \\
+     -p 8443:8443 \\
+     -p 8001:8001 \\
+     -p 8444:8444 \\
      kong:latest`,
         ),
     ).toMatchInlineSnapshot(`
@@ -1122,16 +1122,16 @@ test('remove port when --network host (https://github.com/composerize/composeriz
     expect(
         Composerize(
             `
-docker run --network host --name adguardhome\
-    --restart unless-stopped\
-    -v /my/own/workdir:/opt/adguardhome/work\
-    -v /my/own/confdir:/opt/adguardhome/conf\
-    -p 53:53/tcp -p 53:53/udp\
-    -p 67:67/udp -p 68:68/udp\
-    -p 80:80/tcp -p 443:443/tcp -p 443:443/udp -p 3000:3000/tcp\
-    -p 853:853/tcp\
-    -p 784:784/udp -p 853:853/udp -p 8853:8853/udp\
-    -p 5443:5443/tcp -p 5443:5443/udp\
+docker run --network host --name adguardhome\\
+    --restart unless-stopped\\
+    -v /my/own/workdir:/opt/adguardhome/work\\
+    -v /my/own/confdir:/opt/adguardhome/conf\\
+    -p 53:53/tcp -p 53:53/udp\\
+    -p 67:67/udp -p 68:68/udp\\
+    -p 80:80/tcp -p 443:443/tcp -p 443:443/udp -p 3000:3000/tcp\\
+    -p 853:853/tcp\\
+    -p 784:784/udp -p 853:853/udp -p 8853:8853/udp\\
+    -p 5443:5443/tcp -p 5443:5443/udp\\
     -d adguard/adguardhome
 `,
         ),

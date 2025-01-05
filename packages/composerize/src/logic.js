@@ -29,7 +29,7 @@ const parseListAsValueComposeEntryObject = (argValue: string, listSeparator: str
     );
 };
 
-const stripQuotes = (val: string): string =>
+export const stripQuotes = (val: string): string =>
     typeof val === 'string' && (val[0] === "'" || val[0] === '"') && val[val.length - 1] === val[0]
         ? val.substring(1, val.length - 1)
         : val;
