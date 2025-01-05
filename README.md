@@ -25,6 +25,10 @@ $ composerize docker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --
 
 See `composerize --help` for more options.
 
+## Docker image
+
+A dockker image of composerize, decomposerize and composeverter websites is available here: https://github.com/Oaklight/composerize-minimal/blob/master/README_en.md (thanks to @Oaklight)
+
 ## How to use with node.js
 
 Make sure to install the `composerize` package in your project by running:
