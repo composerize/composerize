@@ -14,7 +14,7 @@ if (argv.help || argv.h)
 	console.log(`
 Convert a "docker run/create/container run/service create" command to docker-compose file.
 
-An existing docker-compose.yml can be passed to stdin to be merged with provided command line.
+An existing compose.yaml can be passed to stdin to be merged with provided command line.
 
 Available options:
 -f, --format: Docker Compose format (v2x, v3x, latest). Default: latest

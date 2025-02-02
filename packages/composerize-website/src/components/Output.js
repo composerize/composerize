@@ -27,7 +27,7 @@ export default (props) => (
         <Label>Output</Label>
         <Blurb>
             <p>
-                Copy the following into a file called <Code>docker-compose.yml</Code>
+                Copy the following into a file called <Code>compose.yaml</Code>
             </p>
             <p>
                 For more help, please consult the{' '}

@@ -5,7 +5,7 @@
 [![Follow @mark_larah](https://img.shields.io/twitter/follow/mark_larah)](https://twitter.com/mark_larah?ref_src=github_composerize)
 [![ShareVB on GitHub](https://img.shields.io/badge/ShareVB-100000?logo=github&logoColor=white)](https://github.com/sharevb)
             
-http://composerize.com - Turns `docker run` commands into `docker-compose.yml` files and even merge with existing `docker-compose.yml`!
+http://composerize.com - Turns `docker run` commands into `compose.yaml` files and even merge with existing `compose.yaml`!
 
 Looking for the reverse : http://decomposerize.com / [Decomposerize](https://github.com/outilslibre/decomposerize)
 

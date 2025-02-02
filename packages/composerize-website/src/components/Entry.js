@@ -76,12 +76,12 @@ export default function Entry(props) {
                     >
                         <summary>
                             Want to merge with a Docker compose file ? Click here and paste into the box below your
-                            existing <Code>docker-compose.yml</Code> to append <Code>docker run</Code> commands to it
+                            existing <Code>compose.yaml</Code> to append <Code>docker run</Code> commands to it
                         </summary>
                         <LinedTextInput
                             value={props.compose}
                             numOfLines={10}
-                            placeholder={'Enter docker-compose.yml content you want to merge with above command(s)'}
+                            placeholder={'Enter compose.yaml content you want to merge with above command(s)'}
                             onValueChange={props.onComposeInputChange}
                             erroredLines={props.erroredLines}
                         />
