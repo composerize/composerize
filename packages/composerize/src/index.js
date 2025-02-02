@@ -22,14 +22,13 @@ export type ComposeFile = { composeFile: any, ignoredOptionsComments: string };
 
 const getComposeFileJson = (input: string, existingComposeFile: string): ComposeFile => {
     const formattedInput = input
-        .replace(/\n\s*#[^\n]+/g, '\n')
-        .replace(/\\\n/g, '\n')
+        .replace(/\n\s*#[^\n]+/g, '')
+        .replace(/\\\n/g, '')
+        .replace(/(\s)+/g, ' ')
+        .trim()
         .replace(/\s-p(\d)/g, ' -p $1')
-        .replace(/\s\\\s/g, '\n')
-        .replace(/\s*;$/g, '')
-        .replace(/[ ]+\n[ ]+/g, '\n ')
-        .replace(/[ ]+/g, ' ')
-        .trim();
+        .replace(/\s\\\s/g, ' ')
+        .replace(/\s*;$/g, '');
     const formattedInputArgs = formattedInput.replace(
         /^(?:\s*\$\s+)?docker\s+(run|create|container\s+run|service\s+create)/,
         '',
@@ -71,7 +70,6 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
             return [key.trim(), typeof value === 'string' ? stripQuotes(String(value).trim()) : value];
         }),
     );
-
     // The service object that we'll update
     let service = {};
 

@@ -536,7 +536,7 @@ services:
 `);
 });
 
-test('carriage return in command (#678)', () => {
+test('carriage return in command (#678) - reverted to single line', () => {
     const command = `docker run \\
   -v <CONFIG_FILE_PATH>:/etc/alloy/config.alloy \\
   -p 12345:12345 \\
@@ -553,11 +553,9 @@ services:
         ports:
             - 12345:12345
         image: grafana/alloy:latest
-        command: >-
-            run --server.http.listen-addr=0.0.0.0:12345
-            --storage.path=/var/lib/alloy/data
-             /etc/alloy/config.alloy
-             other_param"
+        command: run --server.http.listen-addr=0.0.0.0:12345
+            --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
+            other_param"
 `);
 });
 
@@ -594,5 +592,36 @@ volumes:
     openbis-db-data:
         external: true
         name: openbis-db-data"
+`);
+});
+
+test('multiline commands (#697)', () => {
+    const command = `docker run -e TZ=Europe/Berlin \\
+--name foobar \\
+--restart=unless-stopped
+--cpus=2 --memory=128m \\
+-p 8082:8082 \\
+-v /srv/foobar/logs:/logs \\
+-v /srv/foobar/config:/config \\
+foobar`;
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    foobar:
+        environment:
+            - TZ=Europe/Berlin
+        container_name: foobar
+        restart: unless-stopped
+        deploy:
+            resources:
+                limits:
+                    cpus: 2
+                    memory: 128m
+        ports:
+            - 8082:8082
+        volumes:
+            - /srv/foobar/logs:/logs
+            - /srv/foobar/config:/config
+        image: foobar"
 `);
 });
