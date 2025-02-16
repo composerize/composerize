@@ -27,7 +27,7 @@ See `composerize --help` for more options.
 
 ## Docker image
 
-A dockker image of composerize, decomposerize and composeverter websites is available here: https://github.com/Oaklight/composerize-minimal/blob/master/README_en.md (thanks to @Oaklight)
+A docker image of composerize, decomposerize and composeverter websites is available here: https://github.com/Oaklight/composerize-minimal/blob/master/README_en.md (thanks to @Oaklight)
 
 ## How to use with node.js
 
