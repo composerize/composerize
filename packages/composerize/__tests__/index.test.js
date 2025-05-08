@@ -625,3 +625,32 @@ services:
         image: foobar"
 `);
 });
+
+test('shell expression in env vars [$(...)] (#744)', () => {
+    const command = `docker run \
+  -d \
+  --name tor-relay \
+  -e TZ=Europe/London \
+  -e PUID=$(id -u -xxx) \
+  -e PGID=$(id -g) \
+  -v $(pwd)/tor/data:/data:Z \
+  -p 9001:9001 \
+  --restart always \
+  ilshidur/tor-relay`;
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+    tor-relay:
+        container_name: tor-relay
+        environment:
+            - TZ=Europe/London
+            - PUID=$(id -u -xxx)
+            - PGID=$(id -g)
+        volumes:
+            - $(pwd)/tor/data:/data:Z
+        ports:
+            - 9001:9001
+        restart: always
+        image: ilshidur/tor-relay"
+`);
+});

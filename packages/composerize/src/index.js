@@ -23,6 +23,7 @@ export type ComposeFile = { composeFile: any, ignoredOptionsComments: string };
 const getComposeFileJson = (input: string, existingComposeFile: string): ComposeFile => {
     const formattedInput = input
         .replace(/\n\s*#[^\n]+/g, '')
+        .replace(/\$\([^)]*\)/g, (m) => m.replace(/\s/g, '¤'))
         .replace(/\\\n/g, '')
         .replace(/(\s)+/g, ' ')
         .trim()
@@ -62,12 +63,14 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
         ],
     });
     const { _: command, ...rawParams } = parsedInput;
+    const cleanStringArg = (v: any) =>
+        stripQuotes(String(v).trim()).replace(/\$\([^)]*\)/g, (m) => m.replace(/¤/g, ' '));
     const params = Object.fromEntries(
         Object.entries(rawParams).map(([key, value]: [string, RawValue]) => {
             if (Array.isArray(value)) {
-                return [key.trim(), value.map((v) => (typeof v === 'string' ? stripQuotes(String(v).trim()) : v))];
+                return [key.trim(), value.map((v) => (typeof v === 'string' ? cleanStringArg(v) : v))];
             }
-            return [key.trim(), typeof value === 'string' ? stripQuotes(String(value).trim()) : value];
+            return [key.trim(), typeof value === 'string' ? cleanStringArg(value) : value];
         }),
     );
     // The service object that we'll update
