@@ -349,9 +349,9 @@ test('basic docker run command with existing compose and named volumes', () => {
     const command = 'docker run -d  -v vol:/tmp --net othernet hello-world  --parameter';
 
     expect(
-        Composerize(
-            command,
-            `
+  Composerize(
+    command,
+    `
 # some comment
 
 version: '3.3'
@@ -375,10 +375,12 @@ networks:
 volumes:
     readymediacache: {}
 
-    `,
-        ),
-    ).toMatchInlineSnapshot(`
-"name: <your project name>
+    `
+  )
+).toMatchInlineSnapshot(`
+"# named network 'othernet' is marked as \\"external\\" (used by service 'hello-world'), so either remove \\"external\\" from network definition or it needs to be created using: docker network create -d bridge othernet
+# named volume 'vol' is marked as \\"external\\" (used by service 'hello-world'), so either remove \\"external\\" from volume definition or it needs to be created using: docker volume create vol
+name: <your project name>
 services:
     readymedia:
         restart: unless-stopped
@@ -571,6 +573,8 @@ test('$ and ; in command (#679)', () => {
     expect(Composerize(command)).toMatchInlineSnapshot(`
 "# ignored options for 'postgres'
 # --detach
+# named network 'openbis-network' is marked as \\"external\\" (used by service 'postgres'), so either remove \\"external\\" from network definition or it needs to be created using: docker network create -d bridge openbis-network
+# named volume 'openbis-db-data' is marked as \\"external\\" (used by service 'postgres'), so either remove \\"external\\" from volume definition or it needs to be created using: docker volume create openbis-db-data
 name: <your project name>
 services:
     postgres:

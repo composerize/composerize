@@ -303,11 +303,12 @@ test('basic image (https://github.com/magicmark/composerize/issues/542)', () => 
 
 test('volumes declaration (https://github.com/magicmark/composerize/issues/524)', () => {
     expect(
-        Composerize(
-            'docker run --restart=unless-stopped -d --name=readymedia1 --net=host -v /my/video/path:/media -v readymediacache:/cache -e VIDEO_DIR1=/media/my_video_files ypopovych/readymedia',
-        ),
-    ).toMatchInlineSnapshot(`
-"name: <your project name>
+  Composerize(
+    'docker run --restart=unless-stopped -d --name=readymedia1 --net=host -v /my/video/path:/media -v readymediacache:/cache -e VIDEO_DIR1=/media/my_video_files ypopovych/readymedia'
+  )
+).toMatchInlineSnapshot(`
+"# named volume 'readymediacache' is marked as \\"external\\" (used by service 'readymedia'), so either remove \\"external\\" from volume definition or it needs to be created using: docker volume create readymediacache
+name: <your project name>
 services:
     readymedia:
         restart: unless-stopped
@@ -351,8 +352,8 @@ test('tmpfs (https://github.com/magicmark/composerize/issues/536)', () => {
 
 test('multiline (https://github.com/magicmark/composerize/issues/120)', () => {
     expect(
-        Composerize(
-            `docker run -d --name kong \\
+  Composerize(
+    `docker run -d --name kong \\
      --network=kong-net \\
      -e "KONG_DATABASE=postgres" \\
      -e "KONG_PG_HOST=kong-database" \\
@@ -366,10 +367,11 @@ test('multiline (https://github.com/magicmark/composerize/issues/120)', () => {
      -p 8443:8443 \\
      -p 8001:8001 \\
      -p 8444:8444 \\
-     kong:latest`,
-        ),
-    ).toMatchInlineSnapshot(`
-"name: <your project name>
+     kong:latest`
+  )
+).toMatchInlineSnapshot(`
+"# named network 'kong-net' is marked as \\"external\\" (used by service 'kong'), so either remove \\"external\\" from network definition or it needs to be created using: docker network create -d bridge kong-net
+name: <your project name>
 services:
     kong:
         container_name: kong
@@ -445,11 +447,12 @@ test('cgroup (https://github.com/magicmark/composerize/issues/561)', () => {
 
 test('cpu/share, ip (https://github.com/magicmark/composerize/issues/545 and https://github.com/magicmark/composerize/issues/582)', () => {
     expect(
-        Composerize(
-            'docker run -d --restart always -p 5432:5432 --net postgres_net --ip 172.18.0.100 --name postgres2 --cpus=3 --cpu-shares=512 --log-driver json-file --log-opt max-size=100m --log-opt max-file=10 -v /srv/postgres:/var/lib/postgresql/data postgis/postgis',
-        ),
-    ).toMatchInlineSnapshot(`
-"name: <your project name>
+  Composerize(
+    'docker run -d --restart always -p 5432:5432 --net postgres_net --ip 172.18.0.100 --name postgres2 --cpus=3 --cpu-shares=512 --log-driver json-file --log-opt max-size=100m --log-opt max-file=10 -v /srv/postgres:/var/lib/postgresql/data postgis/postgis'
+  )
+).toMatchInlineSnapshot(`
+"# named network 'postgres_net' is marked as \\"external\\" (used by service 'postgis'), so either remove \\"external\\" from network definition or it needs to be created using: docker network create -d bridge postgres_net
+name: <your project name>
 services:
     postgis:
         restart: always
@@ -481,7 +484,8 @@ networks:
 
 test('fake multiline (https://github.com/magicmark/composerize/issues/546)', () => {
     expect(Composerize('docker run -d  -v vol:/tmp  hello-world  --parameter')).toMatchInlineSnapshot(`
-"name: <your project name>
+"# named volume 'vol' is marked as \\"external\\" (used by service 'hello-world'), so either remove \\"external\\" from volume definition or it needs to be created using: docker volume create vol
+name: <your project name>
 services:
     hello-world:
         volumes:
@@ -521,11 +525,12 @@ test('port no space (https://github.com/magicmark/composerize/issues/113)', () =
 
 test('ip, mac, hostname, network (https://github.com/magicmark/composerize/issues/359)', () => {
     expect(
-        Composerize(
-            'docker run -d --name test --restart=always --net=homenet --ip=192.168.1.9 --ip6=xxxxx --mac-address=00:00:00:00:00:09 --hostname myhost -v /import/settings:/settings -v /import/media:/media -p 8080:8080 -e UID=1000 -e GID=1000 repo/image',
-        ),
-    ).toMatchInlineSnapshot(`
-"name: <your project name>
+  Composerize(
+    'docker run -d --name test --restart=always --net=homenet --ip=192.168.1.9 --ip6=xxxxx --mac-address=00:00:00:00:00:09 --hostname myhost -v /import/settings:/settings -v /import/media:/media -p 8080:8080 -e UID=1000 -e GID=1000 repo/image'
+  )
+).toMatchInlineSnapshot(`
+"# named network 'homenet' is marked as \\"external\\" (used by service 'image'), so either remove \\"external\\" from network definition or it needs to be created using: docker network create -d bridge homenet
+name: <your project name>
 services:
     image:
         container_name: test
@@ -808,9 +813,10 @@ test('--pull --runtime --platform --isolation', () => {
 });
 
 test('--network-alias --link-local-ip', () => {
-    expect(Composerize('docker run --net reseau --network-alias=ubuntu_res --link-local-ip 192.168.0.1 ubuntu'))
-        .toMatchInlineSnapshot(`
-"name: <your project name>
+    expect(Composerize('docker run --net reseau --network-alias=ubuntu_res --link-local-ip 192.168.0.1 ubuntu')).
+toMatchInlineSnapshot(`
+"# named network 'reseau' is marked as \\"external\\" (used by service 'ubuntu'), so either remove \\"external\\" from network definition or it needs to be created using: docker network create -d bridge reseau
+name: <your project name>
 services:
     ubuntu:
         networks:
@@ -958,7 +964,8 @@ test('--net and --log-driver bug (https://github.com/magicmark/composerize/issue
         'docker run -td --rm -p 80:80 --net=my_network --log-driver=journald --stop-signal=SIGRTMIN+3 --name my_container my_image';
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
-"name: <your project name>
+"# named network 'my_network' is marked as \\"external\\" (used by service 'my_image'), so either remove \\"external\\" from network definition or it needs to be created using: docker network create -d bridge my_network
+name: <your project name>
 services:
     my_image:
         tty: true
@@ -1019,7 +1026,8 @@ test('--ip (case 1), order of command options should not give different results 
         'docker run -d --name host --ip 192.168.6.120 -p 81:82 --network ipvlan -v /docker/hosted:/data --hostname host container_name --restart=always';
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
-"name: <your project name>
+"# named network 'ipvlan' is marked as \\"external\\" (used by service 'container_name'), so either remove \\"external\\" from network definition or it needs to be created using: docker network create -d bridge ipvlan
+name: <your project name>
 services:
     container_name:
         container_name: host
@@ -1045,7 +1053,8 @@ test('--ip (case 2), order of command options should not give different results 
         'docker run -d --name host -p 81:82 --network ipvlan --ip 192.168.6.120 -v /docker/hosted:/data --hostname host container_name --restart=always';
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
-"name: <your project name>
+"# named network 'ipvlan' is marked as \\"external\\" (used by service 'container_name'), so either remove \\"external\\" from network definition or it needs to be created using: docker network create -d bridge ipvlan
+name: <your project name>
 services:
     container_name:
         container_name: host

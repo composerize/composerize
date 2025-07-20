@@ -18,7 +18,7 @@ const getServiceName = (image: string): string => {
     return name;
 };
 
-export type ComposeFile = { composeFile: any, ignoredOptionsComments: string };
+export type ComposeFile = { composeFile: any, composeCreationComments: string };
 
 const getComposeFileJson = (input: string, existingComposeFile: string): ComposeFile => {
     const formattedInput = input
@@ -202,22 +202,32 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
     };
     const existingCompose = Composeverter.yamlParse(existingComposeFile ?? '') ?? {};
     result = deepmerge(existingCompose, generatedCompose);
+
+    let composeCreationComments = '';
+    if (ignoredOptions.length > 0)
+        composeCreationComments = `# ignored options for '${serviceName}'\n${ignoredOptions.join('\n')}\n`;
+
     if (namedNetworks.length > 0) {
         const networks = { networks: fromEntries(namedNetworks) };
         result = deepmerge(result, networks);
+
+        namedNetworks.forEach(([name]) => {
+            composeCreationComments += `# named network '${name}' is marked as "external" (used by service '${serviceName}'), so either remove "external" from network definition or it needs to be created using: docker network create -d bridge ${name}\n`;
+        });
     }
     if (namedVolumes.length > 0) {
         const volumes = { volumes: fromEntries(namedVolumes) };
         result = deepmerge(result, volumes);
+
+        namedVolumes.forEach(([name]) => {
+            composeCreationComments += `# named volume '${name}' is marked as "external" (used by service '${serviceName}'), so either remove "external" from volume definition or it needs to be created using: docker volume create ${name}\n`;
+        });
     }
 
-    let ignoredOptionsComments = '';
-    if (ignoredOptions.length > 0)
-        ignoredOptionsComments = `# ignored options for '${serviceName}'\n${ignoredOptions.join('\n')}\n`;
 
     return ({
         composeFile: result,
-        ignoredOptionsComments,
+        composeCreationComments,
     }: ComposeFile);
 };
 
@@ -227,7 +237,7 @@ export default (
     composeVersion: 'latest' | 'v2x' | 'v3x' = 'latest',
     indent: number = 4,
 ): ?string => {
-    const globalIgnoredOptionsComments = [];
+    const globalComposeCreationComments = [];
     let result = {};
     const dockerCommands = input.split(/^(?:\s*\$)?\s*docker\s+/gm);
     let convertedExistingComposeFile = existingComposeFile;
@@ -241,14 +251,14 @@ export default (
         const command = String(dockerCommand);
         if (!command) return;
         if (!command.match(/^\s*(run|create|container\s+run|service\s+create)/)) {
-            globalIgnoredOptionsComments.push(`# ignored : docker ${command}\n`);
+            globalComposeCreationComments.push(`# ignored : docker ${command}\n`);
             return;
         }
-        const { composeFile, ignoredOptionsComments } = getComposeFileJson(
+        const { composeFile, composeCreationComments } = getComposeFileJson(
             `docker ${command}`,
             convertedExistingComposeFile,
         );
-        if (ignoredOptionsComments) globalIgnoredOptionsComments.push(ignoredOptionsComments);
+        if (composeCreationComments) globalComposeCreationComments.push(composeCreationComments);
 
         result = deepmerge(result, composeFile);
     });
@@ -262,5 +272,5 @@ export default (
         finalComposeYaml = Composeverter.migrateToCommonSpec(finalComposeYaml, { indent });
     else if (composeVersion !== 'v3x') throw new Error(`Unknown ComposeVersion '${composeVersion}'`);
 
-    return globalIgnoredOptionsComments.join('\n') + finalComposeYaml;
+    return globalComposeCreationComments.join('\n') + finalComposeYaml;
 };
