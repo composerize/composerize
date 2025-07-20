@@ -31,7 +31,7 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
         .replace(/\s\\\s/g, ' ')
         .replace(/\s*;$/g, '');
     const formattedInputArgs = formattedInput.replace(
-        /^(?:\s*\$\s+)?docker\s+(run|create|container\s+run|service\s+create)/,
+        /^(?:\s*\$\s+)?(?:docker|podman)\s+(run|create|container\s+run|service\s+create)/,
         '',
     );
     const parsedInput: {
@@ -239,7 +239,7 @@ export default (
 ): ?string => {
     const globalComposeCreationComments = [];
     let result = {};
-    const dockerCommands = input.split(/^(?:\s*\$)?\s*docker\s+/gm);
+    const dockerCommands = input.split(/^(?:\s*\$)?\s*(?:docker|podman)\s+/gm);
     let convertedExistingComposeFile = existingComposeFile;
     if (existingComposeFile) {
         if (composeVersion === 'v2x')
@@ -251,7 +251,7 @@ export default (
         const command = String(dockerCommand);
         if (!command) return;
         if (!command.match(/^\s*(run|create|container\s+run|service\s+create)/)) {
-            globalComposeCreationComments.push(`# ignored : docker ${command}\n`);
+            globalComposeCreationComments.push(`# ignored : docker/podman ${command}\n`);
             return;
         }
         const { composeFile, composeCreationComments } = getComposeFileJson(
@@ -264,7 +264,7 @@ export default (
     });
     // $FlowFixMe: prop missing
     if (!result.services)
-        throw new SyntaxError('must have at least a valid docker run/create/service create/container run command');
+        throw new SyntaxError('must have at least a valid docker/podman run/create/service create/container run command');
 
     let finalComposeYaml = Composeverter.yamlStringify(result, { indent }).trim();
     if (composeVersion === 'v2x') finalComposeYaml = Composeverter.migrateFromV3xToV2x(finalComposeYaml, { indent });

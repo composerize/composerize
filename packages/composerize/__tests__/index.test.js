@@ -4,10 +4,10 @@ import Composerize from '../src';
 
 test('fails with invalid commands', () => {
     expect(() => {
-        Composerize('foo bar');
-    }).toThrowErrorMatchingInlineSnapshot(
-        `"must have at least a valid docker run/create/service create/container run command"`,
-    );
+  Composerize('foo bar');
+}).toThrowErrorMatchingInlineSnapshot(`"must have at least a valid docker/podman run/create/service create/container run command"`
+
+);
 });
 
 test('fails with invalid conversion', () => {
@@ -47,33 +47,46 @@ test('multiple docker run command', () => {
         'docker run -p 80:80 foobar/baz:latest\n# comment\n\ndocker run -p 80:80 foobar/buzz:latest\ndocker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro --restart always --log-opt max-size=1g nginx\ndocker stop\n';
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
-        "# ignored : docker stop
+"# ignored : docker/podman stop
 
-        name: <your project name>
-        services:
-            baz:
-                ports:
-                    - 80:80
-                image: foobar/baz:latest
-            buzz:
-                ports:
-                    - 80:80
-                image: foobar/buzz:latest
-            nginx:
-                ports:
-                    - 80:80
-                volumes:
-                    - /var/run/docker.sock:/tmp/docker.sock:ro
-                restart: always
-                logging:
-                    options:
-                        max-size: 1g
-                image: nginx"
-    `);
+name: <your project name>
+services:
+    baz:
+        ports:
+            - 80:80
+        image: foobar/baz:latest
+    buzz:
+        ports:
+            - 80:80
+        image: foobar/buzz:latest
+    nginx:
+        ports:
+            - 80:80
+        volumes:
+            - /var/run/docker.sock:/tmp/docker.sock:ro
+        restart: always
+        logging:
+            options:
+                max-size: 1g
+        image: nginx"
+`);
 });
 
 test('basic docker run command', () => {
     const command = 'docker run -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command)).toMatchInlineSnapshot(`
+        "name: <your project name>
+        services:
+            baz:
+                ports:
+                    - 80:80
+                image: foobar/baz:latest"
+    `);
+});
+
+test('basic podman run command', () => {
+    const command = 'podman run -p 80:80 foobar/baz:latest';
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
         "name: <your project name>

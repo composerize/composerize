@@ -1085,7 +1085,7 @@ test('env var with ending "==" (case 1) (#639)', () => {
         -d productiveops/dokemon-agent:latest`;
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
-"# ignored : docker rm -f dokemon-agent > /dev/null 2>&1
+"# ignored : docker/podman rm -f dokemon-agent > /dev/null 2>&1
 
 name: <your project name>
 services:
@@ -1111,7 +1111,7 @@ test('env var with ending "==" (case 2) (#639)', () => {
         -d productiveops/dokemon-agent:latest`;
 
     expect(Composerize(command)).toMatchInlineSnapshot(`
-"# ignored : docker rm -f dokemon-agent > /dev/null 2>&1
+"# ignored : docker/podman rm -f dokemon-agent > /dev/null 2>&1
 
 name: <your project name>
 services:
