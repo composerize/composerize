@@ -1,6 +1,6 @@
 {
   "name": "composerize",
-  "version": "1.7.2",
+  "version": "1.7.5",
   "main": "dist/composerize.js",
   "license": "MIT",
   "scripts": {
@@ -15,10 +15,11 @@
     "@babel/cli": "^7.x",
     "@babel/core": "^7.x",
     "@babel/plugin-proposal-private-property-in-object": "^7.x",
+    "@babel/plugin-transform-nullish-coalescing-operator": "^7.x",
     "@babel/preset-env": "^7.x",
     "@babel/preset-flow": "^7.x",
     "@rollup/plugin-babel": "6.x",
-    "@rollup/plugin-commonjs": "25.x",
+    "@rollup/plugin-commonjs": "28.x",
     "@rollup/plugin-json": "^6.0.1",
     "@rollup/plugin-node-resolve": "15.x",
     "@rollup/plugin-replace": "5.x",
@@ -28,7 +29,6 @@
     "jest": "^27.4.3",
     "rollup": "4.x",
     "rollup-plugin-node-builtins": "2.x",
-    "rollup-plugin-node-globals": "1.x",
     "rollup-plugin-uglify": "6.x"
   },
   "dependencies": {
