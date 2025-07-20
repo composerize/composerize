@@ -224,7 +224,6 @@ const getComposeFileJson = (input: string, existingComposeFile: string): Compose
         });
     }
 
-
     return ({
         composeFile: result,
         composeCreationComments,
@@ -264,7 +263,9 @@ export default (
     });
     // $FlowFixMe: prop missing
     if (!result.services)
-        throw new SyntaxError('must have at least a valid docker/podman run/create/service create/container run command');
+        throw new SyntaxError(
+            'must have at least a valid docker/podman run/create/service create/container run command',
+        );
 
     let finalComposeYaml = Composeverter.yamlStringify(result, { indent }).trim();
     if (composeVersion === 'v2x') finalComposeYaml = Composeverter.migrateFromV3xToV2x(finalComposeYaml, { indent });
