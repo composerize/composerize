@@ -1,0 +1,5 @@
+steps
+
+1. go to website
+2. select a pizza
+3. order a pizza
