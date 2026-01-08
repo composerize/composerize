@@ -62,12 +62,47 @@ export default function Entry(props) {
                         </p>
                     </Blurb>
                     <TextInput value={props.command} rows={3} onInputChange={props.onCommandInputChange} />
-                    <span>Docker Compose version:</span>
-                    <Select
-                        onChange={props.onSelectChange}
-                        options={options}
-                        value={options.filter(({ value }) => value === props.version)}
-                    />
+                    <div
+                        css={`
+                            display: flex;
+                            gap: 20px;
+                            align-items: center;
+                            margin-top: 10px;
+                        `}
+                    >
+                        <div
+                            css={`
+                                flex: 1;
+                            `}
+                        >
+                            <span>Docker Compose version:</span>
+                            <Select
+                                onChange={props.onSelectChange}
+                                options={options}
+                                value={options.filter(({ value }) => value === props.version)}
+                            />
+                        </div>
+                        <div
+                            css={`
+                                flex: 1;
+                            `}
+                        >
+                            <span>Indentation:</span>
+                            <Select
+                                onChange={props.onIndentChange}
+                                options={[
+                                    { value: 2, label: '2 spaces' },
+                                    { value: 4, label: '4 spaces' },
+                                    { value: 8, label: '8 spaces' },
+                                ]}
+                                value={[
+                                    { value: 2, label: '2 spaces' },
+                                    { value: 4, label: '4 spaces' },
+                                    { value: 8, label: '8 spaces' },
+                                ].filter(({ value }) => value === props.indent)}
+                            />
+                        </div>
+                    </div>
                     <details
                         style={{
                             marginBottom: '1em',

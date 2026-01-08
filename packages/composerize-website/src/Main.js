@@ -19,6 +19,7 @@ export default class Main extends Component {
             command: defaultCommand,
             compose: '',
             version: 'latest',
+            indent: 4,
             output: Composerize(defaultCommand),
             error: '',
             erroredLines: [],
@@ -26,6 +27,7 @@ export default class Main extends Component {
         this.onCommandInputChange = this.onCommandInputChange.bind(this);
         this.onComposeInputChange = this.onComposeInputChange.bind(this);
         this.onSelectChange = this.onSelectChange.bind(this);
+        this.onIndentChange = this.onIndentChange.bind(this);
     }
 
     onComposeInputChange(value) {
@@ -49,11 +51,18 @@ export default class Main extends Component {
         this.updateConversion();
     }
 
+    onIndentChange(value) {
+        this.setState(() => ({
+            indent: value.value,
+        }));
+        this.updateConversion();
+    }
+
     updateConversion() {
         this.setState((state) => {
             try {
                 return {
-                    output: Composerize(state.command, state.compose, state.version),
+                    output: Composerize(state.command, state.compose, state.version, state.indent),
                     error: '',
                     erroredLines: [],
                 };
@@ -75,9 +84,11 @@ export default class Main extends Component {
                     command={this.state.command}
                     compose={this.state.compose}
                     version={this.state.version}
+                    indent={this.state.indent}
                     error={this.state.error}
                     erroredLines={this.state.erroredLines}
                     onSelectChange={this.onSelectChange}
+                    onIndentChange={this.onIndentChange}
                     onCommandInputChange={this.onCommandInputChange}
                     onComposeInputChange={this.onComposeInputChange}
                 />

@@ -671,3 +671,67 @@ services:
         image: ilshidur/tor-relay"
 `);
 });
+
+test('indentation is configurable (2 spaces)', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command, null, 'v3x', 2)).toMatchInlineSnapshot(`
+"version: \\"3\\"
+services:
+  baz:
+    ports:
+      - 80:80
+    image: foobar/baz:latest"
+`);
+});
+
+test('indentation is configurable (4 spaces)', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest';
+
+    expect(Composerize(command, null, 'v3x', 4)).toMatchInlineSnapshot(`
+"version: \\"3\\"
+services:
+    baz:
+        ports:
+            - 80:80
+        image: foobar/baz:latest"
+`);
+});
+
+test('indentation is configurable (2 spaces) with multiple commands', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest\ndocker run -p 81:81 foobar/buzz:latest';
+
+    expect(Composerize(command, null, 'latest', 2)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+  baz:
+    ports:
+      - 80:80
+    image: foobar/baz:latest
+  buzz:
+    ports:
+      - 81:81
+    image: foobar/buzz:latest"
+`);
+});
+
+test('indentation is configurable (2 spaces) with existing compose', () => {
+    const command = 'docker run -p 80:80 foobar/baz:latest';
+    const existingCompose = `
+version: '3.3'
+services:
+  nginx:
+    image: nginx
+`;
+
+    expect(Composerize(command, existingCompose, 'latest', 2)).toMatchInlineSnapshot(`
+"name: <your project name>
+services:
+  nginx:
+    image: nginx
+  baz:
+    ports:
+      - 80:80
+    image: foobar/baz:latest"
+`);
+});
