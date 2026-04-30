@@ -35,11 +35,13 @@
     "composeverter": "latest",
     "core-js": "^2.5.5",
     "deepmerge": "^2.1.0",
+    "enquirer": "^2.4.1",
     "invariant": "^2.2.4",
     "yargs-parser": "^13.0.0"
   },
   "files": [
     "dist/composerize.js",
+    "cli-merge.js",
     "cli.js"
   ],
   "eslintConfig": {

@@ -2,6 +2,7 @@
 /* eslint-disable */
 
 const composerize = require('./dist/composerize');
+const { composerizeCli } = require('./cli-merge');
 const argv = require('yargs-parser')(process.argv.slice(2), {
 	configuration: {
 		'halt-at-non-option': true,
@@ -9,6 +10,9 @@ const argv = require('yargs-parser')(process.argv.slice(2), {
 });
 
 const command = argv['_'].join(' ');
+const composeVersion = argv.format || argv.f || 'latest';
+const indent = Number(argv.indent || argv.i || 2);
+
 if (argv.help || argv.h)
 {
 	console.log(`
@@ -26,14 +30,29 @@ composerize -i 4 -f v2x docker run -p 80:80 -v /var/run/docker.sock:/tmp/docker.
 	process.exit();
 }
 
+function printOutput(existingDockerCompose) {
+	composerizeCli({
+		command,
+		composerize,
+		composeVersion,
+		existingDockerCompose,
+		indent,
+	})
+		.then((output) => console.log(output))
+		.catch((error) => {
+			console.error(error.message);
+			process.exit(1);
+		});
+}
+
 if (process.stdin.isTTY){
-	console.log(composerize(command, '', argv.format || argv.f || 'latest', argv.indent || argv.i || 2));
+	printOutput('');
 }
 else {
 	var existingDockerCompose = '';
 	process.stdin.on('data', function(d) {
 		existingDockerCompose += d;
 	}).on('end', function() {
-		console.log(composerize(command, existingDockerCompose, argv.format || argv.f || 'latest', argv.indent || argv.i || 2));
+		printOutput(existingDockerCompose);
 	}).setEncoding('utf8');
 }
