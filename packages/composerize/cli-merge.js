@@ -273,6 +273,7 @@ async function composerizeCli({
 	composeVersion,
 	existingDockerCompose,
 	indent,
+	resolveConflicts = promptForChoices,
 }) {
 	const generatedOutput = composerize(command, '', composeVersion, indent);
 	const { comments, yaml: generatedYaml } = splitLeadingComments(generatedOutput);
@@ -294,7 +295,7 @@ async function composerizeCli({
 
 	let choices = {};
 	if (conflicts.length > 0) {
-		choices = await promptForChoices(conflicts);
+		choices = await resolveConflicts(conflicts);
 	}
 
 	const mergedJson = dedupeExactArrayValues(mergeWithChoices(existingJson, generatedJson, [], choices));
